@@ -93,6 +93,13 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "version": 2,
+            "browserTarget": "full-sail-frontend:build:production"
+          }
         }
       }
     }
