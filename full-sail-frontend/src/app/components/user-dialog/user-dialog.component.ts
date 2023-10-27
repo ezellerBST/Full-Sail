@@ -30,7 +30,7 @@ export class UserDialogComponent {
         return;
       }
     }
-    this.userService.SetUserData(this.userData);
+    // this.userService.SetUserData(this.userData);
     this.dialogRef.close();
   }
 

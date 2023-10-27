@@ -10,7 +10,8 @@ import { UserService } from '../services/user.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private dialog: MatDialog, public userService: UserService
+  constructor(private dialog: MatDialog, 
+    // public userService: UserService
     ) {}
   
   ngOnInit(): void {}
