@@ -19,6 +19,15 @@ import { UserDialogComponent } from './components/user-dialog/user-dialog.compon
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatIconModule } from '@angular/material/icon';
+
+
 
 @NgModule({
   declarations: [
@@ -41,7 +50,15 @@ import { FormsModule } from '@angular/forms';
     FormsModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore())
+    provideFirestore(() => getFirestore()),
+    MatButtonModule,
+    MatMenuModule,
+    MatToolbarModule,
+    MatCardModule,
+    MatIconModule,
+    MatSlideToggleModule,
+    MatTooltipModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]
