@@ -1,0 +1,43 @@
+<h2 mat-dialog-title>Enter Your Information</h2>
+<div mat-dialog-content>
+    <form (ngSubmit)="onSave()">
+        <!-- Email and password fields for sign-in users -->
+        <ng-container *ngIf="data.isSignIn">
+            <mat-form-field>
+                <input matInput placeholder="Email" [(ngModel)]="userData.email" name="email" required>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput type="password" placeholder="Password" [(ngModel)]="userData.password" name="password"
+                    required>
+            </mat-form-field>
+        </ng-container>
+
+        <!-- Fields for new users -->
+        <ng-container *ngIf="!data.isSignIn">
+            <mat-form-field>
+                <input matInput placeholder="Email" [(ngModel)]="userData.email" name="email" required>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput type="password" placeholder="Password" [(ngModel)]="userData.password" name="password"
+                    required>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="First Name" [(ngModel)]="userData.firstName" name="firstName" required>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Last Name" [(ngModel)]="userData.lastName" name="lastName" required>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Address" [(ngModel)]="userData.address" name="address" required>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Phone Number" [(ngModel)]="userData.phoneNumber" name="phoneNumber"
+                    required>
+            </mat-form-field>
+        </ng-container>
+    </form>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <button mat-button color="primary" type="submit">Save</button>
+</div>

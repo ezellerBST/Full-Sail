@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "full-sail-99d1e": {
+      "hosting": {
+        "full-sail-frontend": [
+          "full-sail-99d1e"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "full-sail-99d1e"
+  }
+}
