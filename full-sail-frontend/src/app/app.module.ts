@@ -29,6 +29,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import { NgIf } from '@angular/common';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 
@@ -63,6 +64,7 @@ import { NgIf } from '@angular/common';
     MatIconModule,
     MatSlideToggleModule,
     MatTooltipModule,
+    FontAwesomeModule,
 
   ],
   providers: [],
