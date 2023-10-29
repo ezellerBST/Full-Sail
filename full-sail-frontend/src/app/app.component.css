@@ -1,0 +1,27 @@
+header {
+    background-color: darkgray;
+}
+
+
+footer {
+    background-color: darkgray;
+    width: 100%;
+}
+
+div {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+
+}
+
+mat-icon {
+    padding: 3px;
+}
+
+mat-toolbar {
+    display: flex;
+    justify-content: space-around;
+    
+}
