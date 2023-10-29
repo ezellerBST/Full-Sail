@@ -1,12 +1,12 @@
 <header>
     <nav>
         <mat-toolbar >
-            <img>
+            <img alt="Icon">
             <h1><span>Full Sail</span></h1>
-            <mat-icon>storage</mat-icon>
+            <mat-icon><fa-icon [icon]="faAnchor"></fa-icon></mat-icon>
             <p>Manage your money and take control!</p>
-            <span><mat-icon>brightness_5</mat-icon><mat-slide-toggle></mat-slide-toggle><mat-icon>brightness_3</mat-icon></span>
-            <a><mat-icon fontIcon="home"></mat-icon></a>
+            <span><mat-icon><fa-icon [icon]="faSun"></fa-icon></mat-icon><mat-slide-toggle></mat-slide-toggle><mat-icon><fa-icon [icon]="faMoon"></fa-icon></mat-icon></span>
+            <a><mat-icon><fa-icon [icon]="faHouseUser"></fa-icon></mat-icon></a>
             <button mat-raised-button color="warn">Sign In</button>
             <button mat-raised-button color="warn">Register</button>
         </mat-toolbar>
@@ -16,14 +16,17 @@
 <router-outlet></router-outlet>
 <br>
 <footer>
-    <h3>Full Sail <mat-icon>copyright</mat-icon> 2023</h3>
-    <img src="" alt="">
-    <p></p>
-    <mat-icon fontIcon=""></mat-icon>
-    <mat-icon fontIcon="home"></mat-icon>
-    <mat-icon></mat-icon>
-    <mat-icon></mat-icon>
-    <mat-icon></mat-icon>
-    <mat-icon></mat-icon>
-    <mat-icon></mat-icon>
+    <div>
+        <img src="" alt="Icon">
+        <h3>Full Sail <mat-icon>copyright</mat-icon> 2023</h3>
+        
+        <p>Lorem Ipsum</p>
+        
+        <mat-icon><fa-icon [icon]="faTwitter"></fa-icon></mat-icon>
+        <mat-icon><fa-icon [icon]="faFacebook"></fa-icon></mat-icon>
+        <mat-icon><fa-icon [icon]="faTiktok"></fa-icon></mat-icon>
+        <mat-icon><fa-icon [icon]="faInstagram"></fa-icon></mat-icon>
+        <mat-icon><fa-icon [icon]="faGithub"></fa-icon></mat-icon>
+    </div>
+        
 </footer>

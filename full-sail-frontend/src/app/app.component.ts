@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { faCoffee } from '@fortawesome/free-solid-svg-icons';
+import { faSun,faMoon } from '@fortawesome/free-regular-svg-icons'
+import { faHouseUser, faAnchor } from '@fortawesome/free-solid-svg-icons'
+import { faFacebook, faXTwitter, faTiktok, faInstagram, faGithub, } from '@fortawesome/free-brands-svg-icons';
 
 @Component({
   selector: 'app-root',
@@ -7,6 +9,15 @@ import { faCoffee } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  faCoffee = faCoffee;
+  faFacebook = faFacebook;
+  faTwitter = faXTwitter;
+  faTiktok = faTiktok;
+  faInstagram = faInstagram;
+  faGithub = faGithub;
+  faHouseUser = faHouseUser;
+  faMoon = faMoon;
+  faSun = faSun;
+  faAnchor = faAnchor;
+
   title = 'full-sail-frontend';
 }
