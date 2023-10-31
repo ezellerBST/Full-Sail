@@ -1,49 +1,32 @@
-import { Injectable, NgZone } from '@angular/core';
-import { User } from '../models/user';
-// import { Firestore, doc, setDoc } from '@angular/fire/firestore';
-// import { AngularFireAuth } from '@angular/fire/compat/auth';
-// import { Router } from '@angular/router';
-// import { MatDialog } from '@angular/material/dialog';
-// import { UserDialogComponent } from '../components/user-dialog/user-dialog.component';
-// import * as auth from 'firebase/auth';
+import { Injectable } from '@angular/core';
+// import { User } from '../models/user';
+import { Firestore, doc, setDoc } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { getAuth, Auth, GoogleAuthProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, sendEmailVerification, UserCredential, updateProfile, User, updatePhoneNumber } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
 
-  // userData: User = new User();
+  constructor(private firestore: Firestore, private auth: Auth, public router: Router, public dialog: MatDialog) { this.auth = getAuth() }
 
-//   constructor(private firestore: Firestore, private afAuth: AngularFireAuth, public router: Router, public ngZone: NgZone, public dialog: MatDialog) {
-
-//     // Saving user data in localstorage when logged in and setting up null when logged out
-
-//     this.afAuth.authState.subscribe((user) => {
-//       if (user) {
-//         this.userData = user;
-//         localStorage.setItem('user', JSON.stringify(this.userData));
-//         JSON.parse(localStorage.getItem('user')!);
-//       } else {
-//         localStorage.setItem('user', 'null');
-//         JSON.parse(localStorage.getItem('user')!);
-//       }
-//     });
-
-//   }
-
-//   // Set up User Data on Sign-up
-//   SetUserData(user: any) {
-//     const userRef = doc(this.firestore, 'users', user.uid);
-//     const userData: User = {
-//       email: user.email,
-//       firstName: user.firstName,
-//       lastName: user.lastName,
-//       address: user.address,
-//       phoneNum: user.phoneNum,
-//       profilePic: user.profilePic,
-//     };
-//     return setDoc(userRef, userData, { merge: true });
-//   }
+  // Function to create a user using email and password
+  async createUserWithEmailAndPassword(email, password, displayName, photoURL): Promise<User> {
+      const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
+      const user = userCredential.user
+      if (user) {
+        updateProfile(user, {
+          displayName,
+          photoURL,
+        });
+      }
+      return user;
+    } catch (error) {
+      throw error;
+    }
+  }
 
 //   // Sign in with email/password
 //   SignIn(email: string, password: string) {
@@ -51,33 +34,6 @@ export class UserService {
 //       .signInWithEmailAndPassword(email, password)
 //       .then((result) => {
 //         this.SetUserData(result.user);
-//         this.afAuth.authState.subscribe((user) => {
-//           if (user) {
-//             // Open the dialog component
-//             const dialogRef = this.dialog.open(UserDialogComponent, {
-//               width: '300px',
-//               data: { user: user }
-//             });
-
-//             // After the dialog is closed, navigate to the 'account' page
-//             dialogRef.afterClosed().subscribe(() => {
-//               this.router.navigate(['account']);
-//             });
-//           }
-//         });
-//       })
-//       .catch((error) => {
-//         window.alert(error.message);
-//       });
-//   }
-
-//   // Sign up with email/password
-//   SignUp(email: string, password: string) {
-//     return this.afAuth
-//       .createUserWithEmailAndPassword(email, password)
-//       .then((result) => {
-//         this.SetUserData(result.user);
-//         this.SendVerificationMail();
 //         this.afAuth.authState.subscribe((user) => {
 //           if (user) {
 //             // Open the dialog component
@@ -121,4 +77,3 @@ export class UserService {
 //     });
 //   }
 
-}
