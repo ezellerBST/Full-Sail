@@ -7,8 +7,8 @@
             <p>Manage your money and take control!</p>
             <span><mat-icon><fa-icon [icon]="faSun"></fa-icon></mat-icon><mat-slide-toggle></mat-slide-toggle><mat-icon><fa-icon [icon]="faMoon"></fa-icon></mat-icon></span>
             <a><mat-icon><fa-icon [icon]="faHouseUser"></fa-icon></mat-icon></a>
-            <button mat-raised-button color="warn">Sign In</button>
-            <button mat-raised-button color="warn">Register</button>
+            <button mat-raised-button color="warn" (click)="openSignInDialog()">Sign In</button>
+            <button mat-raised-button color="warn" (click)="openSignUpDialog()">Register</button>
         </mat-toolbar>
     </nav>
 </header>

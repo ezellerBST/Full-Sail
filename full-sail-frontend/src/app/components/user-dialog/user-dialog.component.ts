@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 import { UserService } from 'src/app/services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-dialog',
@@ -9,29 +10,36 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class UserDialogComponent {
 
-  userData: any = {};
+  email: string;
+  password: string;
+  displayName: string;
+  photoURL: string;
   isSignIn: boolean;
 
   constructor(
     public dialogRef: MatDialogRef<UserDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    private userService: UserService
-  ) {
-    this.isSignIn = data.isSignIn;
-  }
+    private userService: UserService,
+    public router: Router
+  ) { }
 
-  onSave() {
-    if (this.isSignIn) {
-      if (!this.userData.email || !this.userData.password) {
-        return;
-      }
-    } else {
-      if (!this.userData.email || !this.userData.password || !this.userData.firstName || !this.userData.lastName || !this.userData.address || !this.userData.phoneNum) {
-        return;
-      }
+  async onSave() {
+    try {
+      const user = await this.userService.createUserWithEmailAndPassword(
+        this.email,
+        this.password,
+        this.displayName,
+        this.photoURL
+      );
+      this.router.navigate(['/account'], {
+        queryParams: {
+          user: JSON.stringify(user)
+        }
+      });
+      this.dialogRef.close();
+
+    } catch (error) {
+      console.log(error);
     }
-    // this.userService.SetUserData(this.userData);
-    this.dialogRef.close();
   }
 
   onCancel() {
