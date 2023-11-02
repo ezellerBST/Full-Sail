@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
 
   title = 'full-sail-frontend';
 
-  darkMode;
+
 
   
   
