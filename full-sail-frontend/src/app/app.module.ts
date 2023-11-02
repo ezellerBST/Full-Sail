@@ -31,6 +31,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { NgIf } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {MatDividerModule} from '@angular/material/divider';
+import { MatRippleModule } from '@angular/material/core';
 
 
 
@@ -66,7 +67,8 @@ import {MatDividerModule} from '@angular/material/divider';
     MatSlideToggleModule,
     MatTooltipModule,
     FontAwesomeModule,
-    MatDividerModule
+    MatDividerModule,
+    MatRippleModule
 
   ],
   providers: [],
