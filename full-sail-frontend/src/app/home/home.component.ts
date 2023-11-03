@@ -8,24 +8,8 @@ import { UserService } from '../services/user.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
 
-  constructor(private dialog: MatDialog, 
-    // public userService: UserService
-    ) {}
-  
-  ngOnInit(): void {}
-
-  openSignInDialog() {
-    this.dialog.open(UserDialogComponent, {
-      data: { isSignIn: true }
-    });
-  }
-
-  openSignUpDialog() {
-    this.dialog.open(UserDialogComponent, {
-      data: { isSignIn: false }
-    });
-  }
+ 
 }
 

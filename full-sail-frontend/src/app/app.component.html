@@ -6,11 +6,10 @@
             <h1><span>Full Sail</span></h1>
             <mat-icon color="accent"><fa-icon [icon]="faAnchor"></fa-icon></mat-icon>
             <p>Manage your money and take control!</p>
-           
-     
-            <button mat-raised-button color="primary">Sign In</button>
-            <button mat-raised-button color="primary">Register</button>
-            <!-- </div> -->
+            <span><mat-icon><fa-icon [icon]="faSun"></fa-icon></mat-icon><mat-slide-toggle></mat-slide-toggle><mat-icon><fa-icon [icon]="faMoon"></fa-icon></mat-icon></span>
+            <a><mat-icon><fa-icon [icon]="faHouseUser"></fa-icon></mat-icon></a>
+            <button mat-raised-button color="primary" (click)="openSignInDialog()">Sign In</button>
+            <button mat-raised-button color="primary" (click)="openSignUpDialog()">Register</button>
         </mat-toolbar>
     </nav>
 </header>

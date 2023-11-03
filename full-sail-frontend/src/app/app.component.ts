@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
-import { faSun,faMoon } from '@fortawesome/free-regular-svg-icons'
+import { Component, OnInit } from '@angular/core';
+import { faSun, faMoon } from '@fortawesome/free-regular-svg-icons'
 import { faHouseUser, faAnchor } from '@fortawesome/free-solid-svg-icons'
 import { faFacebook, faXTwitter, faTiktok, faInstagram, faGithub, } from '@fortawesome/free-brands-svg-icons';
-import { OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { UserDialogComponent } from './components/user-dialog/user-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -22,12 +23,20 @@ export class AppComponent implements OnInit {
 
   title = 'full-sail-frontend';
 
+  constructor(private dialog: MatDialog,
+  ) { }
 
+  ngOnInit(): void { }
 
-  
-  
-ngOnInit(): void {
+  openSignInDialog() {
+    this.dialog.open(UserDialogComponent, {
+      data: { isSignIn: true }
+    });
+  }
 
-}
-
+  openSignUpDialog() {
+    this.dialog.open(UserDialogComponent, {
+      data: { isSignIn: false }
+    });
+  }
 }

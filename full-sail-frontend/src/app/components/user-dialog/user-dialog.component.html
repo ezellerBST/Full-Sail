@@ -2,37 +2,30 @@
 <div mat-dialog-content>
     <form (ngSubmit)="onSave()">
         <!-- Email and password fields for sign-in users -->
-        <ng-container *ngIf="data.isSignIn">
+        <ng-container *ngIf="isSignIn">
             <mat-form-field>
-                <input matInput placeholder="Email" [(ngModel)]="userData.email" name="email" required>
+                <input matInput placeholder="Email" [(ngModel)]="email" name="email" required>
             </mat-form-field>
             <mat-form-field>
-                <input matInput type="password" placeholder="Password" [(ngModel)]="userData.password" name="password"
+                <input matInput type="password" placeholder="Password" [(ngModel)]="password" name="password"
                     required>
             </mat-form-field>
         </ng-container>
 
         <!-- Fields for new users -->
-        <ng-container *ngIf="!data.isSignIn">
+        <ng-container *ngIf="!isSignIn">
             <mat-form-field>
-                <input matInput placeholder="Email" [(ngModel)]="userData.email" name="email" required>
+                <input matInput placeholder="Email" [(ngModel)]="email" name="email" required>
             </mat-form-field>
             <mat-form-field>
-                <input matInput type="password" placeholder="Password" [(ngModel)]="userData.password" name="password"
+                <input matInput type="password" placeholder="Password" [(ngModel)]="password" name="password"
                     required>
             </mat-form-field>
             <mat-form-field>
-                <input matInput placeholder="First Name" [(ngModel)]="userData.firstName" name="firstName" required>
+                <input matInput placeholder="Name" [(ngModel)]="displayName" name="displayName" required>
             </mat-form-field>
             <mat-form-field>
-                <input matInput placeholder="Last Name" [(ngModel)]="userData.lastName" name="lastName" required>
-            </mat-form-field>
-            <mat-form-field>
-                <input matInput placeholder="Address" [(ngModel)]="userData.address" name="address" required>
-            </mat-form-field>
-            <mat-form-field>
-                <input matInput placeholder="Phone Number" [(ngModel)]="userData.phoneNumber" name="phoneNumber"
-                    required>
+                <input matInput placeholder="PhotoLink" [(ngModel)]="photoURL" name="photURL" required>
             </mat-form-field>
         </ng-container>
     </form>
