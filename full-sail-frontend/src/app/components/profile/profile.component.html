@@ -1,31 +1,43 @@
 <div class="top">
-    <img src="" alt="Profile Photo">
-    <div class="inner">
-        <h3>Name</h3>
-        <mat-form-field>
-            <mat-label>Name</mat-label>
-            <input matInput>
-        </mat-form-field>
-        <h3>Username</h3>
-        <mat-form-field>
-            <mat-label>Username</mat-label>
-            <input matInput>
-        </mat-form-field>
-    </div>
-
+    <mat-card class="profile-card">
+        <mat-card-header>
+            <mat-card-title>{{ displayName }}</mat-card-title>
+            <mat-card-subtitle>{{ email }}</mat-card-subtitle>
+        </mat-card-header>
+        <img class="profile-pic" mat-card-image src="{{ photoURL }}" alt="Profile Photo">
+        <mat-card-content>
+            <p>
+                Address here
+            </p>
+        </mat-card-content>
+        <mat-card-content>
+            <p>
+                {{ phoneNum }}
+            </p>
+        </mat-card-content>
+        <mat-card-footer>
+            <mat-progress-bar mode="determinate" value="100"></mat-progress-bar>
+        </mat-card-footer>
+    </mat-card>
 </div>
 
 <mat-divider></mat-divider>
+
 <div class="mid">
     <mat-card>
-        <h3 class="address">Address</h3>
+        <h3 class="email">Name</h3>
         <mat-form-field>
-            <mat-label>Address</mat-label>
+            <mat-label>Name</mat-label>
             <input matInput>
         </mat-form-field>
         <h3 class="email">Email</h3>
         <mat-form-field>
             <mat-label>Email</mat-label>
+            <input matInput>
+        </mat-form-field>
+        <h3 class="address">Address</h3>
+        <mat-form-field>
+            <mat-label>Address</mat-label>
             <input matInput>
         </mat-form-field>
         <h3 class="phone">Phone Number</h3>
@@ -34,7 +46,6 @@
             <input matInput>
         </mat-form-field>
         <mat-card-actions align="end" class="buttons">
-            <button mat-raised-button class="edit">Edit</button>
             <button mat-raised-button class="save">Save</button>
         </mat-card-actions>
 

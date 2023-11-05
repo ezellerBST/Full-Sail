@@ -28,7 +28,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { NgIf } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {MatDividerModule} from '@angular/material/divider';
-
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 
 @NgModule({
@@ -59,7 +60,9 @@ import {MatDividerModule} from '@angular/material/divider';
     MatSlideToggleModule,
     MatTooltipModule,
     FontAwesomeModule,
-    MatDividerModule
+    MatDividerModule,
+    MatProgressBarModule,
+    MatGridListModule
   ],
   providers: [],
   bootstrap: [AppComponent]
