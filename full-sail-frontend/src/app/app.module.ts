@@ -30,6 +30,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatGridListModule} from '@angular/material/grid-list';
+import { MatRippleModule } from '@angular/material/core';
+
 
 
 @NgModule({
@@ -62,7 +64,9 @@ import {MatGridListModule} from '@angular/material/grid-list';
     FontAwesomeModule,
     MatDividerModule,
     MatProgressBarModule,
-    MatGridListModule
+    MatGridListModule,
+    MatRippleModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]

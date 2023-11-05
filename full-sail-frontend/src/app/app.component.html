@@ -1,18 +1,19 @@
 <header>
     <nav>
-        <mat-toolbar>
+        <mat-toolbar class="header" >
+        <!-- <div> -->
             <img alt="Icon">
             <h1><span>Full Sail</span></h1>
-            <mat-icon><fa-icon [icon]="faAnchor"></fa-icon></mat-icon>
+            <mat-icon color="accent"><fa-icon [icon]="faAnchor"></fa-icon></mat-icon>
             <p>Manage your money and take control!</p>
             <span><mat-icon><fa-icon
                         [icon]="faSun"></fa-icon></mat-icon><mat-slide-toggle></mat-slide-toggle><mat-icon><fa-icon
                         [icon]="faMoon"></fa-icon></mat-icon></span>
             <a><mat-icon><fa-icon [icon]="faHouseUser"></fa-icon></mat-icon></a>
-            <button mat-raised-button color="warn" (click)="openSignInDialog()" *ngIf="!isSignedIn">Sign In</button>
+            <button mat-raised-button color="primary" (click)="openSignInDialog()" *ngIf="!isSignedIn">Sign In</button>
             <!-- <button mat-raised-button color="warn" (click)="openSignUpDialog()">Register</button> -->
-            <button mat-raised-button color="warn" (click)="getProfile()" *ngIf="isSignedIn">Profile</button>
-            <button mat-raised-button color="warn" (click)="signOut()" *ngIf="isSignedIn">Logout</button>
+            <button mat-raised-button color="primary" (click)="getProfile()" *ngIf="isSignedIn">Profile</button>
+            <button mat-raised-button color="primary" (click)="signOut()" *ngIf="isSignedIn">Logout</button>
         </mat-toolbar>
     </nav>
 </header>
@@ -53,19 +54,17 @@
 </form>
 
 <router-outlet></router-outlet>
-<br>
+
 <footer>
-    <div>
+    <div class="footer-div">
         <img src="" alt="Icon">
         <h3>Full Sail <mat-icon>copyright</mat-icon> 2023</h3>
-
-        <p>Lorem Ipsum</p>
-
-        <mat-icon><fa-icon [icon]="faTwitter"></fa-icon></mat-icon>
-        <mat-icon><fa-icon [icon]="faFacebook"></fa-icon></mat-icon>
-        <mat-icon><fa-icon [icon]="faTiktok"></fa-icon></mat-icon>
-        <mat-icon><fa-icon [icon]="faInstagram"></fa-icon></mat-icon>
-        <mat-icon><fa-icon [icon]="faGithub"></fa-icon></mat-icon>
+        <div>
+            <mat-icon><fa-icon [icon]="faTwitter"></fa-icon></mat-icon>
+            <mat-icon><fa-icon [icon]="faFacebook"></fa-icon></mat-icon>
+            <mat-icon><fa-icon [icon]="faTiktok"></fa-icon></mat-icon>
+            <mat-icon><fa-icon [icon]="faInstagram"></fa-icon></mat-icon>
+            <mat-icon><fa-icon [icon]="faGithub"></fa-icon></mat-icon>
+        </div>
     </div>
-
 </footer>
