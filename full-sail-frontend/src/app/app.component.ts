@@ -60,7 +60,7 @@ export class AppComponent implements OnInit {
   // }
 
   submitForm() {
-    this.userService.createUser(this.email, this.password, this.displayName, this.photoURL, this.phoneNum)
+    this.userService.createUser(this.email, this.password, this.displayName, this.photoURL)
       .then((user) => {
         this.router.navigate(['account']);
         console.log(user);

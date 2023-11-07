@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Auth } from '@angular/fire/auth';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-profile',
@@ -17,7 +18,7 @@ export class ProfileComponent implements OnInit {
   address: string = "";
   phoneNum: string = "";
 
-  constructor(private auth: Auth) {}
+  constructor(private auth: Auth, private userService: UserService) { }
 
   ngOnInit(): void {
     this.getUserDetails();
@@ -31,19 +32,28 @@ export class ProfileComponent implements OnInit {
         this.displayName = this.user.displayName;
         this.email = this.user.email;
         this.photoURL = this.user.photoURL;
-        this.phoneNum = this.user.phoneNum;
-        this.address = this.user.address;
+        const userDoc = await this.userService.getUserProfileDocument(this.user.uid);
+        this.address = userDoc.address;
+        this.phoneNum = userDoc.phoneNumber;
       }
     } catch (error) {
       console.log(error);
     }
   }
 
-  getErrorMessage() {
-    if(this.emailCheck.hasError('required')){
-      return 'You must enter a valid email';
+  async updateProfile() {
+    try {
+      await this.userService.updateUserProfile(this.displayName, this.photoURL, this.email, this.address, this.phoneNum);
+      await this.getUserDetails(); // Refresh user details after update
+    } catch (error) {
+      console.log(error);
     }
-    return this.emailCheck.hasError('email') ? 'Not a valid email' : 'Please enter a valid email';
   }
-
 }
+
+  // getErrorMessage() {
+  //   if (this.emailCheck.hasError('required')) {
+  //     return 'You must enter a valid email';
+  //   }
+  //   return this.emailCheck.hasError('email') ? 'Not a valid email' : 'Please enter a valid email';
+  // }
