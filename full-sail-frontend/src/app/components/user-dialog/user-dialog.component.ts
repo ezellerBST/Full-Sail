@@ -30,7 +30,6 @@ export class UserDialogComponent {
         this.password,
         this.displayName,
         this.photoURL,
-        this.phoneNum,
       );
       this.router.navigate(['/account'], {
         queryParams: {
