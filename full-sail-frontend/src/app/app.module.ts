@@ -29,6 +29,10 @@ import { NgIf } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {MatDividerModule} from '@angular/material/divider';
 import { MatRippleModule } from '@angular/material/core';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
 
 
 
@@ -61,7 +65,11 @@ import { MatRippleModule } from '@angular/material/core';
     MatTooltipModule,
     FontAwesomeModule,
     MatDividerModule,
-    MatRippleModule
+    MatRippleModule,
+    MatCheckboxModule,
+    MatButtonToggleModule,
+    MatDatepickerModule,
+    MatNativeDateModule
 
   ],
   providers: [],
