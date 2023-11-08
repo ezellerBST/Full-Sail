@@ -31,7 +31,8 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { MatRippleModule } from '@angular/material/core';
-
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 @NgModule({
@@ -65,8 +66,9 @@ import { MatRippleModule } from '@angular/material/core';
     MatDividerModule,
     MatProgressBarModule,
     MatGridListModule,
-    MatRippleModule
-
+    MatRippleModule,
+    MatTableModule,
+    MatPaginatorModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

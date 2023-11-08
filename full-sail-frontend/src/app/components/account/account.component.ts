@@ -1,21 +1,39 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, OnInit } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
-import { Firestore, addDoc, doc, setDoc, getDoc, collection } from '@angular/fire/firestore';
+import { Firestore, addDoc, doc, setDoc, getDoc, collection, getDocs } from '@angular/fire/firestore';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+
+export interface TransactionTable {
+  date: string;
+  description: string;
+  amount: number;
+}
 
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.css']
 })
-export class AccountComponent implements OnInit {
+export class AccountComponent implements OnInit, AfterViewInit {
 
   user: any;
   displayName: string = "";
+  dataSource = new MatTableDataSource<TransactionTable>();
+  displayedColumns: string[] = ['date', 'description', 'amount'];
+
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private auth: Auth, private firestore: Firestore) { }
 
   ngOnInit(): void {
     this.getUserDetails();
+    this.getTransactions();
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
   }
 
   async getUserDetails() {
@@ -63,5 +81,18 @@ export class AccountComponent implements OnInit {
         console.error('Error: ', error);
       }
     });
+
+    this.getTransactions();
   }
+
+  async getTransactions() {
+    const querySnapshot = await getDocs(collection(this.firestore, 'transactions'));
+    const data: TransactionTable[] = [];
+    querySnapshot.forEach((doc) => {
+      const docData = doc.data() as TransactionTable;
+      data.push(docData);
+    });
+    this.dataSource.data = data;
+  }
+
 }
