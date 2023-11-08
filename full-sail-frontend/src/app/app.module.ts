@@ -31,6 +31,10 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { MatRippleModule } from '@angular/material/core';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
 
 
 
@@ -65,7 +69,11 @@ import { MatRippleModule } from '@angular/material/core';
     MatDividerModule,
     MatProgressBarModule,
     MatGridListModule,
-    MatRippleModule
+    MatRippleModule,
+    MatCheckboxModule,
+    MatButtonToggleModule,
+    MatDatepickerModule,
+    MatNativeDateModule
 
   ],
   providers: [],
