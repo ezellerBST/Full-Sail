@@ -4,6 +4,9 @@ import { faHouseUser, faAnchor } from '@fortawesome/free-solid-svg-icons'
 import { faFacebook, faXTwitter, faTiktok, faInstagram, faGithub, } from '@fortawesome/free-brands-svg-icons';
 import { MatDialog } from '@angular/material/dialog';
 import { UserDialogComponent } from './components/user-dialog/user-dialog.component';
+import { UserService } from './services/user.service';
+import { Router } from '@angular/router';
+import { Auth, signOut } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-root',
@@ -23,10 +26,25 @@ export class AppComponent implements OnInit {
 
   title = 'full-sail-frontend';
 
+  email: string = '';
+  password: string = '';
+  displayName: string = '';
+  photoURL: string = '';
+  phoneNum: string = '';
+  isSignedIn: boolean = false;
+
   constructor(private dialog: MatDialog,
+    private userService: UserService,
+    public router: Router,
+    private auth: Auth
   ) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.auth.onAuthStateChanged(user => {
+      // Update isSignedIn based on the user's authentication state
+      this.isSignedIn = !!user; 
+    });
+  }
 
   openSignInDialog() {
     this.dialog.open(UserDialogComponent, {
@@ -34,9 +52,51 @@ export class AppComponent implements OnInit {
     });
   }
 
-  openSignUpDialog() {
-    this.dialog.open(UserDialogComponent, {
-      data: { isSignIn: false }
+  // openSignUpDialog(email: string, password: string, displayName: string, photoURL: string) {
+  //   this.dialog.open(UserDialogComponent, {
+  //     data: { isSignIn: false }
+  //   });
+  //   this.userService.createUserWithEmailAndPassword(email, password, displayName, photoURL);
+  // }
+
+  submitForm() {
+    this.userService.createUser(this.email, this.password, this.displayName, this.photoURL)
+      .then((user) => {
+        this.router.navigate(['account']);
+        console.log(user);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  signInForm() {
+    this.userService.signInWithEmailAndPassword(this.email, this.password)
+      .then((user) => {
+        if (!user) {
+          return null;
+        } else {
+          this.router.navigate(['account']);
+          console.log(user);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        throw error;
+      });
+  }
+
+  signOut() {
+    return signOut(this.auth).then(() => {
+      console.log('User signed out');
+      this.router.navigate(['home']);
+    }).catch((error) => {
+      console.log(error);
+      return Promise.reject(error);
     });
+  }
+
+  getProfile(){
+    this.router.navigate(['profile']);
   }
 }

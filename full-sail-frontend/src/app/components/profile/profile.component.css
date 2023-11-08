@@ -30,14 +30,8 @@ input {
     
 }
 
-img {
-    padding-left: 10%;
-}
-
-
-
 .inner {
-    padding-right: 40%;
+    /* padding-right: 40%; */
 }
 
 .mid {
@@ -47,3 +41,15 @@ img {
 mat-divider {
     margin: 0 20px 0 20px;
 }
+
+.profile-card {
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+mat-card-image {
+    width: 100%;
+    object-fit: cover;
+}
+

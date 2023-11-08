@@ -14,6 +14,7 @@ export class UserDialogComponent {
   password: string;
   displayName: string;
   photoURL: string;
+  phoneNum: string;
   isSignIn: boolean;
 
   constructor(
@@ -24,11 +25,11 @@ export class UserDialogComponent {
 
   async onSave() {
     try {
-      const user = await this.userService.createUserWithEmailAndPassword(
+      const user = await this.userService.createUser(
         this.email,
         this.password,
         this.displayName,
-        this.photoURL
+        this.photoURL,
       );
       this.router.navigate(['/account'], {
         queryParams: {

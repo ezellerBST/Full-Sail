@@ -28,6 +28,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { NgIf } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {MatDividerModule} from '@angular/material/divider';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatGridListModule} from '@angular/material/grid-list';
 import { MatRippleModule } from '@angular/material/core';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
@@ -65,6 +67,8 @@ import {MatNativeDateModule} from '@angular/material/core';
     MatTooltipModule,
     FontAwesomeModule,
     MatDividerModule,
+    MatProgressBarModule,
+    MatGridListModule,
     MatRippleModule,
     MatCheckboxModule,
     MatButtonToggleModule,

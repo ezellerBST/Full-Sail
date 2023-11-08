@@ -1,79 +1,112 @@
 import { Injectable } from '@angular/core';
 // import { User } from '../models/user';
-import { Firestore, doc, setDoc } from '@angular/fire/firestore';
+import { Firestore, addDoc, doc, setDoc, getDoc, collection } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { getAuth, Auth, GoogleAuthProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, sendEmailVerification, UserCredential, updateProfile, User, updatePhoneNumber } from '@angular/fire/auth';
+import { Auth, GoogleAuthProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendEmailVerification, UserCredential, updateProfile, updateEmail } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
 
-  constructor(private firestore: Firestore, private auth: Auth, public router: Router, public dialog: MatDialog) { this.auth = getAuth() }
+  constructor(public firestore: Firestore, public auth: Auth, public router: Router, public dialog: MatDialog) { }
 
-  // Function to create a user using email and password
-  async createUserWithEmailAndPassword(email, password, displayName, photoURL): Promise<User> {
-      const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
-      const user = userCredential.user
-      if (user) {
-        updateProfile(user, {
-          displayName,
-          photoURL,
-        });
+  createUser(email, password, displayName, photoURL) {
+    return createUserWithEmailAndPassword(this.auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        if (user) {
+          return updateProfile(user, {
+            displayName: displayName,
+            photoURL: photoURL,
+          }).then(() => user);
+        }
+        console.log(user);
+        // sendEmailVerification(this.auth.currentUser);
+        return null; // Handle case where user is not available
+      })
+      .catch((error) => {
+        console.log(error);
+        return null; // Handle the error scenario
+      });
+  }
+
+  signInWithEmailAndPassword(email, password) {
+    return signInWithEmailAndPassword(this.auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log(user);
+        return user;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  async getUserProfileDocument(userId) {
+    const profileCollection = collection(this.firestore, 'profile');
+    const userDoc = doc(profileCollection, userId);
+
+    try {
+      const docSnapshot = await getDoc(userDoc);
+      if (docSnapshot.exists()) {
+        return docSnapshot.data();
+      } else {
+        console.log("User doc does not exist");
+        return null; // Handle non-existing document
       }
-      return user;
     } catch (error) {
+      console.error("Error:", error);
       throw error;
     }
   }
 
-//   // Sign in with email/password
-//   SignIn(email: string, password: string) {
-//     return this.afAuth
-//       .signInWithEmailAndPassword(email, password)
-//       .then((result) => {
-//         this.SetUserData(result.user);
-//         this.afAuth.authState.subscribe((user) => {
-//           if (user) {
-//             // Open the dialog component
-//             const dialogRef = this.dialog.open(UserDialogComponent, {
-//               width: '300px',
-//               data: { user: user }
-//             });
+  updateUserProfile(displayName, photoURL, email, address, phoneNum) {
+    this.auth.onAuthStateChanged((user) => {
+      if (user) {
+        return updateProfile(user, {
+          displayName: displayName,
+          photoURL: photoURL,
+        })
+          .then(() => {
+            // After updating the profile, update the address and phone number in Firestore
+            const profileCollection = collection(this.firestore, 'profile');
+            const userDoc = doc(profileCollection, user.uid);
 
-//             // After the dialog is closed, navigate to the 'account' page
-//             dialogRef.afterClosed().subscribe(() => {
-//               this.router.navigate(['account']);
-//             });
-//           }
-//         });
-//       })
-//       .catch((error) => {
-//         window.alert(error.message);
-//       });
-//   }
+            const data = { address: address, phoneNumber: phoneNum };
 
-//   // Send email verification when new user signs up
-//   SendVerificationMail() {
-//     return this.afAuth.currentUser
-//       .then((user: any) => user.sendEmailVerification())
-//       .then(() => {
-//         this.router.navigate(['account']);
-//       });
-//   }
+            setDoc(userDoc, data, { merge: true })
+              .then(() => {
+                console.log('Updated address and phone number:', data);
+              })
+              .catch((error) => {
+                console.error('Error updating Firestore:', error);
+              });
 
-//   // Sign-in with Google
-//   GoogleAuth () {
-//     this.afAuth.signInWithPopup(new auth.GoogleAuthProvider());
-//     this.router.navigate(['account']);
-//   }
+            // Check and update email if needed
+            if (email && email !== user.email) {
+              return updateEmail(user, email)
+                .then(() => {
+                  console.log('New email:', email);
+                })
+                .catch((error) => {
+                  console.error('Error updating email:', error);
+                });
+            }
 
-//   // Sign out
-//   SignOut() {
-//     return this.afAuth.signOut().then(() => {
-//       localStorage.removeItem('user');
-//       this.router.navigate(['home']);
-//     });
-//   }
+            console.log('Profile updated:', user);
+            return null;
+          })
+          .catch((error) => {
+            console.error('Error updating profile:', error);
+          });
+      }
+      return null;
+    });
+  }
+
+
+}
+
 

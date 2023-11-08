@@ -1,7 +1,11 @@
+
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { Transaction } from 'src/app/models/transaction';
 import { Papa } from 'ngx-papaparse';
 import { faFileCsv } from '@fortawesome/free-solid-svg-icons';
+import { Auth } from '@angular/fire/auth';
+
+
 
 @Component({
   selector: 'app-account',
@@ -10,9 +14,10 @@ import { faFileCsv } from '@fortawesome/free-solid-svg-icons';
 })
 export class AccountComponent implements OnInit {
 
+
   FaFileCsv = faFileCsv;
   
-  constructor(private papa: Papa, private el: ElementRef) { }
+  constructor(private papa: Papa, private el: ElementRef, private auth: Auth) { }
 
   paycheck: number = 0;
   contributeToGoals: boolean = true;
@@ -21,6 +26,9 @@ export class AccountComponent implements OnInit {
   csvString: string = ``;
   parsedData: any[] = [];
   paycheckDate: Date = new Date();
+
+  user: any;
+  displayName: string = "";
 
   extractedData: any[] = [];
   dateOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
@@ -114,10 +122,21 @@ export class AccountComponent implements OnInit {
     }
   }
   
-
+  async getUserDetails() {
+    try {
+      const userCredential = await this.auth.currentUser;
+      if (userCredential) {
+        this.user = userCredential;
+        this.displayName = this.user.displayName;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
 
   ngOnInit(): void { 
-
+    this.getUserDetails();
   }
+
 }
