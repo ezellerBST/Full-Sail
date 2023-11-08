@@ -11,7 +11,16 @@ html {
     margin-bottom: 40px;
 }
 
+.items-centered {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 100%;
+}
 
+svg:not(:root).svg-inline--fa, svg:not(:host).svg-inline--fa {
+    height: 30px;
+}
 
 .accounts-content-card {
 
@@ -40,17 +49,37 @@ html {
     margin-right: auto;
 }
 
+.margin-auto {
+    margin-right: auto;
+    margin-left: auto;
+    width: fit-content;
+}
 
-
-
+.flex-right {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+}
 
 @media (prefers-color-scheme: dark) {
+    
+    
 
     .mat-mdc-form-field:not(.mat-form-field-no-animations) .mdc-text-field__input {
         color: white;
     }
+    
+    .mdc-checkbox .mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate):not([data-indeterminate=true])~.mdc-checkbox__background {
+        border-color: white;
+    }
 
-    .search-label {
+    .mdc-checkbox .mdc-checkbox__native-control:enabled~.mdc-checkbox__background .mdc-checkbox__checkmark {
+        border-color: white;
+      }
+
+    .dark-mode-white {
         color: white;
     }
 

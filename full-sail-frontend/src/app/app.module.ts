@@ -25,7 +25,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatIconModule } from '@angular/material/icon';
-import { NgIf } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
@@ -33,6 +32,11 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import { MatRippleModule } from '@angular/material/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
+
 
 
 @NgModule({
@@ -69,6 +73,11 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatRippleModule,
     MatTableModule,
     MatPaginatorModule,
+    MatCheckboxModule,
+    MatButtonToggleModule,
+    MatDatepickerModule,
+    MatNativeDateModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]

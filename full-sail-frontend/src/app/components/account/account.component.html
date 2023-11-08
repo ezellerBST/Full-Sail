@@ -5,17 +5,64 @@
             <h2 ng-non-bindable>Welcome {{ displayName }}</h2>
             <!--this is simply a place holder till we inplement the code-->
             <mat-form-field appearance="outline">
-                <mat-label ngClass="search-label">Search</mat-label>
-                <input matInput>
+                <mat-label ngClass="dark-mode-white">Search</mat-label>
+                <input  matInput>
             </mat-form-field>
         </div>
 
         <mat-card class="accounts-content-card paycheck-card">
-            <mat-card-content>
-                <div class="input-paycheck-div">
-                    <h2>Input Paycheck</h2>
-                    <mat-icon aria-hidden="false" aria-label="Example home icon"
-                        fontIcon="">insert_drive_file</mat-icon>
+            <mat-card-content ngClass="items-centered">
+                
+                <div class="items-centered">
+                    <h2 ngClass="margin-auto">Income</h2> 
+                
+                    <mat-button-toggle-group color="primary" ngClass="margin-auto" style="width: fit-content;" [(ngModel)]="showImportPaycheck">
+                        <mat-button-toggle color="primary" value="true">Import Paycheck</mat-button-toggle>
+                        <mat-button-toggle value="false">Import CSV</mat-button-toggle>
+                    </mat-button-toggle-group>
+                
+                    <div *ngIf="showImportPaycheck === 'true'">
+                        <form ngClass="items-centered" (ngSubmit)="inputPaycheck()">
+
+                            <div ngClass="flex-right">
+                                <mat-checkbox [(ngModel)]="contributeToGoals" name="contributeToGoals" ngClass="margin-auto">Contribute To Goals</mat-checkbox>
+
+                                <mat-form-field>
+                                    <input matInput [matDatepicker]="paycheckPicker" name="paycheckPicker" [(ngModel)]="paycheckDate">
+                                    <mat-hint>MM/DD/YYYY</mat-hint>
+                                    <mat-datepicker-toggle matIconSuffix [for]="paycheckPicker"></mat-datepicker-toggle>
+                                    <mat-datepicker #paycheckPicker></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+
+                            <div ngClass="flex-right">
+                                
+
+                                <mat-form-field appearance="outline">
+                                    <mat-label ngClass="dark-mode-white">Input Paycheck</mat-label>
+                                    <input matInput type="number" name="paycheck-input" [(ngModel)]="paycheck">
+                                </mat-form-field>
+
+                                <button mat-raised-button color="primary" type="submit">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div *ngIf="showImportPaycheck === 'false'">
+                        <form ngClass="items-centered" (submit)="inputCSV()">
+                            <mat-checkbox  [(ngModel)]="contributeToGoals" name="contributeToGoals" ngClass="dark-mode-white margin-auto">Contribute To Goals</mat-checkbox>
+
+                            <div ngClass="flex-right">      
+                                <!-- Modify your HTML template -->
+                                <input type="file" #fileInput name="CSV-input" style="display: none" (input)="onFileSelected($event); fileInput.value = ''">
+                                <button matTooltip="Import CSV file" mat-raised-button color="primary" (click)="fileInput.click()"><mat-icon style="height: 30px;" class="margin-auto"><fa-icon class="fa-xl" [icon]="FaFileCsv"></fa-icon></mat-icon></button>
+
+
+
+                            </div>
+
+                        </form>
+                    </div>
                 </div>
                 <h5>New paycheck? Add CSV to keep everything up to date</h5>
             </mat-card-content>
@@ -73,14 +120,18 @@
 
 
         <mat-card class="accounts-content-card expenses-card">
-            <mat-card-content>
-                Testing
+            <mat-card-content ngClass="items-centered">
+                <div ngClass="flex-right">
+                    <h2>Expenses</h2>
+                    <button mat-raised-button color="primary">Add Expense</button>
+                </div>
+                
             </mat-card-content>
         </mat-card>
 
         <mat-card class="accounts-content-card hidden-card">
             <mat-card-content>
-                Testing
+                
             </mat-card-content>
         </mat-card>
 
