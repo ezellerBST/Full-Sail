@@ -2,7 +2,8 @@
     <div class="card-list">
 
         <div class="header-div">
-            <h2 ng-non-bindable>Welcome {{ displayName }}</h2> <!--this is simply a place holder till we inplement the code-->
+            <h2 ng-non-bindable>Welcome {{ displayName }}</h2>
+            <!--this is simply a place holder till we inplement the code-->
             <mat-form-field appearance="outline">
                 <mat-label ngClass="dark-mode-white">Search</mat-label>
                 <input  matInput>
@@ -63,17 +64,47 @@
                         </form>
                     </div>
                 </div>
-            
+                <h5>New paycheck? Add CSV to keep everything up to date</h5>
             </mat-card-content>
         </mat-card>
 
         <mat-card class="accounts-content-card">
             <mat-card-content>
-                Testing
+                Testing transactions
+                <button mat-raised-button color="primary" (click)="addTransactions()">Add transaction</button>
+            </mat-card-content>
+            <br>
+            <mat-card-content>
+                <div class="mat-elevation-z8">
+                    <table mat-table [dataSource]="dataSource">
+
+                        <ng-container matColumnDef="date">
+                            <th mat-header-cell *matHeaderCellDef> Date </th>
+                            <td mat-cell *matCellDef="let transaction"> {{ transaction.date }} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="description">
+                            <th mat-header-cell *matHeaderCellDef> Description </th>
+                            <td mat-cell *matCellDef="let transaction"> {{ transaction.description }} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="amount">
+                            <th mat-header-cell *matHeaderCellDef> Amount </th>
+                            <td mat-cell *matCellDef="let transaction"> {{ transaction.amount }} </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+
+                    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                        aria-label="Select page of transactions">
+                    </mat-paginator>
+                </div>
+
             </mat-card-content>
         </mat-card>
 
-        
         <mat-card class="accounts-content-card">
             <mat-card-content>
                 Testing
