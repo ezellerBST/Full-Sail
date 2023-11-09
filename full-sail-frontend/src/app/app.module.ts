@@ -35,6 +35,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
+import { SigninComponent } from './components/signin/signin.component';
+import { RegisterComponent } from './components/register/register.component';
 
 
 
@@ -44,6 +46,8 @@ import {MatNativeDateModule} from '@angular/material/core';
     ProfileComponent,
     AccountComponent,
     UserDialogComponent,
+    SigninComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
