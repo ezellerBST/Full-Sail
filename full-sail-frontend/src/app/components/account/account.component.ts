@@ -1,23 +1,41 @@
 
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, OnInit, ElementRef } from '@angular/core';
 import { Transaction } from 'src/app/models/transaction';
 import { Papa } from 'ngx-papaparse';
 import { faFileCsv } from '@fortawesome/free-solid-svg-icons';
 import { Auth } from '@angular/fire/auth';
+import { Firestore, addDoc, doc, setDoc, getDoc, collection, getDocs } from '@angular/fire/firestore';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
-
+export interface TransactionTable {
+  date: string;
+  description: string;
+  amount: number;
+}
 
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.css']
 })
-export class AccountComponent implements OnInit {
+export class AccountComponent implements OnInit, AfterViewInit {
 
 
   FaFileCsv = faFileCsv;
-  
-  constructor(private papa: Papa, private el: ElementRef, private auth: Auth) { }
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+
+  constructor(private papa: Papa, private el: ElementRef, private auth: Auth, private firestore: Firestore) { }
+
+  ngOnInit(): void {
+    this.getUserDetails();
+    this.getTransactions();
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
 
   paycheck: number = 0;
   contributeToGoals: boolean = true;
@@ -29,17 +47,20 @@ export class AccountComponent implements OnInit {
 
   user: any;
   displayName: string = "";
+  dataSource = new MatTableDataSource<TransactionTable>();
+  displayedColumns: string[] = ['date', 'description', 'amount'];
+
 
   extractedData: any[] = [];
   dateOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
 
   inputPaycheck() {
-    if (this.paycheck > 0)  {
+    if (this.paycheck > 0) {
 
-    this.transactionList.push(new Transaction(this.paycheck.toString(), true, this.paycheckDate, this.contributeToGoals, "Paycheck"));
-    this.paycheck = 0;
-    console.log(this.transactionList);
-    console.log(this.paycheckDate);
+      this.transactionList.push(new Transaction(this.paycheck.toString(), true, this.paycheckDate, this.contributeToGoals, "Paycheck"));
+      this.paycheck = 0;
+      console.log(this.transactionList);
+      console.log(this.paycheckDate);
     } else {
       alert("Paycheck must be a positive number");
       this.paycheck = 0;
@@ -47,7 +68,7 @@ export class AccountComponent implements OnInit {
   }
 
   inputCSV() {
-    if (this.csvString){
+    if (this.csvString) {
       this.papa.parse(this.csvString, {
         header: true,
         skipEmptyLines: true,
@@ -90,10 +111,6 @@ export class AccountComponent implements OnInit {
       if (transaction.Amount < 0) {
         transactionContribute = null;
       }
-
-
-
-
       this.transactionList.push(new Transaction(transaction.Amount, transaction.Amount > 0 ? true : false, parsedDate, transactionContribute, transaction.Description))
     });
 
@@ -102,10 +119,6 @@ export class AccountComponent implements OnInit {
     this.csvString = ``;
     this.parsedData = [];
   }
-
-  
-  
-  
 
   onFileSelected(event: any) {
     const file = event.target.files[0];
@@ -121,7 +134,8 @@ export class AccountComponent implements OnInit {
       reader.readAsText(file);
     }
   }
-  
+
+
   async getUserDetails() {
     try {
       const userCredential = await this.auth.currentUser;
@@ -134,9 +148,51 @@ export class AccountComponent implements OnInit {
     }
   }
 
+  addTransactions() {
+    // Assume you have an array of transactions
+    const sampleTransactions = [
+      {
+        date: '2023-11-01',
+        description: 'Salary',
+        amount: 5000
+      },
+      {
+        date: '2023-11-02',
+        description: 'Groceries',
+        amount: -250
+      }
+    ];
 
-  ngOnInit(): void { 
-    this.getUserDetails();
+    // Iterating through the sample transactions and adding them to Firestore
+    sampleTransactions.forEach(async transaction => {
+      try {
+        const docRef = await addDoc(collection(this.firestore, 'transactions'), {
+          date: transaction.date,
+          description: transaction.description,
+          amount: transaction.amount
+        });
+
+        // Console.log the transaction data after the document is added
+        const docSnapshot = await getDoc(docRef);
+        if (docSnapshot.exists()) {
+          console.log('Transaction data:', docSnapshot.data());
+        }
+      } catch (error) {
+        console.error('Error: ', error);
+      }
+    });
+
+    this.getTransactions();
+  }
+
+  async getTransactions() {
+    const querySnapshot = await getDocs(collection(this.firestore, 'transactions'));
+    const data: TransactionTable[] = [];
+    querySnapshot.forEach((doc) => {
+      const docData = doc.data() as TransactionTable;
+      data.push(docData);
+    });
+    this.dataSource.data = data;
   }
 
 }
