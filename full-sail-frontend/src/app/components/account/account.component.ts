@@ -50,9 +50,10 @@ export class AccountComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource<TransactionTable>();
   displayedColumns: string[] = ['date', 'description', 'amount'];
 
-
   extractedData: any[] = [];
   dateOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
+
+
 
   inputPaycheck() {
     if (this.paycheck > 0) {
@@ -142,57 +143,70 @@ export class AccountComponent implements OnInit, AfterViewInit {
       if (userCredential) {
         this.user = userCredential;
         this.displayName = this.user.displayName;
+        return {
+          uid: this.user.uid,
+          displayName: this.displayName
+        };
       }
     } catch (error) {
       console.log(error);
     }
+    return null;
   }
 
-  addTransactions() {
-    // Assume you have an array of transactions
-    const sampleTransactions = [
-      {
-        date: '2023-11-01',
-        description: 'Salary',
-        amount: 5000
-      },
-      {
-        date: '2023-11-02',
-        description: 'Groceries',
-        amount: -250
-      }
-    ];
-
-    // Iterating through the sample transactions and adding them to Firestore
-    sampleTransactions.forEach(async transaction => {
-      try {
-        const docRef = await addDoc(collection(this.firestore, 'transactions'), {
-          date: transaction.date,
-          description: transaction.description,
-          amount: transaction.amount
-        });
-
-        // Console.log the transaction data after the document is added
-        const docSnapshot = await getDoc(docRef);
-        if (docSnapshot.exists()) {
-          console.log('Transaction data:', docSnapshot.data());
+  async addTransactions() {
+    const userDetails = await this.getUserDetails();
+    if (userDetails && userDetails.uid) {
+      const userId = userDetails.uid
+      // Assume you have an array of transactions
+      const sampleTransactions = [
+        {
+          date: '2023-11-01',
+          description: 'Salary',
+          amount: 5000
+        },
+        {
+          date: '2023-11-02',
+          description: 'Groceries',
+          amount: -250
         }
-      } catch (error) {
-        console.error('Error: ', error);
+      ];
+
+      // Iterating through the sample transactions and adding them to Firestore
+      for (const transaction of sampleTransactions) {
+        try {
+          const docRef = await addDoc(collection(this.firestore, `users/${userId}/transactions`), {
+            date: transaction.date,
+            description: transaction.description,
+            amount: transaction.amount
+          });
+
+          // Console.log the transaction data after the document is added
+          const docSnapshot = await getDoc(docRef);
+          if (docSnapshot.exists()) {
+            console.log('Transaction data:', docSnapshot.data());
+          }
+        } catch (error) {
+          console.error('Error: ', error);
+        }
       }
-    });
+    }
 
     this.getTransactions();
   }
 
   async getTransactions() {
-    const querySnapshot = await getDocs(collection(this.firestore, 'transactions'));
-    const data: TransactionTable[] = [];
-    querySnapshot.forEach((doc) => {
-      const docData = doc.data() as TransactionTable;
-      data.push(docData);
-    });
-    this.dataSource.data = data;
+    const userDetails = await this.getUserDetails();
+    if (userDetails && userDetails.uid) {
+      const userId = userDetails.uid
+      const querySnapshot = await getDocs(collection(this.firestore, `users/${userId}/transactions`));
+      const data: TransactionTable[] = [];
+      querySnapshot.forEach((doc) => {
+        const docData = doc.data() as TransactionTable;
+        data.push(docData);
+      });
+      this.dataSource.data = data;
+    }
   }
 
 }
