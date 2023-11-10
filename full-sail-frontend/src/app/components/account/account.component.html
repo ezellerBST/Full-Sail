@@ -39,9 +39,9 @@
 
                                 <mat-form-field appearance="outline">
                                     <mat-label ngClass="dark-mode-white">Input Paycheck</mat-label>
-                                    <input matInput type="number" name="paycheck-input" [(ngModel)]="paycheck">
+                                    <input matInput min="0" type="number" name="paycheck-input" [(ngModel)]="paycheck">
                                 </mat-form-field>
-
+                                
                                 <button mat-raised-button color="primary" type="submit">Submit</button>
                             </div>
                         </form>
@@ -81,14 +81,57 @@
         </mat-card>
 
 
-        <mat-card class="accounts-content-card">
+        <mat-card class="accounts-content-card goals-card">
             <mat-card-content>
-                Testing
+                <div ngClass="flex-right">
+                    <h2>Goals</h2>
+                    
+                </div>
+                <mat-divider></mat-divider>
+                <br>
+                <div ngClass="items-centered" *ngFor="let goal of goalList">
+                    <div ngClass="flex-goal">
+                        <h3>{{goal.name}}</h3>
+                        <h3>{{goal.balance}} / {{goal.total}}</h3>
+                        <h3>{{goal.amountContributed}} Per Paycheck</h3>
+                        <button mat-raised-button color="primary">Edit</button>
+                    </div>
+                    <div ngClass="alt-theme">
+                        <mat-progress-bar mode="determinate" style="height: 30px;" [value]="goal.balance / goal.total * 100" ></mat-progress-bar>
+                    </div>
+                </div>
+                
             </mat-card-content>
+            <mat-expansion-panel #createGoalPanel hideToggle>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Create Goal
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                    <div  ngClass="items-centered">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Name</mat-label>
+                            <input matInput #goalName type="text">
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>Amount Per Paycheck</mat-label>
+                            <input matInput #goalAmount min="0" type="number">
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>Goal Total</mat-label>
+                            <input matInput #goalTotal min="0" type="number">
+                        </mat-form-field>
+
+                        <button mat-raised-button color="primary" (click)="createGoal(goalName.value, goalAmount.value, goalTotal.value)" (click)="createGoalPanel.close()">Create Goal</button>
+                    </div>
+            </mat-expansion-panel>
         </mat-card>
+        
 
 
-        <mat-card class="accounts-content-card expenses-card">
+        <mat-card class="accounts-content-card transaction-card">
             <mat-card-content ngClass="items-centered">
                 <div ngClass="flex-right">
                     <h2>Expenses</h2>
