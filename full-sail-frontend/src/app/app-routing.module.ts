@@ -6,6 +6,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { AuthGuard, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
 import { SigninComponent } from './components/signin/signin.component';
 import { RegisterComponent } from './components/register/register.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 
@@ -16,7 +17,8 @@ const routes: Routes = [
   { path: "profile", component: ProfileComponent, canActivate: [AuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin }  },
   { path: "signin", component: SigninComponent },
   { path: "register", component: RegisterComponent },
-  { path: "**", redirectTo: "home", pathMatch: "full" }
+  { path: "**", component: PageNotFoundComponent }
+  
 ];
 
 @NgModule({

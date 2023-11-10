@@ -81,4 +81,8 @@ export class AppComponent implements OnInit {
   getRegisterPage(){
     this.router.navigate(['register']);
   }
+
+  getAccountsPage() {
+    this.router.navigate(['account']);
+  }
 }
