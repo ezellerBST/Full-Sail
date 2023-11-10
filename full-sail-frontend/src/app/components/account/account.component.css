@@ -63,6 +63,14 @@ svg:not(:root).svg-inline--fa, svg:not(:host).svg-inline--fa {
     width: 100%;
 }
 
+.flex-goal {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
 @media (prefers-color-scheme: dark) {
     
     
