@@ -59,33 +59,7 @@ export class AppComponent implements OnInit {
   //   this.userService.createUserWithEmailAndPassword(email, password, displayName, photoURL);
   // }
 
-  submitForm() {
-    this.userService.createUser(this.email, this.password, this.displayName, this.photoURL)
-      .then((user) => {
-        this.router.navigate(['account']);
-        console.log(user);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
-  signInForm() {
-    this.userService.signInWithEmailAndPassword(this.email, this.password)
-      .then((user) => {
-        if (!user) {
-          return null;
-        } else {
-          this.router.navigate(['account']);
-          console.log(user);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        throw error;
-      });
-  }
-
+ 
   signOut() {
     return signOut(this.auth).then(() => {
       console.log('User signed out');
@@ -98,5 +72,17 @@ export class AppComponent implements OnInit {
 
   getProfile(){
     this.router.navigate(['profile']);
+  }
+
+  getSignInPage(){
+    this.router.navigate(['signin']);
+  }
+
+  getRegisterPage(){
+    this.router.navigate(['register']);
+  }
+
+  getAccountsPage() {
+    this.router.navigate(['account']);
   }
 }

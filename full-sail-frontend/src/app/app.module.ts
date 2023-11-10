@@ -36,6 +36,10 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
+import {MatExpansionModule} from '@angular/material/expansion';
+import { SigninComponent } from './components/signin/signin.component';
+import { RegisterComponent } from './components/register/register.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 
 
@@ -45,6 +49,9 @@ import {MatNativeDateModule} from '@angular/material/core';
     ProfileComponent,
     AccountComponent,
     UserDialogComponent,
+    SigninComponent,
+    RegisterComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -76,7 +83,8 @@ import {MatNativeDateModule} from '@angular/material/core';
     MatCheckboxModule,
     MatButtonToggleModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatExpansionModule
 
   ],
   providers: [],

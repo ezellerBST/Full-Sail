@@ -2,59 +2,22 @@
     <nav>
         <mat-toolbar class="header" >
         <!-- <div> -->
-            <img alt="Icon">
+            <img alt="Full Sail Icon" (click)="getAccountsPage()">
             <h1><span>Full Sail</span></h1>
             <mat-icon color="accent"><fa-icon [icon]="faAnchor"></fa-icon></mat-icon>
             <p>Manage your money and take control!</p>
             <span><mat-icon><fa-icon
                         [icon]="faSun"></fa-icon></mat-icon><mat-slide-toggle></mat-slide-toggle><mat-icon><fa-icon
                         [icon]="faMoon"></fa-icon></mat-icon></span>
-            <a><mat-icon><fa-icon [icon]="faHouseUser"></fa-icon></mat-icon></a>
-            <button mat-raised-button color="primary" (click)="openSignInDialog()" *ngIf="!isSignedIn">Sign In</button>
-            <!-- <button mat-raised-button color="warn" (click)="openSignUpDialog()">Register</button> -->
+            <button mat-raised-button color="primary" (click)="getSignInPage()" *ngIf="!isSignedIn">Sign In</button>
+            <button mat-raised-button color="primary" (click)="getRegisterPage()" *ngIf="!isSignedIn">Register</button>
             <button mat-raised-button color="primary" (click)="getProfile()" *ngIf="isSignedIn">Profile</button>
+            <button mat-raised-button color="primary" (click)="getAccountsPage()" *ngIf="isSignedIn">Accounts</button>
             <button mat-raised-button color="primary" (click)="signOut()" *ngIf="isSignedIn">Logout</button>
         </mat-toolbar>
     </nav>
 </header>
-<br>
-<form (ngSubmit)="submitForm()" #signupForm="ngForm">
-    <div>
-        <label>Email</label>
-        <input type="email" name="email" [(ngModel)]="email" required>
-    </div>
-    <div>
-        <label>Password</label>
-        <input type="password" name="password" [(ngModel)]="password" required>
-    </div>
-    <div>
-        <label>Display Name</label>
-        <input type="text" name="displayName" [(ngModel)]="displayName" required>
-    </div>
-    <div>
-        <label>Photo URL</label>
-        <input type="text" name="photoURL" [(ngModel)]="photoURL" required>
-    </div>
-    <div>
-        <label>Phone Number</label>
-        <input type="text" name="phone" [(ngModel)]="phoneNum" required>
-    </div>
-    <button type="submit" [disabled]="!signupForm.form.valid">Submit</button>
-</form>
-<form (ngSubmit)="signInForm()" #signinForm="ngForm">
-    <div>
-        <label>Email</label>
-        <input type="email" name="email" [(ngModel)]="email" required>
-    </div>
-    <div>
-        <label>Password</label>
-        <input type="password" name="password" [(ngModel)]="password" required>
-    </div>
-    <button type="submit" [disabled]="!signinForm.form.valid">Submit</button>
-</form>
-
 <router-outlet></router-outlet>
-
 <footer>
     <div class="footer-div">
         <img src="" alt="Icon">

@@ -49,6 +49,15 @@ export class ProfileComponent implements OnInit {
       console.log(error);
     }
   }
+
+
+
+
+
+
+
+
+
 }
 
   // getErrorMessage() {
