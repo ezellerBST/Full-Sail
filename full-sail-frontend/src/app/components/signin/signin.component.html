@@ -1,0 +1,14 @@
+<div>
+    <form (ngSubmit)="signInForm()" #signinForm="ngForm">
+        <div>
+            <label>Email</label>
+            <input type="email" name="email" [(ngModel)]="email" required>
+        </div>
+        <div>
+            <label>Password</label>
+            <input type="password" name="password" [(ngModel)]="password" required>
+        </div>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!signinForm.form.valid">Sign In</button>
+    </form>
+</div>
+    

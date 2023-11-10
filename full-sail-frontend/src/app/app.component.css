@@ -7,8 +7,16 @@ header {
     border-bottom: solid black 1px;
 }
 
+router-outlet {
+    min-height: 100%;
+    
+    
+}
 
 footer {
+    margin-top: auto;
+    bottom: 0px;
+    
     background-color: lightgrey;
     width: 100%;
 }
