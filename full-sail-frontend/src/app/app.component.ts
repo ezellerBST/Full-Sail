@@ -3,7 +3,9 @@ import { faSun, faMoon } from '@fortawesome/free-regular-svg-icons'
 import { faHouseUser, faAnchor } from '@fortawesome/free-solid-svg-icons'
 import { faFacebook, faXTwitter, faTiktok, faInstagram, faGithub, } from '@fortawesome/free-brands-svg-icons';
 import { MatDialog } from '@angular/material/dialog';
-import { UserDialogComponent } from './components/user-dialog/user-dialog.component';
+// import { UserDialogComponent } from './components/user-dialog/user-dialog.component';
+import { SigninComponent } from './components/signin/signin.component';
+import { RegisterComponent } from './components/register/register.component';
 import { UserService } from './services/user.service';
 import { Router } from '@angular/router';
 import { Auth, signOut } from '@angular/fire/auth';
@@ -39,6 +41,7 @@ export class AppComponent implements OnInit {
     private auth: Auth
   ) { }
 
+  //Checks to see if the user is signed in when they visit the website
   ngOnInit(): void {
     this.auth.onAuthStateChanged(user => {
       // Update isSignedIn based on the user's authentication state
@@ -46,20 +49,17 @@ export class AppComponent implements OnInit {
     });
   }
 
+  //Opens the dialog popup to sign in to the app for the registered user
   openSignInDialog() {
-    this.dialog.open(UserDialogComponent, {
-      data: { isSignIn: true }
-    });
+    this.userService.openSignInDialog();
   }
 
-  // openSignUpDialog(email: string, password: string, displayName: string, photoURL: string) {
-  //   this.dialog.open(UserDialogComponent, {
-  //     data: { isSignIn: false }
-  //   });
-  //   this.userService.createUserWithEmailAndPassword(email, password, displayName, photoURL);
-  // }
-
+  //Opens up the register dialog to allow for a new user to create an account
+  openRegisterDialog() {
+    this.userService.openRegisterDialog();
+  }
  
+  //Signs out the logged in user from their session, revoking the token
   signOut() {
     return signOut(this.auth).then(() => {
       console.log('User signed out');
@@ -70,18 +70,12 @@ export class AppComponent implements OnInit {
     });
   }
 
+  //If the user is already signed in, allows them to go to their profile page
   getProfile(){
     this.router.navigate(['profile']);
   }
 
-  getSignInPage(){
-    this.router.navigate(['signin']);
-  }
-
-  getRegisterPage(){
-    this.router.navigate(['register']);
-  }
-
+  //Allows a logged in user to go to their accounts page showing their financial info
   getAccountsPage() {
     this.router.navigate(['account']);
   }

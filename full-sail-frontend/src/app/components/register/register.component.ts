@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 
@@ -20,12 +20,17 @@ export class RegisterComponent {
 
 
 
-  constructor( private dialog: MatDialog, private userService: UserService, public router: Router, private auth: Auth) {}
+  constructor(
+    private userService: UserService,
+    public router: Router,
+    private auth: Auth,
+    public dialogRef: MatDialogRef<RegisterComponent>,
+  ) { }
 
   ngOnInit(): void {
     this.auth.onAuthStateChanged(user => {
       // Update isSignedIn based on the user's authentication state
-      this.isSignedIn = !!user; 
+      this.isSignedIn = !!user;
     });
   }
 
@@ -34,10 +39,11 @@ export class RegisterComponent {
       .then((user) => {
         this.router.navigate(['account']);
         console.log(user);
+        this.dialogRef.close();
       })
       .catch((error) => {
-        console.log(error);
-      });
+  console.log(error);
+});
   }
 
 }
