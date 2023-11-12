@@ -4,6 +4,8 @@ import { Firestore, addDoc, doc, setDoc, getDoc, collection } from '@angular/fir
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { Auth, GoogleAuthProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendEmailVerification, UserCredential, updateProfile, updateEmail } from '@angular/fire/auth';
+import { SigninComponent } from '../components/signin/signin.component';
+import { RegisterComponent } from '../components/register/register.component';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +14,7 @@ export class UserService {
 
   constructor(public firestore: Firestore, public auth: Auth, public router: Router, public dialog: MatDialog) { }
 
+  //Function that allows a new user to be added to the Firestore
   createUser(email, password, displayName, photoURL) {
     return createUserWithEmailAndPassword(this.auth, email, password)
       .then((userCredential) => {
@@ -32,6 +35,7 @@ export class UserService {
       });
   }
 
+  //Allows user to sign in with password and email
   signInWithEmailAndPassword(email, password) {
     return signInWithEmailAndPassword(this.auth, email, password)
       .then((userCredential) => {
@@ -44,6 +48,7 @@ export class UserService {
       });
   }
 
+  //Call to get the current user's document that stores all their info
   async getUserProfileDocument(userId) {
     const profileCollection = collection(this.firestore, 'profile');
     const userDoc = doc(profileCollection, userId);
@@ -62,6 +67,8 @@ export class UserService {
     }
   }
 
+  //Allows the user to update his profile document in Firestore so it is 
+  //reflected in thier profile page and collection
   updateUserProfile(displayName, photoURL, email, address, phoneNum) {
     this.auth.onAuthStateChanged((user) => {
       if (user) {
@@ -106,6 +113,23 @@ export class UserService {
     });
   }
 
+  //Function that calls the SignInComponent to sign in the user as a popup window
+  openSignInDialog() {
+    this.dialog.open(SigninComponent, {
+      width: '600px',
+      height: '300px',
+    });
+  }
+
+  //Function that calls the RegisterComponent to register a new user as a popup window
+  openRegisterDialog() {
+    this.dialog.open(RegisterComponent, {
+      width: '600px',
+      height: '300px',
+    });
+  }
+
+  
   
 }
 

@@ -1,14 +1,24 @@
-<div>
-    <form (ngSubmit)="signInForm()" #signinForm="ngForm">
-        <div>
-            <label>Email</label>
-            <input type="email" name="email" [(ngModel)]="email" required>
-        </div>
-        <div>
-            <label>Password</label>
-            <input type="password" name="password" [(ngModel)]="password" required>
-        </div>
-        <button mat-raised-button color="primary" type="submit" [disabled]="!signinForm.form.valid">Sign In</button>
-    </form>
+<div id="container">
+    <h1 mat-dialog-title>Sign In</h1>
+    <mat-dialog-content>
+        <form (ngSubmit)="signInForm()" #signinForm="ngForm">
+            <div mat-dialog-content>
+                <div class="email">
+                    <label class="label1" for="email">Email</label>
+                    <input id="email" type="email" name="email" [(ngModel)]="email" required>
+                </div>
+                <div class="password">
+                    <label class="label2" for="password">Password</label>
+                    <input id="password" type="password" name="password" [(ngModel)]="password" required>
+                </div>
+                <div class="submitBtn" mat-dialog-actions>
+                    <button  mat-raised-button color="primary" type="submit" [disabled]="!signinForm.form.valid">Sign In</button>
+
+                </div>
+    
+            </div>    
+            
+        </form>
+    </mat-dialog-content>
 </div>
     

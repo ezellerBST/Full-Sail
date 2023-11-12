@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 
@@ -16,7 +16,12 @@ export class SigninComponent {
 
 
 
-  constructor( private dialog: MatDialog, private userService: UserService, public router: Router, private auth: Auth) {}
+  constructor( private dialog: MatDialog,
+     private userService: UserService,
+      public router: Router,
+       private auth: Auth,
+       public dialogRef: MatDialogRef<SigninComponent>,
+       ) {}
 
   ngOnInit(): void {
     this.auth.onAuthStateChanged(user => {
@@ -32,8 +37,10 @@ export class SigninComponent {
           return null;
         } else {
           this.router.navigate(['account']);
+
           console.log(user);
         }
+        this.dialogRef.close();
       })
       .catch((error) => {
         console.log(error);
