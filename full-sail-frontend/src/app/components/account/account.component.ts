@@ -75,6 +75,7 @@ export class AccountComponent implements OnInit, AfterViewInit {
   }
 
   inputTransactionFromParameter(transaction: Transaction) {
+    this.addTransactions(transaction);
     this.transactionList.push(transaction);
     this.addTransactionToGoals(transaction);
     this.paycheck = 0;
@@ -263,6 +264,7 @@ export class AccountComponent implements OnInit, AfterViewInit {
       this.goalList = [];
       querySnapshot.forEach((doc) => {
         const docData = doc.data();
+        docData.dateCreated = new Date(docData.dateCreated);
         this.goalList.push(docData);
       });
       
@@ -282,6 +284,7 @@ export class AccountComponent implements OnInit, AfterViewInit {
   createGoal(name:string, amountPerPaycheck:string, total:string) {
     this.addGoal(new Goal(name, parseInt(total), parseInt(amountPerPaycheck), 0, new Date()));
     console.log("Goal List: ", this.goalList);
+    console.log("create Goal: ", new Date());
   }
 
   async addGoal(goal: Goal) {
@@ -338,11 +341,26 @@ export class AccountComponent implements OnInit, AfterViewInit {
     }
 
     this.goalList.forEach(goal => {
+
+      // const dateParts = goal.dateCreated.toDateString().split('/');
+
+      // const year = parseInt(dateParts[2], 10);
+      // const month = parseInt(dateParts[0], 10) - 1;
+      // const day = parseInt(dateParts[1], 10);
+
+      // const parsedDate = new Date(year, month, day);
+
       const goalDate = goal.dateCreated;
-      // goalDate.setHours(0, 0, 0, 0);
+      
+
+      
+      
 
       const transactionDate = transaction.date;
-      // transactionDate.setHours(0, 0, 0, 0);
+      console.log("Tran Date");
+      console.log(transaction.date)
+
+      
 
       if (goalDate <= transactionDate) {
         goal.balance += goal.amountContributed;
