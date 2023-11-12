@@ -32,6 +32,7 @@ export class AccountComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.getUserDetails();
     this.getTransactions();
+    this.getGoals();
   }
 
   ngAfterViewInit() {
@@ -44,9 +45,7 @@ export class AccountComponent implements OnInit, AfterViewInit {
   paycheckDate: Date = new Date();
 
   transactionList: Transaction[] = [];
-  goalList: Goal[] = [
-    new Goal("Car", 5000, 250, 2550, new Date(2023, 8, 11))
-  ];
+  goalList: Goal[] = [];
 
   csvString: string = ``;
   parsedData: any[] = [];
@@ -63,7 +62,26 @@ export class AccountComponent implements OnInit, AfterViewInit {
 
   
 
+  inputTransaction() {
+    
+      if (this.paycheckDate.setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0)) {
+        this.paycheckDate = new Date();
+      }
 
+      const newTransaction = new Transaction(this.paycheck.toString(),  this.paycheckDate, this.contributeToGoals, "Transaction");
+
+    this.inputTransactionFromParameter(newTransaction);
+
+  }
+
+  inputTransactionFromParameter(transaction: Transaction) {
+    this.transactionList.push(transaction);
+    this.addTransactionToGoals(transaction);
+    this.paycheck = 0;
+    console.log("Transaction List: ", this.transactionList);
+  }
+
+  
 
   inputPaycheck() {
     if (this.paycheck > 0)  {
@@ -73,12 +91,12 @@ export class AccountComponent implements OnInit, AfterViewInit {
         this.paycheckDate = new Date();
       }
 
-      const newTransaction = new Transaction(this.paycheck.toString(), true, this.paycheckDate, this.contributeToGoals, "Paycheck");
+      const newTransaction = new Transaction(this.paycheck.toString(),  this.paycheckDate, this.contributeToGoals, "Paycheck");
 
-    this.transactionList.push(newTransaction);
-    this.addTransactionToGoals(newTransaction);
+    this.inputTransactionFromParameter(newTransaction);
+
     this.paycheck = 0;
-    console.log("Transaction List: ", this.transactionList);
+    
 
     } else {
       alert("Paycheck must be a positive number");
@@ -132,14 +150,12 @@ export class AccountComponent implements OnInit, AfterViewInit {
       }
 
 
-      const newTransaction = new Transaction(transaction.Amount, transaction.Amount > 0 ? true : false, parsedDate, transactionContribute, transaction.Description);
+      const newTransaction = new Transaction(transaction.Amount,  parsedDate, transactionContribute, transaction.Description);
 
-      this.transactionList.push(newTransaction);
-      this.addTransactionToGoals(newTransaction);
+      this.inputTransactionFromParameter(newTransaction);
 
     });
 
-    console.log("Transaction List: ", this.transactionList);
     this.extractedData = [];
     this.csvString = ``;
     this.parsedData = [];
@@ -178,29 +194,18 @@ export class AccountComponent implements OnInit, AfterViewInit {
     return null;
   }
 
-  async addTransactions() {
+  async addTransactions(transaction: Transaction) {
     const userDetails = await this.getUserDetails();
     if (userDetails && userDetails.uid) {
       const userId = userDetails.uid
-      // Assume you have an array of transactions
-      const sampleTransactions = [
-        {
-          date: '2023-11-01',
-          description: 'Salary',
-          amount: 5000
-        },
-        {
-          date: '2023-11-02',
-          description: 'Groceries',
-          amount: -250
-        }
-      ];
+
+      
 
       // Iterating through the sample transactions and adding them to Firestore
-      for (const transaction of sampleTransactions) {
+
         try {
           const docRef = await addDoc(collection(this.firestore, `users/${userId}/transactions`), {
-            date: transaction.date,
+            date: transaction.date.toLocaleDateString(),
             description: transaction.description,
             amount: transaction.amount
           });
@@ -213,10 +218,24 @@ export class AccountComponent implements OnInit, AfterViewInit {
         } catch (error) {
           console.error('Error: ', error);
         }
-      }
+      
     }
 
     this.getTransactions();
+  }
+
+  sampleTransactions() {
+    
+   const transactions = [
+      new Transaction("5000", new Date(2023, 10, 1), null, "Salary"),
+      new Transaction("-250", new Date(2023, 10, 2), null, "Groceries"),
+      new Transaction("500", new Date(), true, "Paycheck"),
+      new Transaction("-44.99", new Date(), null, "Xbox Controller")
+    ];
+
+    transactions.forEach(transaction => {
+      this.inputTransactionFromParameter(transaction);
+    });
   }
 
   async getTransactions() {
@@ -226,10 +245,27 @@ export class AccountComponent implements OnInit, AfterViewInit {
       const querySnapshot = await getDocs(collection(this.firestore, `users/${userId}/transactions`));
       const data: TransactionTable[] = [];
       querySnapshot.forEach((doc) => {
+
         const docData = doc.data() as TransactionTable;
+
+        docData.date = docData.date
         data.push(docData);
       });
       this.dataSource.data = data;
+    }
+  }
+
+  async getGoals() {
+    const userDetails = await this.getUserDetails();
+    if (userDetails && userDetails.uid) {
+      const userId = userDetails.uid
+      const querySnapshot = await getDocs(collection(this.firestore, `users/${userId}/goals`));
+      this.goalList = [];
+      querySnapshot.forEach((doc) => {
+        const docData = doc.data();
+        this.goalList.push(docData);
+      });
+      
     }
   }
 
@@ -244,11 +280,43 @@ export class AccountComponent implements OnInit, AfterViewInit {
   }
 
   createGoal(name:string, amountPerPaycheck:string, total:string) {
-    this.goalList.push(new Goal(name, parseInt(total), parseInt(amountPerPaycheck), 0, new Date()));
+    this.addGoal(new Goal(name, parseInt(total), parseInt(amountPerPaycheck), 0, new Date()));
     console.log("Goal List: ", this.goalList);
   }
 
-  testGoals = []
+  async addGoal(goal: Goal) {
+    const userDetails = await this.getUserDetails();
+    if (userDetails && userDetails.uid) {
+      const userId = userDetails.uid
+
+      
+
+      // Iterating through the sample transactions and adding them to Firestore
+
+        try {
+          const docRef = await addDoc(collection(this.firestore, `users/${userId}/goals`), {
+            name: goal.name,
+            total: goal.total,
+            amountContributed: goal.amountContributed,
+            balance: goal.balance,
+            dateCreated: goal.dateCreated.toLocaleDateString()
+          });
+
+          // Console.log the transaction data after the document is added
+          const docSnapshot = await getDoc(docRef);
+          if (docSnapshot.exists()) {
+            console.log('Goal data:', docSnapshot.data());
+          }
+        } catch (error) {
+          console.error('Error: ', error);
+        }
+      
+    }
+
+    this.getGoals();
+  }
+
+
 
   addTransactionToGoals(transaction : Transaction) {
 
