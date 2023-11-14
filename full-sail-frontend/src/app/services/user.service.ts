@@ -12,7 +12,11 @@ import { RegisterComponent } from '../components/register/register.component';
 })
 export class UserService {
 
-  constructor(public firestore: Firestore, public auth: Auth, public router: Router, public dialog: MatDialog) { }
+  constructor(public firestore: Firestore, 
+    private auth: Auth, 
+    public router: Router, 
+    public dialog: MatDialog
+    ) { }
 
   //Function that allows a new user to be added to the Firestore
   createUser(email, password, displayName, photoURL) {
