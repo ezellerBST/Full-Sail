@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-// import { User } from '../models/user';
-import { Firestore, addDoc, doc, setDoc, getDoc, collection } from '@angular/fire/firestore';
+import { Firestore, doc, setDoc, getDoc, collection } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { Auth, GoogleAuthProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendEmailVerification, UserCredential, updateProfile, updateEmail } from '@angular/fire/auth';
+import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, updateEmail } from '@angular/fire/auth';
 import { SigninComponent } from '../components/signin/signin.component';
 import { RegisterComponent } from '../components/register/register.component';
+
 
 @Injectable({
   providedIn: 'root',
