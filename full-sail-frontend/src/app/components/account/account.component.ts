@@ -27,7 +27,10 @@ export class AccountComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
 
-  constructor(private papa: Papa, private el: ElementRef, private auth: Auth, private firestore: Firestore) { }
+  constructor(private papa: Papa, 
+    private el: ElementRef, 
+    private auth: Auth, 
+    private firestore: Firestore) { }
 
   ngOnInit(): void {
     this.getUserDetails();
