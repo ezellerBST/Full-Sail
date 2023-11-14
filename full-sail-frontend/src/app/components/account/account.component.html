@@ -122,7 +122,7 @@
                 <br>
                 <div ngClass="items-centered" *ngFor="let goal of goalList">
                     <div ngClass="flex-goal">
-                        <h3>{{goal.name}}</h3>
+                        <h3>{{goal.dateCreated.toLocaleDateString()}} - {{goal.name}}</h3>
                         <h3>{{goal.balance}} / {{goal.total}}</h3>
                         <h3>{{goal.amountContributed}} Per Paycheck</h3>
                         <button mat-raised-button color="primary">Edit</button>
