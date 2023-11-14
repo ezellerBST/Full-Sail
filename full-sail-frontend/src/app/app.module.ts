@@ -39,8 +39,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { SigninComponent } from './components/signin/signin.component';
 import { RegisterComponent } from './components/register/register.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
-import { TransactionDialogComponent } from './components/transaction-dialog/transaction-dialog.component';
-
+import { AddTransactionComponent } from './components/add-transaction/add-transaction.component';
 
 
 @NgModule({
@@ -51,7 +50,7 @@ import { TransactionDialogComponent } from './components/transaction-dialog/tran
     SigninComponent,
     RegisterComponent,
     PageNotFoundComponent,
-    TransactionDialogComponent,
+    AddTransactionComponent,
   ],
   imports: [
     BrowserModule,

@@ -12,11 +12,12 @@ import { RegisterComponent } from '../components/register/register.component';
 })
 export class UserService {
 
-  constructor(public firestore: Firestore, 
-    private auth: Auth, 
-    public router: Router, 
+  constructor(
+    public firestore: Firestore,
+    private auth: Auth,
+    public router: Router,
     public dialog: MatDialog
-    ) { }
+  ) { }
 
   //Function that allows a new user to be added to the Firestore
   createUser(email, password, displayName, photoURL) {
@@ -133,8 +134,8 @@ export class UserService {
     });
   }
 
-  
-  
+
+
 }
 
 
