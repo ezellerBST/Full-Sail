@@ -71,7 +71,7 @@
         <mat-card class="accounts-content-card">
             <mat-card-content>
                 Testing transactions
-                <button mat-raised-button color="primary" (click)="addTransactions()">Add transaction</button>
+                <button mat-raised-button color="primary" (click)="sampleTransactions()">Add transaction</button>
             </mat-card-content>
             <br>
             <mat-card-content>
@@ -122,7 +122,7 @@
                 <br>
                 <div ngClass="items-centered" *ngFor="let goal of goalList">
                     <div ngClass="flex-goal">
-                        <h3>{{goal.name}}</h3>
+                        <h3>{{goal.dateCreated.toLocaleDateString()}} - {{goal.name}}</h3>
                         <h3>{{goal.balance}} / {{goal.total}}</h3>
                         <h3>{{goal.amountContributed}} Per Paycheck</h3>
                         <button mat-raised-button color="primary">Edit</button>

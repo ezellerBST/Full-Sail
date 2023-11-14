@@ -5,9 +5,13 @@ export class Transaction {
     contributeToGoals?: boolean;
     description?: string;
 
-    constructor(amount?: string, income?: boolean, date?: Date, contributeToGoals?: boolean, description?: string) {
+    constructor(amount?: string, date?: Date, contributeToGoals?: boolean, description?: string) {
         this.amount = amount;
-        this.income = income;
+        if (parseInt(this.amount) > 0) {
+            this.income = true;
+        } else {
+            this.income = false;
+        }
         this.date = date;
         this.contributeToGoals = contributeToGoals;
         this.description = description;
