@@ -8,6 +8,7 @@ import { Auth } from '@angular/fire/auth';
 import { Firestore, addDoc, doc, setDoc, getDoc, collection, getDocs } from '@angular/fire/firestore';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { FinanceService } from 'src/app/services/finance.service';
 
 export interface TransactionTable {
   date: string;
@@ -30,9 +31,15 @@ export class AccountComponent implements OnInit, AfterViewInit {
   constructor(private papa: Papa, 
     private el: ElementRef, 
     private auth: Auth, 
-    private firestore: Firestore) { }
+    private firestore: Firestore,
+    private financeService: FinanceService, 
+    ) { 
+
+    }
 
   ngOnInit(): void {
+    
+
     this.getUserDetails();
     this.getTransactions();
     this.getGoals();
@@ -41,8 +48,9 @@ export class AccountComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
+  _financeService = this.financeService
 
-  paycheck: number = 0;
+  paycheckAmount: number = 0;
   contributeToGoals: boolean = true;
   showImportPaycheck: string = "true";
   paycheckDate: Date = new Date();
@@ -63,122 +71,132 @@ export class AccountComponent implements OnInit, AfterViewInit {
 
   createGoalExpanded: boolean = false;
 
+
   
 
-  inputTransaction() {
+  // inputTransaction() {
     
-      if (this.paycheckDate.setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0)) {
-        this.paycheckDate = new Date();
-      }
+  //     if (this.paycheckDate.setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0)) {
+  //       this.paycheckDate = new Date();
+  //     }
 
-      const newTransaction = new Transaction(this.paycheck.toString(),  this.paycheckDate, this.contributeToGoals, "Transaction");
+  //     const newTransaction = new Transaction(this.paycheck.toString(),  this.paycheckDate, this.contributeToGoals, "Transaction");
 
-    this.inputTransactionFromParameter(newTransaction);
+  //   this.inputTransactionFromParameter(newTransaction);
 
-  }
+  // }
 
   inputTransactionFromParameter(transaction: Transaction) {
-    this.addTransactions(transaction);
-    this.transactionList.push(transaction);
-    this.addTransactionToGoals(transaction);
-    this.paycheck = 0;
-    console.log("Transaction List: ", this.transactionList);
+
+    this._financeService.inputTransactionFromParameter(transaction);
+
+    // this.addTransactions(transaction);
+    // this.transactionList.push(transaction);
+    // this.addTransactionToGoals(transaction);
+    this.paycheckAmount = 0;
+    // console.log("Transaction List: ", this.transactionList);
+    
+  
   }
 
   
 
-  inputPaycheck() {
-    if (this.paycheck > 0)  {
+  // inputPaycheck() {
+  //   if (this.paycheck > 0)  {
       
 
-      if (this.paycheckDate.setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0)) {
-        this.paycheckDate = new Date();
-      }
+  //     if (this.paycheckDate.setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0)) {
+  //       this.paycheckDate = new Date();
+  //     }
 
-      const newTransaction = new Transaction(this.paycheck.toString(),  this.paycheckDate, this.contributeToGoals, "Paycheck");
+  //     const newTransaction = new Transaction(this.paycheck.toString(),  this.paycheckDate, this.contributeToGoals, "Paycheck");
 
-    this.inputTransactionFromParameter(newTransaction);
+  //   this.inputTransactionFromParameter(newTransaction);
 
-    this.paycheck = 0;
+  //   this.paycheck = 0;
     
 
-    } else {
-      alert("Paycheck must be a positive number");
-      this.paycheck = 0;
-    }
-  }
+  //   } else {
+  //     alert("Paycheck must be a positive number");
+  //     this.paycheck = 0;
+  //   }
+  // }
 
-  inputCSV() {
-    if (this.csvString) {
-      this.papa.parse(this.csvString, {
-        header: true,
-        skipEmptyLines: true,
-        quoteChar: '"',
-        complete: (result) => {
-          this.parsedData = result.data;
-          this.extractedData = this.parsedData.map(row => ({
-            "Date": row["Effective Date"],
-            "Amount": row["Amount"],
-            "Description": row["Description"]
-          }));
-          console.log('Extracted Data: ', this.extractedData);
+  // inputPaycheck() {
+  //   this.financeService.inputPaycheck(this.paycheckAmount, this.paycheckDate, this.contributeToGoals);
+  // }
 
-          this.csvToTransactionList();
-        },
-        error: (error) => {
-          console.error(error.message);
-          this.extractedData = [];
-          this.csvString = ``;
-          this.parsedData = [];
-        }
-      });
-    }
-  }
+  // inputCSV() {
+  //   if (this.csvString) {
+  //     this.papa.parse(this.csvString, {
+  //       header: true,
+  //       skipEmptyLines: true,
+  //       quoteChar: '"',
+  //       complete: (result) => {
+  //         this.parsedData = result.data;
+  //         this.extractedData = this.parsedData.map(row => ({
+  //           "Date": row["Effective Date"],
+  //           "Amount": row["Amount"],
+  //           "Description": row["Description"]
+  //         }));
+  //         console.log('Extracted Data: ', this.extractedData);
 
-  csvToTransactionList() {
+  //         this.csvToTransactionList();
+  //       },
+  //       error: (error) => {
+  //         console.error(error.message);
+  //         this.extractedData = [];
+  //         this.csvString = ``;
+  //         this.parsedData = [];
+  //       }
+  //     });
+  //   }
+  // }
 
-    this.extractedData.forEach(transaction => {
+  // csvToTransactionList() {
 
-      const dateParts = transaction.Date.split('/');
+  //   this.extractedData.forEach(transaction => {
 
-      const year = parseInt(dateParts[2], 10);
-      const month = parseInt(dateParts[0], 10) - 1;
-      const day = parseInt(dateParts[1], 10);
+  //     const dateParts = transaction.Date.split('/');
 
-      const parsedDate = new Date(year, month, day);
+  //     const year = parseInt(dateParts[2], 10);
+  //     const month = parseInt(dateParts[0], 10) - 1;
+  //     const day = parseInt(dateParts[1], 10);
 
-      let transactionContribute = this.contributeToGoals;
+  //     const parsedDate = new Date(year, month, day);
 
-      if (transaction.Amount <= 0) {
-        transactionContribute = null;
-      }
+  //     let transactionContribute = this.contributeToGoals;
+
+  //     if (transaction.Amount <= 0) {
+  //       transactionContribute = null;
+  //     }
 
 
-      const newTransaction = new Transaction(transaction.Amount,  parsedDate, transactionContribute, transaction.Description);
+  //     const newTransaction = new Transaction(transaction.Amount,  parsedDate, transactionContribute, transaction.Description);
 
-      this.inputTransactionFromParameter(newTransaction);
+  //     this.inputTransactionFromParameter(newTransaction);
 
-    });
+  //   });
 
-    this.extractedData = [];
-    this.csvString = ``;
-    this.parsedData = [];
-  }
+  //   this.extractedData = [];
+  //   this.csvString = ``;
+  //   this.parsedData = [];
+  // }
 
-  onFileSelected(event: any) {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
+  // onFileSelected(event: any) {
+  //   const file = event.target.files[0];
+  //   if (file) {
+  //     const reader = new FileReader();
 
-      reader.onload = (e) => {
-        const content = reader.result as string;
-        this.csvString = content;
-        this.inputCSV();
-      };
+  //     reader.onload = (e) => {
+  //       const content = reader.result as string;
+  //       this.csvString = content;
+  //       this.inputCSV();
+  //     };
 
-      reader.readAsText(file);
-    }
-  }
+  //     reader.readAsText(file);
+  //   }
+  // }
 
 
   async getUserDetails() {
@@ -198,182 +216,198 @@ export class AccountComponent implements OnInit, AfterViewInit {
     return null;
   }
 
-  async addTransactions(transaction: Transaction) {
-    const userDetails = await this.getUserDetails();
-    if (userDetails && userDetails.uid) {
-      const userId = userDetails.uid
+
+
+  // async addTransactions(transaction: Transaction) {
+  //   const userDetails = await this.getUserDetails();
+  //   if (userDetails && userDetails.uid) {
+  //     const userId = userDetails.uid
 
       
 
-      // Iterating through the sample transactions and adding them to Firestore
+  //     // Iterating through the sample transactions and adding them to Firestore
 
-        try {
-          const docRef = await addDoc(collection(this.firestore, `users/${userId}/transactions`), {
-            date: transaction.date.toLocaleDateString(),
-            description: transaction.description,
-            amount: transaction.amount
-          });
+  //       try {
+  //         const docRef = await addDoc(collection(this.firestore, `users/${userId}/transactions`), {
+  //           date: transaction.date.toLocaleDateString(),
+  //           description: transaction.description,
+  //           amount: transaction.amount
+  //         });
 
-          // Console.log the transaction data after the document is added
-          const docSnapshot = await getDoc(docRef);
-          if (docSnapshot.exists()) {
-            console.log('Transaction data:', docSnapshot.data());
-          }
-        } catch (error) {
-          console.error('Error: ', error);
-        }
+  //         // Console.log the transaction data after the document is added
+  //         const docSnapshot = await getDoc(docRef);
+  //         if (docSnapshot.exists()) {
+  //           console.log('Transaction data:', docSnapshot.data());
+  //         }
+  //       } catch (error) {
+  //         console.error('Error: ', error);
+  //       }
       
-    }
+  //   }
 
-    this.getTransactions();
-  }
+  //   this.getTransactions();
+  // }
 
-  sampleTransactions() {
+
+
+  // sampleTransactions() {
     
-   const transactions = [
-      new Transaction("5000", new Date(2023, 10, 1), null, "Salary"),
-      new Transaction("-250", new Date(2023, 10, 2), null, "Groceries"),
-      new Transaction("500", new Date(), true, "Paycheck"),
-      new Transaction("-44.99", new Date(), null, "Xbox Controller")
-    ];
+  //  const transactions = [
+  //     new Transaction("5000", new Date(2023, 10, 1), null, "Salary"),
+  //     new Transaction("-250", new Date(2023, 10, 2), null, "Groceries"),
+  //     new Transaction("500", new Date(), true, "Paycheck"),
+  //     new Transaction("-44.99", new Date(), null, "Xbox Controller")
+  //   ];
 
-    transactions.forEach(transaction => {
-      this.inputTransactionFromParameter(transaction);
-    });
-  }
+  //   transactions.forEach(transaction => {
+  //     this.inputTransactionFromParameter(transaction);
+  //   });
+  // }
+
+
 
   async getTransactions() {
-    const userDetails = await this.getUserDetails();
-    if (userDetails && userDetails.uid) {
-      const userId = userDetails.uid
-      const querySnapshot = await getDocs(collection(this.firestore, `users/${userId}/transactions`));
-      const data: TransactionTable[] = [];
-      querySnapshot.forEach((doc) => {
+    // const userDetails = await this.getUserDetails();
+    // if (userDetails && userDetails.uid) {
+    //   const userId = userDetails.uid
+    //   const querySnapshot = await getDocs(collection(this.firestore, `users/${userId}/transactions`));
+    //   const data: TransactionTable[] = [];
+
+    const transactions = await this.financeService.getTransactions();
+      transactions.forEach((doc) => {
 
         const docData = doc.data() as TransactionTable;
 
         docData.date = docData.date
-        data.push(docData);
+        // data.push(docData);
       });
-      this.dataSource.data = data;
+      // this.dataSource.data = data;
     }
-  }
+  
 
   async getGoals() {
     const userDetails = await this.getUserDetails();
-    if (userDetails && userDetails.uid) {
-      const userId = userDetails.uid
-      const querySnapshot = await getDocs(collection(this.firestore, `users/${userId}/goals`));
+    // if (userDetails && userDetails.uid) {
+    //   const userId = userDetails.uid
+    //   const querySnapshot = await getDocs(collection(this.firestore, `users/${userId}/goals`));
+      const goals = await this._financeService.getGoals();
+
       this.goalList = [];
-      querySnapshot.forEach((doc) => {
+      goals.forEach((doc) => {
         const docData = doc.data();
         docData.dateCreated = new Date(docData.dateCreated);
         this.goalList.push(docData);
+        
       });
-      
-    }
+      console.log(this.goalList);    
   }
 
-  toggleExpansionPanel(panelBool:boolean) {
-    if (panelBool) {
-      panelBool = false; 
-      console.log(this.createGoalExpanded);
-    } else {
-      panelBool = true;
-      console.log(this.createGoalExpanded);
-    }
-  }
+
+
+  // toggleExpansionPanel(panelBool:boolean) {
+  //   if (panelBool) {
+  //     panelBool = false; 
+  //     console.log(this.createGoalExpanded);
+  //   } else {
+  //     panelBool = true;
+  //     console.log(this.createGoalExpanded);
+  //   }
+  // }
+
+
 
   createGoal(name:string, amountPerPaycheck:string, total:string) {
-    this.addGoal(new Goal(name, parseInt(total), parseInt(amountPerPaycheck), 0, new Date()));
+    this.financeService.createGoal(name, amountPerPaycheck, total);
+    // this.addGoal(new Goal(name, parseInt(total), parseInt(amountPerPaycheck), 0, new Date()));
     console.log("Goal List: ", this.goalList);
     console.log("create Goal: ", new Date());
   }
 
   async addGoal(goal: Goal) {
-    const userDetails = await this.getUserDetails();
-    if (userDetails && userDetails.uid) {
-      const userId = userDetails.uid
+    // const userDetails = await this.getUserDetails();
+    // if (userDetails && userDetails.uid) {
+    //   const userId = userDetails.uid
 
       
 
-      // Iterating through the sample transactions and adding them to Firestore
+    //   // Iterating through the sample transactions and adding them to Firestore
 
-        try {
-          const docRef = await addDoc(collection(this.firestore, `users/${userId}/goals`), {
-            name: goal.name,
-            total: goal.total,
-            amountContributed: goal.amountContributed,
-            balance: goal.balance,
-            dateCreated: goal.dateCreated.toLocaleDateString()
-          });
+    //     try {
+    //       const docRef = await addDoc(collection(this.firestore, `users/${userId}/goals`), {
+    //         name: goal.name,
+    //         total: goal.total,
+    //         amountContributed: goal.amountContributed,
+    //         balance: goal.balance,
+    //         dateCreated: goal.dateCreated.toLocaleDateString()
+    //       });
 
-          // Console.log the transaction data after the document is added
-          const docSnapshot = await getDoc(docRef);
-          if (docSnapshot.exists()) {
-            console.log('Goal data:', docSnapshot.data());
-          }
-        } catch (error) {
-          console.error('Error: ', error);
-        }
+    //       // Console.log the transaction data after the document is added
+    //       const docSnapshot = await getDoc(docRef);
+    //       if (docSnapshot.exists()) {
+    //         console.log('Goal data:', docSnapshot.data());
+    //       }
+    //     } catch (error) {
+    //       console.error('Error: ', error);
+    //     }
       
-    }
+    // }
+    this.financeService.addGoal(goal);
 
     this.getGoals();
   }
 
 
 
-  addTransactionToGoals(transaction : Transaction) {
+  // addTransactionToGoals(transaction : Transaction) {
 
-    if (parseInt(transaction.amount) <= 0 || transaction.income === false || (transaction.contributeToGoals === false || null)) {
-      console.log("addtrantogoal 1st");
-      return
-    }
-    let goalTotal = 0;
+  //   if (parseInt(transaction.amount) <= 0 || transaction.income === false || (transaction.contributeToGoals === false || null)) {
+  //     console.log("addtrantogoal 1st");
+  //     return
+  //   }
+  //   let goalTotal = 0;
 
-    this.goalList.forEach(goal => {
-      goalTotal += goal.amountContributed;
-    });
+  //   this.goalList.forEach(goal => {
+  //     goalTotal += goal.amountContributed;
+  //   });
 
-    console.log("goal Total: ", goalTotal);
+  //   console.log("goal Total: ", goalTotal);
 
-    if (parseInt(transaction.amount) < goalTotal) {
-      console.log("addtrantogoal 2st");
-      return;
-    }
+  //   if (parseInt(transaction.amount) < goalTotal) {
+  //     console.log("addtrantogoal 2st");
+  //     return;
+  //   }
 
-    this.goalList.forEach(goal => {
+  //   this.goalList.forEach(goal => {
 
-      // const dateParts = goal.dateCreated.toDateString().split('/');
+  //     // const dateParts = goal.dateCreated.toDateString().split('/');
 
-      // const year = parseInt(dateParts[2], 10);
-      // const month = parseInt(dateParts[0], 10) - 1;
-      // const day = parseInt(dateParts[1], 10);
+  //     // const year = parseInt(dateParts[2], 10);
+  //     // const month = parseInt(dateParts[0], 10) - 1;
+  //     // const day = parseInt(dateParts[1], 10);
 
-      // const parsedDate = new Date(year, month, day);
+  //     // const parsedDate = new Date(year, month, day);
 
-      const goalDate = goal.dateCreated;
+  //     const goalDate = goal.dateCreated;
       
 
       
       
 
-      const transactionDate = transaction.date;
-      console.log("Tran Date");
-      console.log(transaction.date)
+  //     const transactionDate = transaction.date;
+  //     console.log("Tran Date");
+  //     console.log(transaction.date)
 
       
 
-      if (goalDate <= transactionDate) {
-        goal.balance += goal.amountContributed;
-        console.log("success", goal.balance);
-      } else {
-        console.log("addtrantogoal 3rd: Tran: ", transaction.date, "Goal: ", goal.dateCreated);
-      }
+  //     if (goalDate <= transactionDate) {
+  //       goal.balance += goal.amountContributed;
+  //       console.log("success", goal.balance);
+  //     } else {
+  //       console.log("addtrantogoal 3rd: Tran: ", transaction.date, "Goal: ", goal.dateCreated);
+  //     }
       
 
-    });
-  }
+  //   });
+  // }
 
 }
