@@ -24,7 +24,7 @@ export class FinanceService {
     private firestore: Firestore
   ) { }
 
-  inputPaycheck(paycheckAmount: number, paycheckDate: Date, paycheckToGoals: boolean) {
+  async inputPaycheck(paycheckAmount: number, paycheckDate: Date, paycheckToGoals: boolean) {
     if (paycheckAmount > 0)  {
       
 
@@ -33,8 +33,8 @@ export class FinanceService {
       }
 
       const newTransaction = new Transaction(paycheckAmount.toString(),  paycheckDate, paycheckToGoals, "Paycheck");
-
-    this.inputTransactionFromParameter(newTransaction);
+      console.log("1");
+   await this.inputTransactionFromParameter(newTransaction);
 
     
 
@@ -45,10 +45,11 @@ export class FinanceService {
 
 
 
-inputTransactionFromParameter(transaction: Transaction) {
-  this.addTransactions(transaction);
+async inputTransactionFromParameter(transaction: Transaction) {
+  console.log("2");
+  await this.addTransactions(transaction);
   // this.transactionList.push(transaction);
-  this.addTransactionToGoals(transaction);
+  await this.addTransactionToGoals(transaction);
   // this.paycheck = 0;
   // console.log("Transaction List: ", this.transactionList);
 }
@@ -56,7 +57,7 @@ inputTransactionFromParameter(transaction: Transaction) {
 
 
 
-inputCSV(csvString : string, contributeToGoals : boolean) {
+async inputCSV(csvString : string, contributeToGoals : boolean) {
   if (csvString) {
     this.papa.parse(csvString, {
       header: true,
@@ -147,6 +148,7 @@ async getUserDetails() {
 }
 
 async addTransactions(transaction: Transaction) {
+  console.log("3");
   const userDetails = await this.getUserDetails();
   if (userDetails && userDetails.uid) {
     const userId = userDetails.uid
@@ -172,6 +174,7 @@ async addTransactions(transaction: Transaction) {
       }
     
   }
+  console.log("4", "transaction added");
 
   // this.getTransactions();
 }
@@ -282,7 +285,7 @@ async addTransactionToGoals(transaction : Transaction) {
   let goalTotal = 0;
   const goalList = await this.getGoals();
 
-  goalList.forEach(goal => {
+  await goalList.forEach(goal => {
     goalTotal += goal.amountContributed;
   });
 

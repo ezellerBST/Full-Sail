@@ -88,7 +88,7 @@ export class AccountComponent implements OnInit, AfterViewInit {
 
   inputTransactionFromParameter(transaction: Transaction) {
 
-    this._financeService.inputTransactionFromParameter(transaction);
+    this.financeService.inputTransactionFromParameter(transaction);
 
     // this.addTransactions(transaction);
     // this.transactionList.push(transaction);
@@ -99,6 +99,17 @@ export class AccountComponent implements OnInit, AfterViewInit {
   
   }
 
+
+  async inputPaycheck(paycheckAmount: number, paycheckDate : Date, contributeToGoals : boolean) {
+    console.log("start");
+    await this.financeService.inputPaycheck(paycheckAmount, paycheckDate, contributeToGoals);
+    console.log("paycheckamount = 0")
+    this.paycheckAmount = 0;
+    
+
+    this.ngOnInit();
+    
+  }
   
 
   // inputPaycheck() {
@@ -198,6 +209,12 @@ export class AccountComponent implements OnInit, AfterViewInit {
   //   }
   // }
 
+  async onFileSelected($event, contributeToGoals) {
+    await this.financeService.onFileSelected($event, contributeToGoals);
+    
+    this.ngOnInit();
+  }
+
 
   async getUserDetails() {
     try {
@@ -250,6 +267,12 @@ export class AccountComponent implements OnInit, AfterViewInit {
 
 
 
+   async sampleTransactions() {
+    await this.financeService.sampleTransactions();
+    this.getGoals();
+    this.getTransactions();
+   }
+
   // sampleTransactions() {
     
   //  const transactions = [
@@ -267,21 +290,22 @@ export class AccountComponent implements OnInit, AfterViewInit {
 
 
   async getTransactions() {
+    console.log("get trans");
     // const userDetails = await this.getUserDetails();
     // if (userDetails && userDetails.uid) {
     //   const userId = userDetails.uid
     //   const querySnapshot = await getDocs(collection(this.firestore, `users/${userId}/transactions`));
-    //   const data: TransactionTable[] = [];
+      const data: TransactionTable[] = [];
 
     const transactions = await this.financeService.getTransactions();
       transactions.forEach((doc) => {
 
-        const docData = doc.data() as TransactionTable;
+        const docData = doc as TransactionTable;
 
         docData.date = docData.date
-        // data.push(docData);
+        data.push(docData);
       });
-      // this.dataSource.data = data;
+      this.dataSource.data = data;
     }
   
 
@@ -294,12 +318,12 @@ export class AccountComponent implements OnInit, AfterViewInit {
 
       this.goalList = [];
       goals.forEach((doc) => {
-        const docData = doc.data();
-        docData.dateCreated = new Date(docData.dateCreated);
-        this.goalList.push(docData);
+        
+        doc.dateCreated = new Date(doc.dateCreated);
+        this.goalList.push(doc);
         
       });
-      console.log(this.goalList);    
+      // console.log(this.goalList);    
   }
 
 
@@ -316,11 +340,12 @@ export class AccountComponent implements OnInit, AfterViewInit {
 
 
 
-  createGoal(name:string, amountPerPaycheck:string, total:string) {
-    this.financeService.createGoal(name, amountPerPaycheck, total);
+  async createGoal(name:string, amountPerPaycheck:string, total:string) {
+    await this.financeService.createGoal(name, amountPerPaycheck, total);
     // this.addGoal(new Goal(name, parseInt(total), parseInt(amountPerPaycheck), 0, new Date()));
     console.log("Goal List: ", this.goalList);
     console.log("create Goal: ", new Date());
+    this.getGoals();
   }
 
   async addGoal(goal: Goal) {

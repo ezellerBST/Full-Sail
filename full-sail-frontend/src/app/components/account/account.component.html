@@ -22,7 +22,7 @@
                     </mat-button-toggle-group>
                 
                     <div *ngIf="showImportPaycheck === 'true'">
-                        <form ngClass="items-centered" (ngSubmit)="_financeService.inputPaycheck(paycheckAmount, paycheckDate, contributeToGoals)">
+                        <form ngClass="items-centered" (ngSubmit)="inputPaycheck(paycheckAmount, paycheckDate, contributeToGoals)">
 
                             <div ngClass="flex-right">
                                 <mat-checkbox [(ngModel)]="contributeToGoals" name="contributeToGoals" ngClass="margin-auto">Contribute To Goals</mat-checkbox>
@@ -55,7 +55,7 @@
 
                             <div ngClass="flex-right">      
                                 <!-- Modify your HTML template -->
-                                <input type="file" #fileInput name="CSV-input" style="display: none" (input)="_financeService.onFileSelected($event, contributeToGoals); fileInput.value = ''">
+                                <input type="file" #fileInput name="CSV-input" style="display: none" (input)="onFileSelected($event, contributeToGoals); fileInput.value = ''">
                                 <button matTooltip="Import CSV file" mat-raised-button color="primary" (click)="fileInput.click()"><mat-icon style="height: 30px;" class="margin-auto"><fa-icon class="fa-xl" [icon]="FaFileCsv"></fa-icon></mat-icon></button>
 
 
@@ -72,7 +72,7 @@
         <mat-card class="accounts-content-card">
             <mat-card-content>
                 Testing transactions
-                <button mat-raised-button color="primary" (click)="_financeService.sampleTransactions()">Add transaction</button>
+                <button mat-raised-button color="primary" (click)="sampleTransactions()">Add transaction</button>
             </mat-card-content>
             <br>
             <mat-card-content>
@@ -156,7 +156,7 @@
                             <input matInput #goalTotal min="0" type="number">
                         </mat-form-field>
 
-                        <button mat-raised-button color="primary" (click)="_financeService.createGoal(goalName.value, goalAmount.value, goalTotal.value)" (click)="createGoalPanel.close()">Create Goal</button>
+                        <button mat-raised-button color="primary" (click)="createGoal(goalName.value, goalAmount.value, goalTotal.value)" (click)="createGoalPanel.close()">Create Goal</button>
                     </div>
             </mat-expansion-panel>
         </mat-card>
