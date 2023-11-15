@@ -10,7 +10,7 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './add-transaction.component.html',
   styleUrls: ['./add-transaction.component.css']
 })
-export class AddTransactionComponent {
+export class AddTransactionComponent implements OnInit {
 
   isSignedIn: boolean = false;
   date: Date = new Date();
@@ -23,35 +23,27 @@ export class AddTransactionComponent {
     private router: Router,
     private auth: Auth,
     private financeService: FinanceService,
-    public dialofRef: MatDialogRef<AddTransactionComponent>,
+    public dialogRef: MatDialogRef<AddTransactionComponent>,
 
-  ){}
+  ) { }
 
   ngOnInit() {
     this.auth.onAuthStateChanged(user => {
       this.isSignedIn = !!user;
-    })
+    });
   }
 
+  //NEED TO UPDATE .app TO ACTUAL NAME OF FUNCTION IN SERVICE
 
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  // submitTransaction(){
+  //   this.financeService.app(this.date, this.description, this.amount)
+  //   .then((transaction) => {
+  //     console.log(transaction);
+  //     this.dialogRef.close();
+  //   })
+  //   .catch((error) => {
+  //     console.log(error);
+  //   });
+  // }
 
 }

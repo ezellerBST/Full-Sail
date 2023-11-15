@@ -231,7 +231,7 @@ export class AccountComponent implements OnInit, AfterViewInit {
   sampleTransactions() {
     
    const transactions = [
-      new Transaction("5000", new Date(2023, 10, 1), null, "Salary"),
+      new Transaction("5000", new Date(2023, 10, 1), false, "Salary"),
       new Transaction("-250", new Date(2023, 10, 2), null, "Groceries"),
       new Transaction("500", new Date(), true, "Paycheck"),
       new Transaction("-44.99", new Date(), null, "Xbox Controller")

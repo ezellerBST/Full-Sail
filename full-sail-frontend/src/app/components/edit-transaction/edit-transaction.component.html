@@ -1,0 +1,11 @@
+<mat-form-field>
+    <mat-label >{{ date }}</mat-label>
+    <input [(ngModel)]='date' matInput>
+    <mat-label >{{ description }}</mat-label>
+    <input [(ngModel)]="description" matInput>
+    <mat-label >{{ amount }}</mat-label>
+    <input [(ngModel)]="amount" matInput>
+    <!-- <button mat-raised-button color="primary" (click)="editTransaction()">Save Changes</button> -->
+    <button mat-raised-button color="warn" (click)="closeDialog()">Cancel</button>
+</mat-form-field>
+
