@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 
@@ -16,17 +16,17 @@ export class SigninComponent {
 
 
 
-  constructor( private dialog: MatDialog,
-     private userService: UserService,
-      public router: Router,
-       private auth: Auth,
-       public dialogRef: MatDialogRef<SigninComponent>,
-       ) {}
+  constructor(
+    private userService: UserService,
+    public router: Router,
+    private auth: Auth,
+    public dialogRef: MatDialogRef<SigninComponent>,
+  ) { }
 
   ngOnInit(): void {
     this.auth.onAuthStateChanged(user => {
       // Update isSignedIn based on the user's authentication state
-      this.isSignedIn = !!user; 
+      this.isSignedIn = !!user;
     });
   }
 

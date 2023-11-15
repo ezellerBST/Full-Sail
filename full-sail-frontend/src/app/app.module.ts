@@ -40,6 +40,8 @@ import { SigninComponent } from './components/signin/signin.component';
 import { RegisterComponent } from './components/register/register.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { AddTransactionComponent } from './components/add-transaction/add-transaction.component';
+import { EditTransactionComponent } from './components/edit-transaction/edit-transaction.component';
+import { DeleteTransactionComponent } from './components/delete-transaction/delete-transaction.component';
 
 
 @NgModule({
@@ -51,6 +53,8 @@ import { AddTransactionComponent } from './components/add-transaction/add-transa
     RegisterComponent,
     PageNotFoundComponent,
     AddTransactionComponent,
+    EditTransactionComponent,
+    DeleteTransactionComponent,
   ],
   imports: [
     BrowserModule,
