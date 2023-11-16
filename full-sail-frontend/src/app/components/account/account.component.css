@@ -18,7 +18,8 @@ html {
     width: 100%;
 }
 
-svg:not(:root).svg-inline--fa, svg:not(:host).svg-inline--fa {
+svg:not(:root).svg-inline--fa,
+svg:not(:host).svg-inline--fa {
     height: 30px;
 }
 
@@ -29,8 +30,9 @@ svg:not(:root).svg-inline--fa, svg:not(:host).svg-inline--fa {
     margin-bottom: 90px;
     box-sizing: border-box;
     background-color: lightgray;
-    
+
 }
+
 .input-paycheck-div {
     display: flex;
     flex-direction: row;
@@ -72,30 +74,30 @@ svg:not(:root).svg-inline--fa, svg:not(:host).svg-inline--fa {
 }
 
 @media (prefers-color-scheme: dark) {
-    
-    
+
+
 
     .mat-mdc-form-field:not(.mat-form-field-no-animations) .mdc-text-field__input {
         color: white;
     }
-    
+
     .mdc-checkbox .mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate):not([data-indeterminate=true])~.mdc-checkbox__background {
         border-color: white;
     }
 
     .mdc-checkbox .mdc-checkbox__native-control:enabled~.mdc-checkbox__background .mdc-checkbox__checkmark {
         border-color: white;
-      }
+    }
 
     .dark-mode-white {
         color: white;
     }
 
-  body {
-    background-color: rgb(25, 25, 25);
-    color: white;
-  }
-    
+    body {
+        background-color: rgb(25, 25, 25);
+        color: white;
+    }
+
     .accounts-content-card {
 
         width: 100%;
@@ -104,7 +106,7 @@ svg:not(:root).svg-inline--fa, svg:not(:host).svg-inline--fa {
         box-sizing: border-box;
         background-color: rgb(59, 55, 52);
         color: white;
-        
+
     }
 
 }
@@ -167,9 +169,9 @@ svg:not(:root).svg-inline--fa, svg:not(:host).svg-inline--fa {
 }
 
 
-@media (min-width: 825px) and (max-width: 1020px)  {
+@media (min-width: 825px) and (max-width: 1020px) {
     .accounts-content-card {
-        
+
         margin-bottom: 90px;
         width: 600px;
     }
@@ -179,9 +181,9 @@ svg:not(:root).svg-inline--fa, svg:not(:host).svg-inline--fa {
     }
 }
 
-@media (min-width: 650px) and (max-width: 825px)  {
+@media (min-width: 650px) and (max-width: 825px) {
     .accounts-content-card {
-        
+
         margin-bottom: 90px;
         width: 450px;
     }
@@ -191,9 +193,9 @@ svg:not(:root).svg-inline--fa, svg:not(:host).svg-inline--fa {
     }
 }
 
-@media (min-width: 470px) and (max-width: 650px)  {
+@media (min-width: 470px) and (max-width: 650px) {
     .accounts-content-card {
-        
+
         margin-bottom: 90px;
         width: 400px;
     }
@@ -203,9 +205,9 @@ svg:not(:root).svg-inline--fa, svg:not(:host).svg-inline--fa {
     }
 }
 
-@media (max-width: 470px)  {
+@media (max-width: 470px) {
     .accounts-content-card {
-        
+
         margin-bottom: 90px;
         width: 300px;
     }
@@ -215,3 +217,20 @@ svg:not(:root).svg-inline--fa, svg:not(:host).svg-inline--fa {
     }
 }
 
+.filter-field {
+    font-size: 16px;
+    width: 100%;
+}
+
+tr.example-detail-row {
+    height: 0;
+}
+
+.example-element-row td {
+    border-bottom-width: 0;
+}
+
+.example-element-detail {
+    overflow: hidden;
+    display: flex;
+}

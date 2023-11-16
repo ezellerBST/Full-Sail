@@ -42,6 +42,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { AddTransactionComponent } from './components/add-transaction/add-transaction.component';
 import { EditTransactionComponent } from './components/edit-transaction/edit-transaction.component';
 import { DeleteTransactionComponent } from './components/delete-transaction/delete-transaction.component';
+import { MatSortModule } from '@angular/material/sort';
 
 
 @NgModule({
@@ -87,8 +88,8 @@ import { DeleteTransactionComponent } from './components/delete-transaction/dele
     MatButtonToggleModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatExpansionModule
-
+    MatExpansionModule,
+    MatSortModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -8,6 +8,9 @@ import { Auth } from '@angular/fire/auth';
 import { Firestore, addDoc, doc, setDoc, getDoc, collection, getDocs } from '@angular/fire/firestore';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import {animate, state, style, transition, trigger} from '@angular/animations';
+import { FinanceService } from 'src/app/services/finance.service';
 
 export interface TransactionTable {
   date: string;
@@ -18,19 +21,28 @@ export interface TransactionTable {
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
-  styleUrls: ['./account.component.css']
+  styleUrls: ['./account.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class AccountComponent implements OnInit, AfterViewInit {
 
 
   FaFileCsv = faFileCsv;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
 
-  constructor(private papa: Papa, 
-    private el: ElementRef, 
-    private auth: Auth, 
-    private firestore: Firestore) { }
+  constructor(private papa: Papa,
+    private el: ElementRef,
+    private auth: Auth,
+    private firestore: Firestore,
+    private financeService: FinanceService) { }
 
   ngOnInit(): void {
     this.getUserDetails();
@@ -40,6 +52,16 @@ export class AccountComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   paycheck: number = 0;
@@ -49,29 +71,36 @@ export class AccountComponent implements OnInit, AfterViewInit {
 
   transactionList: Transaction[] = [];
   goalList: Goal[] = [];
+  createGoalExpanded: boolean = false;
 
   csvString: string = ``;
   parsedData: any[] = [];
   extractedData: any[] = [];
   dateOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
-  
 
   user: any;
   displayName: string = "";
   dataSource = new MatTableDataSource<TransactionTable>();
-  displayedColumns: string[] = ['date', 'description', 'amount'];
+  // displayedColumns: string[] = ['date', 'description', 'amount'];
+  columnsToDisplay = ['date', 'description', 'amount'];
+  columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
+  expandedElement: any | null;
 
-  createGoalExpanded: boolean = false;
+  editTransaction() {
+    this.financeService.openEditTransactionDialog();
+  }
 
-  
+  deleteTransaction() {
+    this.financeService.openDeleteTransactionDialog();
+  }
 
   inputTransaction() {
-    
-      if (this.paycheckDate.setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0)) {
-        this.paycheckDate = new Date();
-      }
 
-      const newTransaction = new Transaction(this.paycheck.toString(),  this.paycheckDate, this.contributeToGoals, "Transaction");
+    if (this.paycheckDate.setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0)) {
+      this.paycheckDate = new Date();
+    }
+
+    const newTransaction = new Transaction(this.paycheck.toString(), this.paycheckDate, this.contributeToGoals, "Transaction");
 
     this.inputTransactionFromParameter(newTransaction);
 
@@ -85,22 +114,22 @@ export class AccountComponent implements OnInit, AfterViewInit {
     console.log("Transaction List: ", this.transactionList);
   }
 
-  
+
 
   inputPaycheck() {
-    if (this.paycheck > 0)  {
-      
+    if (this.paycheck > 0) {
+
 
       if (this.paycheckDate.setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0)) {
         this.paycheckDate = new Date();
       }
 
-      const newTransaction = new Transaction(this.paycheck.toString(),  this.paycheckDate, this.contributeToGoals, "Paycheck");
+      const newTransaction = new Transaction(this.paycheck.toString(), this.paycheckDate, this.contributeToGoals, "Paycheck");
 
-    this.inputTransactionFromParameter(newTransaction);
+      this.inputTransactionFromParameter(newTransaction);
 
-    this.paycheck = 0;
-    
+      this.paycheck = 0;
+
 
     } else {
       alert("Paycheck must be a positive number");
@@ -154,7 +183,7 @@ export class AccountComponent implements OnInit, AfterViewInit {
       }
 
 
-      const newTransaction = new Transaction(transaction.Amount,  parsedDate, transactionContribute, transaction.Description);
+      const newTransaction = new Transaction(transaction.Amount, parsedDate, transactionContribute, transaction.Description);
 
       this.inputTransactionFromParameter(newTransaction);
 
@@ -203,34 +232,34 @@ export class AccountComponent implements OnInit, AfterViewInit {
     if (userDetails && userDetails.uid) {
       const userId = userDetails.uid
 
-      
+
 
       // Iterating through the sample transactions and adding them to Firestore
 
-        try {
-          const docRef = await addDoc(collection(this.firestore, `users/${userId}/transactions`), {
-            date: transaction.date.toLocaleDateString(),
-            description: transaction.description,
-            amount: transaction.amount
-          });
+      try {
+        const docRef = await addDoc(collection(this.firestore, `users/${userId}/transactions`), {
+          date: transaction.date.toLocaleDateString(),
+          description: transaction.description,
+          amount: transaction.amount
+        });
 
-          // Console.log the transaction data after the document is added
-          const docSnapshot = await getDoc(docRef);
-          if (docSnapshot.exists()) {
-            console.log('Transaction data:', docSnapshot.data());
-          }
-        } catch (error) {
-          console.error('Error: ', error);
+        // Console.log the transaction data after the document is added
+        const docSnapshot = await getDoc(docRef);
+        if (docSnapshot.exists()) {
+          console.log('Transaction data:', docSnapshot.data());
         }
-      
+      } catch (error) {
+        console.error('Error: ', error);
+      }
+
     }
 
     this.getTransactions();
   }
 
   sampleTransactions() {
-    
-   const transactions = [
+
+    const transactions = [
       new Transaction("5000", new Date(2023, 10, 1), false, "Salary"),
       new Transaction("-250", new Date(2023, 10, 2), null, "Groceries"),
       new Transaction("500", new Date(), true, "Paycheck"),
@@ -270,13 +299,13 @@ export class AccountComponent implements OnInit, AfterViewInit {
         docData.dateCreated = new Date(docData.dateCreated);
         this.goalList.push(docData);
       });
-      
+
     }
   }
 
-  toggleExpansionPanel(panelBool:boolean) {
+  toggleExpansionPanel(panelBool: boolean) {
     if (panelBool) {
-      panelBool = false; 
+      panelBool = false;
       console.log(this.createGoalExpanded);
     } else {
       panelBool = true;
@@ -284,7 +313,7 @@ export class AccountComponent implements OnInit, AfterViewInit {
     }
   }
 
-  createGoal(name:string, amountPerPaycheck:string, total:string) {
+  createGoal(name: string, amountPerPaycheck: string, total: string) {
     this.addGoal(new Goal(name, parseInt(total), parseInt(amountPerPaycheck), 0, new Date()));
     console.log("Goal List: ", this.goalList);
     console.log("create Goal: ", new Date());
@@ -295,28 +324,28 @@ export class AccountComponent implements OnInit, AfterViewInit {
     if (userDetails && userDetails.uid) {
       const userId = userDetails.uid
 
-      
+
 
       // Iterating through the sample transactions and adding them to Firestore
 
-        try {
-          const docRef = await addDoc(collection(this.firestore, `users/${userId}/goals`), {
-            name: goal.name,
-            total: goal.total,
-            amountContributed: goal.amountContributed,
-            balance: goal.balance,
-            dateCreated: goal.dateCreated.toLocaleDateString()
-          });
+      try {
+        const docRef = await addDoc(collection(this.firestore, `users/${userId}/goals`), {
+          name: goal.name,
+          total: goal.total,
+          amountContributed: goal.amountContributed,
+          balance: goal.balance,
+          dateCreated: goal.dateCreated.toLocaleDateString()
+        });
 
-          // Console.log the transaction data after the document is added
-          const docSnapshot = await getDoc(docRef);
-          if (docSnapshot.exists()) {
-            console.log('Goal data:', docSnapshot.data());
-          }
-        } catch (error) {
-          console.error('Error: ', error);
+        // Console.log the transaction data after the document is added
+        const docSnapshot = await getDoc(docRef);
+        if (docSnapshot.exists()) {
+          console.log('Goal data:', docSnapshot.data());
         }
-      
+      } catch (error) {
+        console.error('Error: ', error);
+      }
+
     }
 
     this.getGoals();
@@ -324,7 +353,7 @@ export class AccountComponent implements OnInit, AfterViewInit {
 
 
 
-  addTransactionToGoals(transaction : Transaction) {
+  addTransactionToGoals(transaction: Transaction) {
 
     if (parseInt(transaction.amount) <= 0 || transaction.income === false || (transaction.contributeToGoals === false || null)) {
       console.log("addtrantogoal 1st");
@@ -354,16 +383,16 @@ export class AccountComponent implements OnInit, AfterViewInit {
       // const parsedDate = new Date(year, month, day);
 
       const goalDate = goal.dateCreated;
-      
 
-      
-      
+
+
+
 
       const transactionDate = transaction.date;
       console.log("Tran Date");
       console.log(transaction.date)
 
-      
+
 
       if (goalDate <= transactionDate) {
         goal.balance += goal.amountContributed;
@@ -371,7 +400,7 @@ export class AccountComponent implements OnInit, AfterViewInit {
       } else {
         console.log("addtrantogoal 3rd: Tran: ", transaction.date, "Goal: ", goal.dateCreated);
       }
-      
+
 
     });
   }

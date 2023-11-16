@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-
 import { Firestore, addDoc, doc, setDoc, getDoc, collection } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -51,6 +50,14 @@ export class FinanceService {
       width: '20%',
       height: '20%'
     })
+  }
+
+  editTransactionButton() {
+
+  }
+
+  deleteTransactionButton() {
+    
   }
 
 }
