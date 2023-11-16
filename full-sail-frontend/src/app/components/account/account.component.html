@@ -23,7 +23,7 @@
                     </mat-button-toggle-group>
 
                     <div *ngIf="showImportPaycheck === 'true'">
-                        <form ngClass="items-centered" (ngSubmit)="inputPaycheck()">
+                        <form ngClass="items-centered" (ngSubmit)="inputPaycheck(paycheckAmount, paycheckDate, contributeToGoals)">
 
                             <div ngClass="flex-right">
                                 <mat-checkbox [(ngModel)]="contributeToGoals" name="contributeToGoals"
@@ -43,7 +43,7 @@
 
                                 <mat-form-field appearance="outline">
                                     <mat-label ngClass="dark-mode-white">Input Paycheck</mat-label>
-                                    <input matInput min="0" type="number" name="paycheck-input" [(ngModel)]="paycheck">
+                                    <input matInput min="0" type="number" name="paycheck-input" [(ngModel)]="paycheckAmount">
                                 </mat-form-field>
 
                                 <button mat-raised-button color="primary" type="submit">Submit</button>
@@ -52,18 +52,14 @@
                     </div>
 
                     <div *ngIf="showImportPaycheck === 'false'">
-                        <form ngClass="items-centered" (submit)="inputCSV()">
-                            <mat-checkbox [(ngModel)]="contributeToGoals" name="contributeToGoals"
-                                ngClass="dark-mode-white margin-auto">Contribute To Goals</mat-checkbox>
+                        <!-- <form ngClass="items-centered" (submit)="inputCSV()"> -->
+                            <form ngClass="items-centered">
+                            <mat-checkbox  [(ngModel)]="contributeToGoals" name="contributeToGoals" ngClass="dark-mode-white margin-auto">Contribute To Goals</mat-checkbox>
 
                             <div ngClass="flex-right">
                                 <!-- Modify your HTML template -->
-                                <input type="file" #fileInput name="CSV-input" style="display: none"
-                                    (input)="onFileSelected($event); fileInput.value = ''">
-                                <button matTooltip="Import CSV file" mat-raised-button color="primary"
-                                    (click)="fileInput.click()"><mat-icon style="height: 30px;"
-                                        class="margin-auto"><fa-icon class="fa-xl"
-                                            [icon]="FaFileCsv"></fa-icon></mat-icon></button>
+                                <input type="file" #fileInput name="CSV-input" style="display: none" (input)="onFileSelected($event, contributeToGoals); fileInput.value = ''">
+                                <button matTooltip="Import CSV file" mat-raised-button color="primary" (click)="fileInput.click()"><mat-icon style="height: 30px;" class="margin-auto"><fa-icon class="fa-xl" [icon]="FaFileCsv"></fa-icon></mat-icon></button>
 
 
 
