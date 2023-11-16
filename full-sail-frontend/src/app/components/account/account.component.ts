@@ -1,4 +1,3 @@
-
 import { Component, AfterViewInit, ViewChild, OnInit, ElementRef } from '@angular/core';
 import { Transaction } from 'src/app/models/transaction';
 import { Goal } from 'src/app/models/goal';
@@ -8,6 +7,8 @@ import { Auth } from '@angular/fire/auth';
 import { Firestore, addDoc, doc, setDoc, getDoc, collection, getDocs } from '@angular/fire/firestore';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 import { FinanceService } from 'src/app/services/finance.service';
 
 export interface TransactionTable {
@@ -19,23 +20,28 @@ export interface TransactionTable {
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
-  styleUrls: ['./account.component.css']
+  styleUrls: ['./account.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class AccountComponent implements OnInit, AfterViewInit {
 
 
   FaFileCsv = faFileCsv;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
 
-  constructor(private papa: Papa, 
-    private el: ElementRef, 
-    private auth: Auth, 
+  constructor(private papa: Papa,
+    private el: ElementRef,
+    private auth: Auth,
     private firestore: Firestore,
-    private financeService: FinanceService, 
-    ) { 
-
-    }
+    private financeService: FinanceService) { }
 
   ngOnInit(): void {
     
@@ -47,7 +53,18 @@ export class AccountComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
   _financeService = this.financeService
 
   paycheckAmount: number = 0;
@@ -57,22 +74,28 @@ export class AccountComponent implements OnInit, AfterViewInit {
 
   transactionList: Transaction[] = [];
   goalList: Goal[] = [];
+  createGoalExpanded: boolean = false;
 
   csvString: string = ``;
   parsedData: any[] = [];
   extractedData: any[] = [];
   dateOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
-  
 
   user: any;
   displayName: string = "";
   dataSource = new MatTableDataSource<TransactionTable>();
-  displayedColumns: string[] = ['date', 'description', 'amount'];
+  // displayedColumns: string[] = ['date', 'description', 'amount'];
+  columnsToDisplay = ['date', 'description', 'amount'];
+  columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
+  expandedElement: any | null;
 
-  createGoalExpanded: boolean = false;
+   editTransaction() {
+    this.financeService.openEditTransactionDialog();
+  }
 
-
-  
+  deleteTransaction() {
+    this.financeService.openDeleteTransactionDialog();
+  }
 
   // inputTransaction() {
     
@@ -240,7 +263,7 @@ export class AccountComponent implements OnInit, AfterViewInit {
   //   if (userDetails && userDetails.uid) {
   //     const userId = userDetails.uid
 
-      
+
 
   //     // Iterating through the sample transactions and adding them to Firestore
 
@@ -353,7 +376,7 @@ export class AccountComponent implements OnInit, AfterViewInit {
     // if (userDetails && userDetails.uid) {
     //   const userId = userDetails.uid
 
-      
+
 
     //   // Iterating through the sample transactions and adding them to Firestore
 
@@ -415,14 +438,14 @@ export class AccountComponent implements OnInit, AfterViewInit {
   //     const goalDate = goal.dateCreated;
       
 
-      
-      
+
+
 
   //     const transactionDate = transaction.date;
   //     console.log("Tran Date");
   //     console.log(transaction.date)
 
-      
+
 
   //     if (goalDate <= transactionDate) {
   //       goal.balance += goal.amountContributed;
