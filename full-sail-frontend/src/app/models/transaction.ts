@@ -5,7 +5,7 @@ export class Transaction {
     contributeToGoals?: boolean;
     description?: string;
 
-    constructor(amount?: string, date?: Date, contributeToGoals?: boolean, description?: string) {
+    public constructor(amount?: string, date?: Date, contributeToGoals?: boolean, description?: string) {
         this.amount = amount;
         if (parseInt(this.amount) > 0) {
             this.income = true;
