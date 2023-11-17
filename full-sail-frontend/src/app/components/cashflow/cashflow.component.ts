@@ -1,4 +1,4 @@
-import { Component, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import {
   ApexAxisChartSeries,
   ApexChart,
@@ -12,6 +12,8 @@ import {
   ApexFill,
   ApexTooltip
 } from "ng-apexcharts";
+import { Transaction } from "src/app/models/transaction";
+import { FinanceService } from "src/app/services/finance.service";
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -31,22 +33,27 @@ export type ChartOptions = {
   templateUrl: './cashflow.component.html',
   styleUrls: ['./cashflow.component.css']
 })
-export class CashflowComponent {
+export class CashflowComponent implements OnInit {
   @ViewChild("chart") chart: ChartComponent;
   public chartOptions: Partial<ChartOptions>;
 
-  constructor() {
+  constructor(private financeService : FinanceService) {
+
+
+
+
+
     this.chartOptions = {
       series: [
         
-        // {
-        //   name: "Income",
-        //   data: [76, 85, 101, 98, 87, 105, 91, 114, 94, 76, 85, 101]
-        // },
-        // {
-        //   name: "Expenses",
-        //   data: [35, 41, 36, 26, 45, 48, 52, 53, 41, 35, 41, 36]
-        // }
+        {
+          name: "Income",
+          data: [76, 85, 101, 98, 87, 105, 91, 114, 94, 76, 85, 101]
+        },
+        {
+          name: "Expenses",
+          data: [35, 41, 36, 26, 45, 48, 52, 53, 41, 35, 41, 36]
+        }
       ],
       chart: {
         type: "bar",
@@ -85,7 +92,7 @@ export class CashflowComponent {
       },
       yaxis: {
         title: {
-          text: "$ (thousands)"
+          text: "$ (USD)"
         }
       },
       fill: {
@@ -94,10 +101,73 @@ export class CashflowComponent {
       tooltip: {
         y: {
           formatter: function(val) {
-            return "$ " + val + " thousands";
+            return "$ " + val;
           }
         }
       }
     };
   }
+
+ async ngOnInit(){
+    await this.loadData();
+  }
+
+  private async loadData() {
+    let incomeData = [];
+    let expensesData = [];
+    
+
+    try{
+      const data = await this.financeService.getTransactions();
+
+      const currentYear = new Date().getUTCFullYear();
+
+      const monthData = {
+        0: { name: 'Jan', income: 0, expenses: 0 },
+        1: { name: 'Feb', income: 0, expenses: 0 },
+        2: { name: 'Mar', income: 0, expenses: 0 },
+        3: { name: 'Apr', income: 0, expenses: 0 },
+        4: { name: 'May', income: 0, expenses: 0 },
+        5: { name: 'Jun', income: 0, expenses: 0 },
+        6: { name: 'Jul', income: 0, expenses: 0 },
+        7: { name: 'Aug', income: 0, expenses: 0 },
+        8: { name: 'Sep', income: 0, expenses: 0 },
+        9: { name: 'Oct', income: 0, expenses: 0 },
+        10: { name: 'Nov', income: 0, expenses: 0 },
+        11: { name: 'Dec', income: 0, expenses: 0 },
+      };
+
+      const filteredData = data.filter(transaction => {
+        const transactionYear = new Date(transaction.date).getUTCFullYear();
+        return transactionYear === currentYear;
+      })
+
+      filteredData.forEach(transaction => {
+        const transactionMonth = new Date(transaction.date).getUTCMonth();
+        if (transaction.amount > 0) {
+          monthData[transactionMonth].income += parseInt(transaction.amount || '0');
+        } else {
+          monthData[transactionMonth].expenses -= parseInt(transaction.amount || '0');
+          
+        }
+      });
+
+      this.chartOptions.series = [
+        {
+          name: "Income",
+          data: Object.values(monthData).map(month => month.income)
+        },
+        {
+          name: "Expenses",
+          data: Object.values(monthData).map(month => month.expenses)
+        },
+
+      ];
+
+      console.log(this.chartOptions.series);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }
+  
 }
