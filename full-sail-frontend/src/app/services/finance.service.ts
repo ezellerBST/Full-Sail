@@ -12,6 +12,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Goal } from '../models/goal';
 
 
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -22,7 +24,8 @@ export class FinanceService {
     private auth: Auth,
     private router: Router,
     public dialog: MatDialog,
-    private firestore: Firestore) { }
+    private firestore: Firestore,
+    ) { }
 
   async inputPaycheck(paycheckAmount: number, paycheckDate: Date, paycheckToGoals: boolean) {
     if (paycheckAmount > 0) {

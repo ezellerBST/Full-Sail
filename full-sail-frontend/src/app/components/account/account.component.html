@@ -154,7 +154,10 @@
 
         <mat-card class="accounts-content-card">
             <mat-card-content>
-                Testing
+                <div id="chart">
+                    <app-cashflow></app-cashflow>
+                  </div>
+                  
             </mat-card-content>
         </mat-card>
 
@@ -212,13 +215,10 @@
 
 
 
-        <mat-card class="accounts-content-card transaction-card">
+        <mat-card class="accounts-content-card hidden-card">
             <mat-card-content ngClass="items-centered">
-                <div ngClass="flex-right">
-                    <h2>Expenses</h2>
-                    <button mat-raised-button color="primary">Add Expense</button>
-                </div>
-
+                
+                
             </mat-card-content>
         </mat-card>
 

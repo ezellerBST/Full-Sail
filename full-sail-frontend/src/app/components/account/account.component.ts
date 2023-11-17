@@ -11,6 +11,7 @@ import { MatSort } from '@angular/material/sort';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { FinanceService } from 'src/app/services/finance.service';
 import { SharedService } from 'src/app/services/shared.service';
+// import { CashflowComponent } from '../cashflow/cashflow.component';
 
 export interface TransactionTable {
   date: string;
@@ -54,6 +55,8 @@ export class AccountComponent implements OnInit, AfterViewInit {
     this.getUserDetails();
     this.getTransactions();
     this.getGoals();
+    
+    
   }
 
   ngAfterViewInit() {

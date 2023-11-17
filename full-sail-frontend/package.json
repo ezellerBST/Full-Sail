@@ -26,6 +26,8 @@
     "@fortawesome/free-brands-svg-icons": "^6.4.0",
     "@fortawesome/free-regular-svg-icons": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
+    "apexcharts": "^3.44.0",
+    "ng-apexcharts": "^1.8.0",
     "ngx-papaparse": "^8.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
