@@ -10,6 +10,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { FinanceService } from 'src/app/services/finance.service';
+// import { CashflowComponent } from '../cashflow/cashflow.component';
 
 export interface TransactionTable {
   date: string;
@@ -41,7 +42,8 @@ export class AccountComponent implements OnInit, AfterViewInit {
     private el: ElementRef,
     private auth: Auth,
     private firestore: Firestore,
-    private financeService: FinanceService) { }
+    private financeService: FinanceService,
+    ) { }
 
   ngOnInit(): void {
     
@@ -49,6 +51,8 @@ export class AccountComponent implements OnInit, AfterViewInit {
     this.getUserDetails();
     this.getTransactions();
     this.getGoals();
+    
+    
   }
 
   ngAfterViewInit() {
