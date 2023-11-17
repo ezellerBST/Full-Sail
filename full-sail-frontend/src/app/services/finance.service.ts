@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Firestore, addDoc, doc, setDoc, getDoc, getDocs, collection } from '@angular/fire/firestore';
+import { Firestore, addDoc, doc, setDoc, getDoc, getDocs, collection, deleteDoc } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { Auth } from '@angular/fire/auth';
@@ -149,10 +149,7 @@ export class FinanceService {
     if (userDetails && userDetails.uid) {
       const userId = userDetails.uid
 
-
-
       // Iterating through the sample transactions and adding them to Firestore
-
       try {
         const docRef = await addDoc(collection(this.firestore, `users/${userId}/transactions`), {
           date: transaction.date.toLocaleDateString(),
@@ -202,10 +199,12 @@ export class FinanceService {
         // const docData = doc.data() as TransactionTable;
 
         docData.date = docData.date
+        docData.id = doc.id
         // data.push(docData);
         result.push(docData);
       });
       // this.dataSource.data = data;
+      console.log(result);
       return result
     } else {
       return null;
@@ -335,19 +334,32 @@ export class FinanceService {
     })
   }
 
-  openDeleteTransactionDialog() {
+  openDeleteTransactionDialog(transactionId) {
     this.dialog.open(DeleteTransactionComponent, {
-      width: '20%',
-      height: '20%'
-    })
+      width: '35%',
+      height: '25%',
+      data: { transactionId }
+    });
   }
 
   editTransactionButton() {
 
   }
 
-  deleteTransactionButton() {
+  async deleteTransactionButton(transactionId) {
+    const userDetails = await this.getUserDetails();
 
+    if (userDetails && userDetails.uid) {
+      const userId = userDetails.uid;
+      const transactionDocRef = doc(this.firestore, `users/${userId}/transactions/${transactionId}`);
+      console.log(transactionId);
+      try {
+        await deleteDoc(transactionDocRef);
+        console.log('Transaction deleted');
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
   }
 
 }

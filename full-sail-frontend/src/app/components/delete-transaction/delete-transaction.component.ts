@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { FinanceService } from 'src/app/services/finance.service';
-
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-delete-transaction',
@@ -13,34 +13,33 @@ import { FinanceService } from 'src/app/services/finance.service';
 export class DeleteTransactionComponent implements OnInit {
 
   isSignedIn: boolean = false;
-  transactionId: string;
+  id: string;
 
   constructor(
     private auth: Auth,
     private router: Router,
     private financeService: FinanceService,
-    public dialogRef: MatDialogRef<DeleteTransactionComponent>
+    public dialogRef: MatDialogRef<DeleteTransactionComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { transactionId },
+    private sharedService: SharedService
   ) { }
 
   ngOnInit(): void {
     this.auth.onAuthStateChanged(user => {
       this.isSignedIn = !!user;
+      this.id = this.data.transactionId;
     });
   }
 
-  //NEED TO UPDATE .deleteTransaction TO ACTUAL NAME OF FUNCTION IN SERVICE
-  
-  // deleteTransaction() {
-  //   this.financeService.deleteTransaction(this.transactionId)
-  //   .then((transaction) => {
-  //     console.log('Deleted transaction: ', transaction);
-  //     this.dialogRef.close();
-  //   });
-  // }
-
-  closeDialog(){
+  async deleteTransaction() {
+    await this.financeService.deleteTransactionButton(this.id);
+    console.log(this.id);
+    await this.sharedService.accountTransactionsUpdate();
     this.dialogRef.close();
   }
 
+  closeDialog() {
+    this.dialogRef.close();
+  }
 
 }
