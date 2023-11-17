@@ -44,6 +44,7 @@ import { EditTransactionComponent } from './components/edit-transaction/edit-tra
 import { DeleteTransactionComponent } from './components/delete-transaction/delete-transaction.component';
 import { NgApexchartsModule } from "ng-apexcharts";
 import { CashflowComponent } from './components/cashflow/cashflow.component';
+import { MatSortModule } from '@angular/material/sort';
 
 
 @NgModule({
@@ -92,7 +93,7 @@ import { CashflowComponent } from './components/cashflow/cashflow.component';
     MatNativeDateModule,
     MatExpansionModule,
     NgApexchartsModule,
-
+    MatSortModule
   ],
   providers: [],
   bootstrap: [AppComponent]
