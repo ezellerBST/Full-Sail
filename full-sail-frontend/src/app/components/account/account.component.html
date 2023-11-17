@@ -126,7 +126,7 @@
                         <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayWithExpand.length">
                             <div [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
                                 <button mat-raised-button color="secondary" (click)="editTransaction()">Edit</button>
-                                <button mat-raised-button color="warn" (click)="deleteTransaction()">Delete</button>
+                                <button mat-raised-button color="warn" (click)="deleteTransaction(element.id)">Delete</button>
                             </div>
                         </td>
                     </ng-container>
