@@ -8,6 +8,7 @@ import { Auth } from '@angular/fire/auth';
 import { Firestore, addDoc, doc, setDoc, getDoc, collection, getDocs } from '@angular/fire/firestore';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { CashflowComponent } from '../cashflow/cashflow.component';
 
 export interface TransactionTable {
   date: string;
@@ -30,12 +31,15 @@ export class AccountComponent implements OnInit, AfterViewInit {
   constructor(private papa: Papa, 
     private el: ElementRef, 
     private auth: Auth, 
-    private firestore: Firestore) { }
+    private firestore: Firestore,
+    private cashflow: CashflowComponent) { }
 
   ngOnInit(): void {
     this.getUserDetails();
     this.getTransactions();
     this.getGoals();
+    
+    
   }
 
   ngAfterViewInit() {

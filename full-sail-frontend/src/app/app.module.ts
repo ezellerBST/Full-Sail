@@ -42,6 +42,8 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { AddTransactionComponent } from './components/add-transaction/add-transaction.component';
 import { EditTransactionComponent } from './components/edit-transaction/edit-transaction.component';
 import { DeleteTransactionComponent } from './components/delete-transaction/delete-transaction.component';
+import { NgApexchartsModule } from "ng-apexcharts";
+import { CashflowComponent } from './components/cashflow/cashflow.component';
 
 
 @NgModule({
@@ -55,6 +57,7 @@ import { DeleteTransactionComponent } from './components/delete-transaction/dele
     AddTransactionComponent,
     EditTransactionComponent,
     DeleteTransactionComponent,
+    CashflowComponent,
   ],
   imports: [
     BrowserModule,
@@ -87,7 +90,8 @@ import { DeleteTransactionComponent } from './components/delete-transaction/dele
     MatButtonToggleModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatExpansionModule
+    MatExpansionModule,
+    NgApexchartsModule,
 
   ],
   providers: [],
