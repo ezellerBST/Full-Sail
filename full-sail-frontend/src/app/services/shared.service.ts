@@ -11,4 +11,11 @@ export class SharedService {
   accountTransactionsUpdate() {
     this.transactionsUpdatedList.next(null);
   }
+
+  private profileDataUpdated = new BehaviorSubject<void>(null);
+  updtedProfileCard = this.profileDataUpdated.asObservable();
+
+  profileCardUpdate() {
+    this.profileDataUpdated.next(null);
+  }
 }
