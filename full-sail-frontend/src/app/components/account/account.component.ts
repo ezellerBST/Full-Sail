@@ -46,17 +46,17 @@ export class AccountComponent implements OnInit, AfterViewInit {
     private firestore: Firestore,
     private financeService: FinanceService,
     private sharedService: SharedService) {
-      this.sharedService.transactionsUpdated.subscribe(() => {
-        this.getTransactions();
-      });
-     }
+    this.sharedService.transactionsUpdated.subscribe(() => {
+      this.getTransactions();
+    });
+  }
 
   ngOnInit(): void {
     this.getUserDetails();
     this.getTransactions();
     this.getGoals();
-    
-    
+
+
   }
 
   ngAfterViewInit() {
@@ -97,8 +97,12 @@ export class AccountComponent implements OnInit, AfterViewInit {
   columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
   expandedElement: any | null;
 
-  editTransaction() {
-    this.financeService.openEditTransactionDialog();
+  addTransaction() {
+    this.financeService.openTransactionDialog();
+  }
+
+  editTransaction(transactionId, date, amount, description) {
+    this.financeService.openEditTransactionDialog(transactionId, date, amount, description);
   }
 
   deleteTransaction(transactionId) {
@@ -298,11 +302,11 @@ export class AccountComponent implements OnInit, AfterViewInit {
 
 
 
-  async sampleTransactions() {
-    await this.financeService.sampleTransactions();
-    this.getGoals();
-    this.getTransactions();
-  }
+  // async sampleTransactions() {
+  //   await this.financeService.sampleTransactions();
+  //   this.getGoals();
+  //   this.getTransactions();
+  // }
 
   // sampleTransactions() {
 

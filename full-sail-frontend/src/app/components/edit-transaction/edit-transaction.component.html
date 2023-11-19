@@ -1,11 +1,17 @@
 <mat-form-field>
-    <mat-label >{{ date }}</mat-label>
+    <mat-label>Date</mat-label>
     <input [(ngModel)]='date' matInput>
-    <mat-label >{{ description }}</mat-label>
-    <input [(ngModel)]="description" matInput>
-    <mat-label >{{ amount }}</mat-label>
-    <input [(ngModel)]="amount" matInput>
-    <!-- <button mat-raised-button color="primary" (click)="editTransaction()">Save Changes</button> -->
-    <button mat-raised-button color="warn" (click)="closeDialog()">Cancel</button>
 </mat-form-field>
-
+<br>
+<mat-form-field>
+    <mat-label>Description</mat-label>
+    <input [(ngModel)]="description" matInput>
+</mat-form-field>
+<br>
+<mat-form-field>
+    <mat-label>Amount</mat-label>
+    <input [(ngModel)]="amount" matInput>
+</mat-form-field>
+<br>
+<button mat-raised-button color="primary" (click)="editTransaction()">Save Changes</button>
+<button mat-raised-button color="warn" (click)="closeDialog()">Cancel</button>

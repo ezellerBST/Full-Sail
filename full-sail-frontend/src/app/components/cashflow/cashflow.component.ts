@@ -37,7 +37,7 @@ export class CashflowComponent implements OnInit {
   @ViewChild("chart") chart: ChartComponent;
   public chartOptions: Partial<ChartOptions>;
 
-  constructor(private financeService : FinanceService) {
+  constructor(private financeService: FinanceService) {
 
 
 
@@ -45,7 +45,7 @@ export class CashflowComponent implements OnInit {
 
     this.chartOptions = {
       series: [
-        
+
         {
           name: "Income",
           data: [76, 85, 101, 98, 87, 105, 91, 114, 94, 76, 85, 101]
@@ -63,7 +63,7 @@ export class CashflowComponent implements OnInit {
         bar: {
           horizontal: false,
           columnWidth: "55%",
-          
+
         }
       },
       dataLabels: {
@@ -85,7 +85,7 @@ export class CashflowComponent implements OnInit {
           "Jul",
           "Aug",
           "Sep",
-          "Oct", 
+          "Oct",
           "Nov",
           "Dec"
         ]
@@ -100,7 +100,7 @@ export class CashflowComponent implements OnInit {
       },
       tooltip: {
         y: {
-          formatter: function(val) {
+          formatter: function (val) {
             return "$ " + val;
           }
         }
@@ -108,16 +108,16 @@ export class CashflowComponent implements OnInit {
     };
   }
 
- async ngOnInit(){
+  async ngOnInit() {
     await this.loadData();
   }
 
   private async loadData() {
     let incomeData = [];
     let expensesData = [];
-    
 
-    try{
+
+    try {
       const data = await this.financeService.getTransactions();
 
       const currentYear = new Date().getUTCFullYear();
@@ -148,7 +148,7 @@ export class CashflowComponent implements OnInit {
           monthData[transactionMonth].income += parseInt(transaction.amount || '0');
         } else {
           monthData[transactionMonth].expenses -= parseInt(transaction.amount || '0');
-          
+
         }
       });
 
@@ -169,5 +169,5 @@ export class CashflowComponent implements OnInit {
       console.error("Error fetching data:", error);
     }
   }
-  
+
 }
