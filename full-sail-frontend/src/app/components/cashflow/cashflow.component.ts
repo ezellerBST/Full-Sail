@@ -110,6 +110,7 @@ export class CashflowComponent implements OnInit {
 
   async ngOnInit() {
     await this.loadData();
+    console.log("Cashflow - ngOnInit");
   }
 
   private async loadData() {
@@ -117,7 +118,8 @@ export class CashflowComponent implements OnInit {
     let expensesData = [];
 
 
-    try {
+    try{
+      console.log("Cashflow - loadData");
       const data = await this.financeService.getTransactions();
 
       const currentYear = new Date().getUTCFullYear();

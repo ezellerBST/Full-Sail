@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Auth } from '@angular/fire/auth';
 import { UserService } from 'src/app/services/user.service';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-profile',
@@ -18,7 +19,12 @@ export class ProfileComponent implements OnInit {
   address: string = "";
   phoneNum: string = "";
 
-  constructor(private auth: Auth, private userService: UserService) { }
+  constructor(private auth: Auth, private userService: UserService, private sharedService: SharedService) 
+  { 
+    this.sharedService.transactionsUpdated.subscribe(() => {
+      this.getUserDetails();
+    });
+  }
 
   ngOnInit(): void {
     this.getUserDetails();
@@ -44,7 +50,7 @@ export class ProfileComponent implements OnInit {
   async updateProfile() {
     try {
       await this.userService.updateUserProfile(this.displayName, this.photoURL, this.email, this.address, this.phoneNum);
-      await this.getUserDetails(); // Refresh user details after update
+      await this.sharedService.profileCardUpdate(); // Refresh user details after update
     } catch (error) {
       console.log(error);
     }

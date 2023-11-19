@@ -10,6 +10,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { FinanceService } from 'src/app/services/finance.service';
+import { CashflowComponent } from '../cashflow/cashflow.component';
 import { SharedService } from 'src/app/services/shared.service';
 // import { CashflowComponent } from '../cashflow/cashflow.component';
 
@@ -38,6 +39,7 @@ export class AccountComponent implements OnInit, AfterViewInit {
   FaFileCsv = faFileCsv;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild('cashflow') cashflow: CashflowComponent;
 
 
   constructor(private papa: Papa,
@@ -340,8 +342,12 @@ export class AccountComponent implements OnInit, AfterViewInit {
       data.push(docData);
     });
     this.dataSource.data = data;
-  }
 
+      if (this.cashflow) {
+      this.cashflow.ngOnInit();
+      }
+    }
+  
 
   async getGoals() {
     const userDetails = await this.getUserDetails();
