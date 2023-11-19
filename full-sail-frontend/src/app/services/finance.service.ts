@@ -169,20 +169,6 @@ export class FinanceService {
     // this.getTransactions();
   }
 
-  // sampleTransactions() {
-
-  //   const transactions = [
-  //     new Transaction("5000", new Date(2023, 10, 1), null, "Salary"),
-  //     new Transaction("-250", new Date(2023, 10, 2), null, "Groceries"),
-  //     new Transaction("500", new Date(), true, "Paycheck"),
-  //     new Transaction("-44.99", new Date(), null, "Xbox Controller")
-  //   ];
-
-  //   transactions.forEach(transaction => {
-  //     this.inputTransactionFromParameter(transaction);
-  //   });
-  // }
-
   async getTransactions() {
     const userDetails = await this.getUserDetails();
     if (userDetails && userDetails.uid) {
@@ -327,28 +313,6 @@ export class FinanceService {
     });
   }
 
-  // async openTransactionButton(date, amount, description) {
-  //   const userDetails = await this.getUserDetails();
-  //   try {
-  //     if (userDetails && userDetails.uid) {
-  //       const userId = userDetails.uid;
-  //       const docRef = addDoc(collection(this.firestore, `users/${userId}/transactions`), {
-  //         date: date,
-  //         description: description,
-  //         amount: amount
-  //       });
-  //       console.log(date, amount, description);
-  //       const docSnapshot = await getDoc(docRef);
-  //       if (docSnapshot.exists()) {
-  //         console.log('Transaction data:', docSnapshot.data());
-
-  //       }
-
-  //     }
-  //   } catch (err) {
-  //     console.error('Error: ', err);
-  //   }
-  // }
 
   async editTransactionButton(transactionId, date, amount, description) {
     const userDetails = await this.getUserDetails();
