@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { DecimalPipe } from '@angular/common';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
-import { MatDialogRef } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FinanceService } from 'src/app/services/finance.service';
-import { UserService } from 'src/app/services/user.service';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-add-transaction',
@@ -13,37 +13,48 @@ import { UserService } from 'src/app/services/user.service';
 export class AddTransactionComponent implements OnInit {
 
   isSignedIn: boolean = false;
-  date: Date = new Date();
+  date: Date;
   description: string;
-  amount: number;
-
-
+  amount: number = 0;
+  contributeToGoals: boolean = false;
 
   constructor(
-    private router: Router,
     private auth: Auth,
     private financeService: FinanceService,
     public dialogRef: MatDialogRef<AddTransactionComponent>,
-
+    @Inject(MAT_DIALOG_DATA) public data: { 
+      date: Date, 
+      description: string, 
+      amount: number, 
+      contributeTogoals: boolean 
+    },
+    private sharedService: SharedService
   ) { }
 
   ngOnInit() {
     this.auth.onAuthStateChanged(user => {
       this.isSignedIn = !!user;
+      this.date = this.date;
+      this.description = this.description;
+      this.amount = this.amount;
+      this.contributeToGoals = this.contributeToGoals;
     });
   }
 
-  //NEED TO UPDATE .app TO ACTUAL NAME OF FUNCTION IN SERVICE
+  async addTransaction() {
+    //await this.financeService.addTransactions({ date: this.date, description: this.description, amount: this.amount })
+    await this.financeService.inputTransactionFromParameter({
+      date: this.date,
+      description: this.description,
+      amount: this.amount,
+      contributeToGoals: this.contributeToGoals
+    })
+    console.log({ date: this.date, description: this.description, amount: this.amount });
+    await this.sharedService.accountTransactionsUpdate();
+    this.dialogRef.close();
+  }
 
-  // submitTransaction(){
-  //   this.financeService.app(this.date, this.description, this.amount)
-  //   .then((transaction) => {
-  //     console.log(transaction);
-  //     this.dialogRef.close();
-  //   })
-  //   .catch((error) => {
-  //     console.log(error);
-  //   });
-  // }
-
+  closeDialog() {
+    this.dialogRef.close();
+  }
 }

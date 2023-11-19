@@ -12,8 +12,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Goal } from '../models/goal';
 
 
-
-
 @Injectable({
   providedIn: 'root'
 })
@@ -25,7 +23,7 @@ export class FinanceService {
     private router: Router,
     public dialog: MatDialog,
     private firestore: Firestore,
-    ) { }
+  ) { }
 
   async inputPaycheck(paycheckAmount: number, paycheckDate: Date, paycheckToGoals: boolean) {
     if (paycheckAmount > 0) {
@@ -35,7 +33,7 @@ export class FinanceService {
         paycheckDate = new Date();
       }
 
-      const newTransaction = new Transaction(paycheckAmount.toString(), paycheckDate, paycheckToGoals, "Paycheck");
+      const newTransaction = new Transaction(paycheckAmount, paycheckDate, paycheckToGoals, "Paycheck");
       console.log("1");
       await this.inputTransactionFromParameter(newTransaction);
 
@@ -45,7 +43,6 @@ export class FinanceService {
       return alert("Paycheck must be a positive number");
     }
   }
-
 
   async inputTransactionFromParameter(transaction: Transaction) {
     console.log("2");
@@ -101,13 +98,11 @@ export class FinanceService {
         transactionContribute = null;
       }
 
-
       const newTransaction = new Transaction(transaction.Amount, parsedDate, transactionContribute, transaction.Description);
 
       this.inputTransactionFromParameter(newTransaction);
 
     });
-
     // this.extractedData = [];
     // this.csvString = ``;
     // this.parsedData = [];
@@ -128,7 +123,6 @@ export class FinanceService {
     }
   }
 
-
   async getUserDetails() {
     try {
       const userCredential = await this.auth.currentUser;
@@ -147,7 +141,6 @@ export class FinanceService {
   }
 
   async addTransactions(transaction: Transaction) {
-    console.log("3");
     const userDetails = await this.getUserDetails();
     if (userDetails && userDetails.uid) {
       const userId = userDetails.uid
@@ -155,9 +148,10 @@ export class FinanceService {
       // Iterating through the sample transactions and adding them to Firestore
       try {
         const docRef = await addDoc(collection(this.firestore, `users/${userId}/transactions`), {
-          date: transaction.date.toLocaleDateString(),
+          date: transaction.date,
           description: transaction.description,
-          amount: transaction.amount
+          amount: transaction.amount,
+
         });
 
         // Console.log the transaction data after the document is added
@@ -170,23 +164,9 @@ export class FinanceService {
       }
 
     }
-    console.log("4", "transaction added");
+    //console.log("4", "transaction added");
 
     // this.getTransactions();
-  }
-
-  sampleTransactions() {
-
-    const transactions = [
-      new Transaction("5000", new Date(2023, 10, 1), null, "Salary"),
-      new Transaction("-250", new Date(2023, 10, 2), null, "Groceries"),
-      new Transaction("500", new Date(), true, "Paycheck"),
-      new Transaction("-44.99", new Date(), null, "Xbox Controller")
-    ];
-
-    transactions.forEach(transaction => {
-      this.inputTransactionFromParameter(transaction);
-    });
   }
 
   async getTransactions() {
@@ -245,8 +225,6 @@ export class FinanceService {
     if (userDetails && userDetails.uid) {
       const userId = userDetails.uid
 
-
-
       // Iterating through the sample transactions and adding them to Firestore
 
       try {
@@ -255,7 +233,7 @@ export class FinanceService {
           total: goal.total,
           amountContributed: goal.amountContributed,
           balance: goal.balance,
-          dateCreated: goal.dateCreated.toLocaleDateString()
+          dateCreated: goal.dateCreated
         });
 
         // Console.log the transaction data after the document is added
@@ -266,74 +244,64 @@ export class FinanceService {
       } catch (error) {
         console.error('Error: ', error);
       }
-
     }
-
     // this.getGoals();
   }
 
 
+//NEED TO ADD UPDATE AND DELETE FUNCTIONS FOR GOALS CARD
+
+//NEED TO ADD SETDOC FOR addTransactionToGoals() FOR GOALS UPDATE IN FIRESTORE
   // async is new
   async addTransactionToGoals(transaction: Transaction) {
 
-    if (parseInt(transaction.amount) <= 0 || transaction.income === false || (transaction.contributeToGoals === false || null)) {
+    if (transaction.amount <= 0 || transaction.income === false || (transaction.contributeToGoals === false || null)) {
       console.log("addtrantogoal 1st");
       return
     }
     let goalTotal = 0;
     const goalList = await this.getGoals();
-
     await goalList.forEach(goal => {
       goalTotal += goal.amountContributed;
     });
 
     console.log("goal Total: ", goalTotal);
 
-    if (parseInt(transaction.amount) < goalTotal) {
+    if (transaction.amount < goalTotal) {
       console.log("addtrantogoal 2st");
       return;
     }
 
     goalList.forEach(goal => {
-
-      // const dateParts = goal.dateCreated.toDateString().split('/');
-
-      // const year = parseInt(dateParts[2], 10);
-      // const month = parseInt(dateParts[0], 10) - 1;
-      // const day = parseInt(dateParts[1], 10);
-
-      // const parsedDate = new Date(year, month, day);
-
       const goalDate = goal.dateCreated;
-
-
       const transactionDate = transaction.date;
       console.log("Tran Date");
       console.log(transaction.date)
 
-
-
       if (goalDate <= transactionDate) {
         goal.balance += goal.amountContributed;
+        
+        
+
         console.log("success", goal.balance);
       } else {
         console.log("addtrantogoal 3rd: Tran: ", transaction.date, "Goal: ", goal.dateCreated);
       }
-
     });
   }
 
   openTransactionDialog() {
     this.dialog.open(AddTransactionComponent, {
-      width: '33%',
-      height: '20%',
+      width: '55%',
+      height: '45%'
     })
   }
 
-  openEditTransactionDialog() {
+  openEditTransactionDialog(transactionId, date, amount, description) {
     this.dialog.open(EditTransactionComponent, {
-      width: '33%',
-      height: '20%'
+      width: '55%',
+      height: '45%',
+      data: { transactionId, date, amount, description }
     })
   }
 
@@ -345,8 +313,22 @@ export class FinanceService {
     });
   }
 
-  editTransactionButton() {
 
+  async editTransactionButton(transactionId, date, amount, description) {
+    const userDetails = await this.getUserDetails();
+
+    if (userDetails && userDetails.uid) {
+      const userId = userDetails.uid;
+      const transactionDocRef = doc(this.firestore, `users/${userId}/transactions/${transactionId}`);
+      console.log(transactionId);
+      const data = { date: date, amount: amount, description: description };
+      try {
+        await setDoc(transactionDocRef, data, { merge: true });
+        console.log('Updated data: ', data);
+      } catch (error) {
+        console.error('Error: ', error);
+      }
+    }
   }
 
   async deleteTransactionButton(transactionId) {
@@ -364,5 +346,4 @@ export class FinanceService {
       }
     }
   }
-
 }
