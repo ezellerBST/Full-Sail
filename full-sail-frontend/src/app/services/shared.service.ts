@@ -8,6 +8,7 @@ export class SharedService {
   private transactionsUpdatedList = new BehaviorSubject<void>(null);
   transactionsUpdated = this.transactionsUpdatedList.asObservable();
 
+
   accountTransactionsUpdate() {
     this.transactionsUpdatedList.next(null);
   }
@@ -18,4 +19,13 @@ export class SharedService {
   profileCardUpdate() {
     this.profileDataUpdated.next(null);
   }
+
+  private goalDataUpdated = new BehaviorSubject<void>(null);
+  goalsUpdated = this.goalDataUpdated.asObservable();
+  
+  accountGoalUpdate(){
+    this.goalDataUpdated.next(null);
+  }
+
+
 }

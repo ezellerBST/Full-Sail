@@ -111,6 +111,36 @@ export class AccountComponent implements OnInit, AfterViewInit {
     this.financeService.openDeleteTransactionDialog(transactionId);
   }
 
+  addNewGoalDialog(){
+    this.financeService.openCreateGoalDialog();
+  }
+
+  editGoalDialog(goalId, nameOfGoal, amountPerPaycheck, total){
+    this.financeService.openEditGoalDialog(goalId, nameOfGoal, amountPerPaycheck, total);
+  }
+
+  deleteGoalDialog(goalId){
+    this.financeService.openDeleteGoalDialog(goalId);
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   // inputTransaction() {
 
   //     if (this.paycheckDate.setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0)) {
