@@ -50,7 +50,7 @@ export class AddTransactionComponent implements OnInit {
       contributeToGoals: this.contributeToGoals
     })
     console.log({ date: this.date, description: this.description, amount: this.amount });
-    await this.sharedService.accountTransactionsUpdate();
+    // await this.sharedService.accountTransactionsUpdate();
     this.dialogRef.close();
   }
 

@@ -200,33 +200,6 @@
                     </div>
                 </div>
             </mat-card-content>
-            <mat-expansion-panel #createGoalPanel hideToggle>
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        Create Goal
-                    </mat-panel-title>
-                </mat-expansion-panel-header>
-                <div ngClass="items-centered">
-                    <mat-form-field appearance="outline">
-                        <mat-label>Name</mat-label>
-                        <input matInput #goalName type="text">
-                    </mat-form-field>
-
-                    <mat-form-field appearance="outline">
-                        <mat-label>Amount Per Paycheck</mat-label>
-                        <input matInput #goalAmount min="0" type="number">
-                    </mat-form-field>
-
-                    <mat-form-field appearance="outline">
-                        <mat-label>Goal Total</mat-label>
-                        <input matInput #goalTotal min="0" type="number">
-                    </mat-form-field>
-
-                    <button mat-raised-button color="primary"
-                        (click)="createGoal(goalName.value, goalAmount.value, goalTotal.value)"
-                        (click)="createGoalPanel.close()">Create Goal</button>
-                </div>
-            </mat-expansion-panel>
         </mat-card>
 
         <mat-card class="accounts-content-card hidden-card">
