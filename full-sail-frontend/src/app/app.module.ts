@@ -45,6 +45,9 @@ import { DeleteTransactionComponent } from './components/delete-transaction/dele
 import { NgApexchartsModule } from "ng-apexcharts";
 import { CashflowComponent } from './components/cashflow/cashflow.component';
 import { MatSortModule } from '@angular/material/sort';
+import { AddGoalComponent } from './components/add-goal/add-goal.component';
+import { EditGoalComponent } from './components/edit-goal/edit-goal.component';
+import { DeleteGoalComponent } from './components/delete-goal/delete-goal.component';
 
 
 @NgModule({
@@ -59,6 +62,9 @@ import { MatSortModule } from '@angular/material/sort';
     EditTransactionComponent,
     DeleteTransactionComponent,
     CashflowComponent,
+    AddGoalComponent,
+    EditGoalComponent,
+    DeleteGoalComponent,
   ],
   imports: [
     BrowserModule,
