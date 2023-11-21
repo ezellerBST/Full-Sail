@@ -1,98 +1,152 @@
 <body>
+    <section class="first-section">
+        <div class="sales-pitch">
+            <h2>Budget Like a Pro</h2>
+            <p>Experience powerful budgeting tools combined with an intuitive interface. See exactly where your money is
+                going and make informed decisions.</p>
+            <button mat-raised-button color="warn" (click)="getRegisterPage()">Create Your Free Account</button>
+        </div>
+        <img class="img-1" height="300px" width="500px" src="./assets/financial-planner.jpg" alt="Image">
+    </section>
 
-    <div>
-        <img src="http://placekitten.com/200/300" alt="Photo relating to app">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-            magna aliqua. Egestas congue quisque egestas diam in. Eu volutpat odio facilisis mauris sit amet. Habitasse
-            platea dictumst vestibulum rhoncus est. Purus viverra accumsan in nisl nisi scelerisque eu ultrices. Proin
-            sagittis nisl rhoncus mattis rhoncus urna neque viverra justo. Varius morbi enim nunc faucibus a
-            pellentesque sit amet porttitor. Arcu dui vivamus arcu felis bibendum. Et malesuada fames ac turpis egestas
-            sed tempus urna. Aliquet porttitor lacus luctus accumsan tortor posuere ac ut. Id consectetur purus ut
-            faucibus pulvinar elementum integer enim. Lorem sed risus ultricies tristique nulla aliquet. Fusce id velit
-            ut tortor pretium viverra suspendisse potenti nullam. Justo laoreet sit amet cursus sit. Vitae congue eu
-            consequat ac felis. Fermentum iaculis eu non diam.</p>
-        <button mat-raised-button color="warn" (click)="getRegisterPage()">Create Your Free Account</button>
-    </div>
+    <section class="second-section">
+        <img class="img-2" height="300px" width="400px" src="./assets/saving-money.avif" alt="Savings Image">
+        <div class="sales-pitch">
+            <h2>Secure Your Financial Future</h2>
+            <p>Transform your financial habits with smart savings strategies. Set goals, track progress, and watch your
+                savings grow effortlessly.</p>
+            <button class="btn-2" mat-raised-button color="warn" (click)="getRegisterPage()">Start Saving Today</button>
+        </div>
+    </section>
 
+    <h1>Testimonials</h1>
 
-    <div>
-        <h2>Another Header</h2>
-        <p>Iaculis at erat pellentesque adipiscing. In fermentum posuere urna nec tincidunt praesent semper feugiat
-            nibh. Aenean et tortor at risus viverra adipiscing at in. Ac felis donec et odio pellentesque diam. Dapibus
-            ultrices in iaculis nunc sed augue lacus. Nisi vitae suscipit tellus mauris a diam maecenas sed enim. Luctus
-            venenatis lectus magna fringilla urna porttitor rhoncus. Mattis aliquam faucibus purus in massa tempor nec
-            feugiat nisl. Quisque egestas diam in arcu. Quisque sagittis purus sit amet volutpat consequat mauris nunc
-            congue. Cursus vitae congue mauris rhoncus aenean vel elit scelerisque. Urna porttitor rhoncus dolor purus
-            non. Laoreet id donec ultrices tincidunt arcu non sodales neque. Eu volutpat odio facilisis mauris sit amet
-            massa vitae. Mi in nulla posuere sollicitudin aliquam ultrices sagittis. Accumsan sit amet nulla facilisi.
-            Adipiscing elit duis tristique sollicitudin nibh sit amet commodo nulla.</p>
-        <img src="http://placekitten.com/200/300" alt="Another photo relating to the app">
-        <button mat-raised-button color="warn" (click)="getRegisterPage()">Start Saving Money</button>
-    </div>
+    <section class="testimonials-section">
+        <div class="card-container">
+            <mat-card class="test-card">
+                <mat-card-header>
+                    <mat-card-title-group>
+                        <mat-card-title>John D.</mat-card-title>
+                        <mat-card-subtitle>
+                            <span>
+                                <mat-icon style="height: 30px;">
+                                    <fa-icon [icon]="faStar"></fa-icon>
+                                </mat-icon>
+                                <mat-icon style="height: 30px;">
+                                    <fa-icon [icon]="faStar"></fa-icon>
+                                </mat-icon>
+                                <mat-icon style="height: 30px;">
+                                    <fa-icon [icon]="faStar"></fa-icon>
+                                </mat-icon>
+                                <mat-icon style="height: 30px;"> 
+                                    <fa-icon [icon]="faStar"></fa-icon>
+                                </mat-icon>
+                                <mat-icon style="height: 30px;">
+                                    <fa-icon [icon]="faStar"></fa-icon>
+                                </mat-icon>
+                            </span>
+                        </mat-card-subtitle>
+                        <img height="100px" width="100px" mat-card-sm-image src="./assets/profile-pic.avif">
+                    </mat-card-title-group>
+                </mat-card-header>
+                <mat-card-content>
+                    "Full Sail has been a game-changer for my finances. I love how it helps me manage my money
+                    efficiently!" </mat-card-content>
+            </mat-card>
+            <mat-card class="test-card">
+                <mat-card-header>
+                    <mat-card-title-group>
+                        <mat-card-title>John D.</mat-card-title>
+                        <img height="100px" width="100px" mat-card-sm-image src="./assets/profile-pic.avif">
+                    </mat-card-title-group>
+                </mat-card-header>
+                <mat-card-content>
+                    "Full Sail has been a game-changer for my finances. I love how it helps me manage my money
+                    efficiently!" </mat-card-content>
+                <mat-card-footer>
+                    <span>
+                        <mat-icon>
+                            <fa-icon [icon]="faStar"></fa-icon>
+                        </mat-icon>
+                        <mat-icon>
+                            <fa-icon [icon]="faStar"></fa-icon>
+                        </mat-icon>
+                        <mat-icon>
+                            <fa-icon [icon]="faStar"></fa-icon>
+                        </mat-icon>
+                        <mat-icon>
+                            <fa-icon [icon]="faStar"></fa-icon>
+                        </mat-icon>
+                        <mat-icon>
+                            <fa-icon [icon]="faStar"></fa-icon>
+                        </mat-icon>
+                    </span>
+                </mat-card-footer>
+            </mat-card>
+            <mat-card class="test-card">
+                <mat-card-header>
+                    <mat-card-title-group>
+                        <mat-card-title>John D.</mat-card-title>
+                        <img height="100px" width="100px" mat-card-sm-image src="./assets/profile-pic.avif">
+                    </mat-card-title-group>
+                </mat-card-header>
+                <mat-card-content>
+                    "Full Sail has been a game-changer for my finances. I love how it helps me manage my money
+                    efficiently!" </mat-card-content>
+                <mat-card-footer>
+                    <span>
+                        <mat-icon>
+                            <fa-icon [icon]="faStar"></fa-icon>
+                        </mat-icon>
+                        <mat-icon>
+                            <fa-icon [icon]="faStar"></fa-icon>
+                        </mat-icon>
+                        <mat-icon>
+                            <fa-icon [icon]="faStar"></fa-icon>
+                        </mat-icon>
+                        <mat-icon>
+                            <fa-icon [icon]="faStar"></fa-icon>
+                        </mat-icon>
+                        <mat-icon>
+                            <fa-icon [icon]="faStar"></fa-icon>
+                        </mat-icon>
+                    </span>
+                </mat-card-footer>
+            </mat-card>
+            <mat-card class="test-card">
+                <mat-card-header>
+                    <mat-card-title-group>
+                        <mat-card-title>John D.</mat-card-title>
+                        <img height="100px" width="100px" mat-card-sm-image src="./assets/profile-pic.avif">
+                    </mat-card-title-group>
+                </mat-card-header>
+                <mat-card-content>
+                    "Full Sail has been a game-changer for my finances. I love how it helps me manage my money
+                    efficiently!" </mat-card-content>
+                <mat-card-footer>
+                    <span>
+                        <mat-icon>
+                            <fa-icon [icon]="faStar"></fa-icon>
+                        </mat-icon>
+                        <mat-icon>
+                            <fa-icon [icon]="faStar"></fa-icon>
+                        </mat-icon>
+                        <mat-icon>
+                            <fa-icon [icon]="faStar"></fa-icon>
+                        </mat-icon>
+                        <mat-icon>
+                            <fa-icon [icon]="faStar"></fa-icon>
+                        </mat-icon>
+                        <mat-icon>
+                            <fa-icon [icon]="faStar"></fa-icon>
+                        </mat-icon>
+                    </span>
+                </mat-card-footer>
+            </mat-card>
+        </div>
+    </section>
 
-    <div>
-        <h1>Testimonials</h1>
-        <mat-card>
-            <mat-card-header>
-                <mat-card-title>Name of Person</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <p>Text of the review of the app, and what it did to help this person.</p>
-            </mat-card-content>
-            <mat-card-footer>
-                Number out of 5 rating
-            </mat-card-footer>
-        </mat-card>
-
-        <mat-card>
-            <mat-card-header>
-                <mat-card-title>Name of Person</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <p>Text of the review of the app, and what it did to help this person.</p>
-            </mat-card-content>
-            <mat-card-footer>
-                Number out of 5 rating
-            </mat-card-footer>
-        </mat-card>
-
-        <mat-card>
-            <mat-card-header>
-                <mat-card-title>Name of Person</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <p>Text of the review of the app, and what it did to help this person.</p>
-            </mat-card-content>
-            <mat-card-footer>
-                Number out of 5 rating
-            </mat-card-footer>
-        </mat-card>
-
-        <mat-card>
-            <mat-card-header>
-                <mat-card-title>Name of Person</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <p>Text of the review of the app, and what it did to help this person.</p>
-            </mat-card-content>
-            <mat-card-footer>
-                Number out of 5 rating
-            </mat-card-footer>
-        </mat-card>
-
-        <mat-card>
-            <mat-card-header>
-                <mat-card-title>Name of Person</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <p>Text of the review of the app, and what it did to help this person.</p>
-            </mat-card-content>
-            <mat-card-footer>
-                Number out of 5 rating
-            </mat-card-footer>
-        </mat-card>
-        <button mat-raised-button color="warn" (click)="getRegisterPage()">Get Started Today</button>
-
-    </div>
+    <button class="btn-3" mat-raised-button color="warn" (click)="getRegisterPage()">Get
+        Started Today</button>
 
 </body>

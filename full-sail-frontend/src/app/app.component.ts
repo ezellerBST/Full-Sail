@@ -3,7 +3,6 @@ import { faSun, faMoon } from '@fortawesome/free-regular-svg-icons'
 import { faHouseUser, faAnchor } from '@fortawesome/free-solid-svg-icons'
 import { faFacebook, faXTwitter, faTiktok, faInstagram, faGithub, } from '@fortawesome/free-brands-svg-icons';
 import { MatDialog } from '@angular/material/dialog';
-// import { UserDialogComponent } from './components/user-dialog/user-dialog.component';
 import { SigninComponent } from './components/signin/signin.component';
 import { RegisterComponent } from './components/register/register.component';
 import { UserService } from './services/user.service';

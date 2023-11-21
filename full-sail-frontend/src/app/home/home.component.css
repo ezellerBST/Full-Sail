@@ -1,3 +1,110 @@
 body {
     height: 100%;
 }
+
+.first-section {
+    margin-top: 45px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.sales-pitch {
+    flex: 1;
+    background-color: navy;
+    color: white;
+    border-radius: 20px;
+    margin: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 400px;
+    height: 175px;
+}
+
+.img-1 {
+    display: flex;
+    max-width: 100%;
+    height: auto;
+    margin: 20px;
+}
+
+.second-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.img-2 {
+    flex: 1;
+    max-width: 400px;
+    max-height: 300px;
+    margin-left: 20px;
+}
+
+.btn-2 {
+    margin-left: 70%;
+}
+
+@media (max-width: 850px) {
+    .first-section {
+        flex-direction: column;
+    }
+
+    .img-1 {
+        order: 1;
+        margin-top: 10px;
+    }
+
+    .second-section {
+        flex-direction: column;
+    }
+
+    .img-2 {
+        order: 1;
+        margin-top: 0;
+    }
+
+    .test-card {
+        width: 100%;
+    }
+}
+
+.testimonials-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+h1 {
+    font-size: 30px;
+    font-style: italic;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.test-card {
+    margin: 20px;
+    max-width: 350px;
+    max-height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.btn-3 {
+    display: block;
+    margin: 10px auto;
+}
+
+mat-card-subtitle {
+    color: navy;
+}
