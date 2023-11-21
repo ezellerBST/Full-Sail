@@ -1,0 +1,58 @@
+<div class="top">
+    <mat-card class="profile-card">
+        <mat-card-header>
+            <mat-card-title>{{ displayName }}</mat-card-title>
+            <mat-card-subtitle>{{ email }}</mat-card-subtitle>
+        </mat-card-header>
+        <img class="profile-pic" mat-card-image src="{{ photoURL }}" alt="Profile Photo">
+        <mat-card-content>
+            <p>
+                {{ address }}
+            </p>
+        </mat-card-content>
+        <mat-card-content>
+            <p>
+                {{ phoneNum }}
+            </p>
+        </mat-card-content>
+        <mat-card-footer>
+            <mat-progress-bar mode="determinate" value="100"></mat-progress-bar>
+        </mat-card-footer>
+    </mat-card>
+</div>
+
+<mat-divider></mat-divider>
+
+<div class="mid">
+    <mat-card>
+        <h3 class="email">Name</h3>
+        <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input matInput [(ngModel)]="displayName">
+        </mat-form-field>
+        <h3 class="email">Email</h3>
+        <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input matInput [(ngModel)]="email">
+        </mat-form-field>
+        <h3 class="address">Address</h3>
+        <mat-form-field>
+            <mat-label>Address</mat-label>
+            <input matInput [(ngModel)]="address">
+        </mat-form-field>
+        <h3 class="phone">Phone Number</h3>
+        <mat-form-field>
+            <mat-label>Number</mat-label>
+            <input matInput [(ngModel)]="phoneNum">
+        </mat-form-field>
+        <h3 class="phone">Profile Pic</h3>
+        <mat-form-field>
+            <mat-label>Insert URL</mat-label>
+            <input matInput [(ngModel)]="photoURL">
+        </mat-form-field>
+        <mat-card-actions align="end" class="buttons">
+            <button mat-raised-button color="secondary" class="save" (click)="updateProfile()">Save</button>
+        </mat-card-actions>
+
+    </mat-card>
+</div>
