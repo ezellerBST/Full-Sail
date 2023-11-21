@@ -164,8 +164,7 @@
             <mat-card-content>
                 <div id="chart">
                     <app-cashflow #cashflow></app-cashflow>
-                  </div>
-                  
+                </div>
             </mat-card-content>
         </mat-card>
 
@@ -176,6 +175,9 @@
                     <h2>Goals</h2>
 
                 </div>
+                <div>
+                    <button mat-raised-button color="primary" (click)="addNewGoalDialog()"> Add New Goal </button>
+                </div>
                 <mat-divider></mat-divider>
                 <br>
                 <div ngClass="items-centered" *ngFor="let goal of goalList">
@@ -183,14 +185,20 @@
                         <h3>{{goal.dateCreated.toLocaleDateString()}} - {{goal.name}}</h3>
                         <h3>{{goal.balance}} / {{goal.total}}</h3>
                         <h3>{{goal.amountContributed}} Per Paycheck</h3>
-                        <button mat-raised-button color="primary">Edit</button>
+
+                        <!-- Need to add button functions to the below buttons, need to change Goal Card so that we 
+                            can get the element.id, and other values to pass in to the button functions  -->
+                        <!-- 
+                        <button mat-raised-button color="primary" (click)="editGoalDialog(  INPUT HERE!! )">Edit</button>
+                        <button mat-raised-button color="warn" (click)="deleteGoalDialog(  INPUT HERE!!!  )">Delete</button>    
+                        -->
+
                     </div>
                     <div ngClass="alt-theme">
                         <mat-progress-bar mode="determinate" style="height: 30px;"
                             [value]="goal.balance / goal.total * 100"></mat-progress-bar>
                     </div>
                 </div>
-
             </mat-card-content>
             <mat-expansion-panel #createGoalPanel hideToggle>
                 <mat-expansion-panel-header>
@@ -221,11 +229,8 @@
             </mat-expansion-panel>
         </mat-card>
 
-
-
         <mat-card class="accounts-content-card hidden-card">
             <mat-card-content ngClass="items-centered">
-
 
             </mat-card-content>
         </mat-card>
@@ -235,8 +240,5 @@
 
             </mat-card-content>
         </mat-card>
-
-
     </div>
-
 </body>

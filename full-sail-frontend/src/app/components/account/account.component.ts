@@ -36,45 +36,6 @@ export interface TransactionTable {
 export class AccountComponent implements OnInit, AfterViewInit {
 
 
-  FaFileCsv = faFileCsv;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild('cashflow') cashflow: CashflowComponent;
-
-
-  constructor(private papa: Papa,
-    private el: ElementRef,
-    private auth: Auth,
-    private firestore: Firestore,
-    private financeService: FinanceService,
-    private sharedService: SharedService) {
-    this.sharedService.transactionsUpdated.subscribe(() => {
-      this.getTransactions();
-    });
-  }
-
-  ngOnInit(): void {
-    this.getUserDetails();
-    this.getTransactions();
-    this.getGoals();
-
-
-  }
-
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
-
   _financeService = this.financeService
 
   paycheckAmount: number = 0;
@@ -99,6 +60,46 @@ export class AccountComponent implements OnInit, AfterViewInit {
   columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
   expandedElement: any | null;
 
+  FaFileCsv = faFileCsv;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild('cashflow') cashflow: CashflowComponent;
+
+
+  constructor(private papa: Papa,
+    private el: ElementRef,
+    private auth: Auth,
+    private firestore: Firestore,
+    private financeService: FinanceService,
+    private sharedService: SharedService) {
+    this.sharedService.transactionsUpdated.subscribe(() => {
+      this.getTransactions();
+    });
+    this.sharedService.goalsUpdated.subscribe(() => {
+      this.getGoals();
+    })
+  }
+
+  ngOnInit(): void {
+    this.financeService.getUserDetails();
+    this.financeService.getTransactions();
+    this.financeService.getGoals();
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
   addTransaction() {
     this.financeService.openTransactionDialog();
   }
@@ -115,8 +116,8 @@ export class AccountComponent implements OnInit, AfterViewInit {
     this.financeService.openCreateGoalDialog();
   }
 
-  editGoalDialog(goalId, nameOfGoal, amountPerPaycheck, total){
-    this.financeService.openEditGoalDialog(goalId, nameOfGoal, amountPerPaycheck, total);
+  editGoalDialog(goalId, date, nameOfGoal, amountPerPaycheck, total){
+    this.financeService.openEditGoalDialog(goalId, date, nameOfGoal, amountPerPaycheck, total);
   }
 
   deleteGoalDialog(goalId){
@@ -203,6 +204,7 @@ export class AccountComponent implements OnInit, AfterViewInit {
 
   async createGoal(name: string, amountPerPaycheck: string, total: string) {
     await this.financeService.createGoal(name, parseInt(amountPerPaycheck), parseInt(total));
+    // this.addGoal(new Goal(name, parseInt(total), parseInt(amountPerPaycheck), 0, new Date()));
     console.log("Goal List: ", this.goalList);
     console.log("create Goal: ", new Date());
     this.getGoals();
