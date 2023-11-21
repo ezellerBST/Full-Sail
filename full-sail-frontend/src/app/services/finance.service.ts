@@ -10,6 +10,9 @@ import { DeleteTransactionComponent } from '../components/delete-transaction/del
 import { Papa } from 'ngx-papaparse';
 import { MatTableDataSource } from '@angular/material/table';
 import { Goal } from '../models/goal';
+import { AddGoalComponent } from '../components/add-goal/add-goal.component';
+import { EditGoalComponent } from '../components/edit-goal/edit-goal.component';
+import { DeleteGoalComponent } from '../components/delete-goal/delete-goal.component';
 
 
 @Injectable({
@@ -214,8 +217,8 @@ export class FinanceService {
 
 
 
-  createGoal(name: string, amountPerPaycheck: string, total: string) {
-    this.addGoal(new Goal(name, parseInt(total), parseInt(amountPerPaycheck), 0, new Date()));
+  createGoal(name: string, amountPerPaycheck: number, total: number) {
+    this.addGoal(new Goal(name, total, amountPerPaycheck, 0, new Date()));
     // console.log("Goal List: ", this.goalList);
     console.log("create Goal: ", new Date());
   }
@@ -290,6 +293,9 @@ export class FinanceService {
     });
   }
 
+
+  //Transaction dialog button functions
+
   openTransactionDialog() {
     this.dialog.open(AddTransactionComponent, {
       width: '55%',
@@ -346,4 +352,75 @@ export class FinanceService {
       }
     }
   }
+
+  //Goal dialog functions
+
+  openCreateGoalDialog(){
+    this.dialog.open(AddGoalComponent, {
+      width: '55%',
+      height: '45%'
+    })
+  }
+
+  openEditGoalDialog(goalId, nameOfGoal, amountPerPaycheck, total){
+    this.dialog.open(EditGoalComponent, {
+      width: '55%',
+      height: '45%',
+      data: { goalId, nameOfGoal, amountPerPaycheck, total }
+    })
+  }
+
+  openDeleteGoalDialog(goalId){
+    this.dialog.open(DeleteGoalComponent, {
+      width: '55%',
+      height: '45%',
+      data: { goalId }
+    })
+  }
+
+  async editGoalButton(goalId, nameOfGoal, amountPerPaycheck, total){
+    const userDetails = await this.getUserDetails();
+
+    if(userDetails && userDetails.uid) {
+      const userId = userDetails.uid;
+      const goalDocRef = doc(this.firestore, `users/${userId}/goals/${goalId}`);
+      console.log(goalId);
+      const data = { nameOfGoal: nameOfGoal, amountPerPaycheck: amountPerPaycheck, total: total };
+      try {
+        await setDoc(goalDocRef, data, { merge: true });
+        console.log('Updated goal: ', data);
+      } catch (err) {
+        console.log('Error: ', err);
+      }
+    }
+  }
+
+  async deleteGoalButton(goalId){
+    const userDetails = await this.getUserDetails();
+
+    if (userDetails && userDetails.uid) {
+      const userId = userDetails.uid;
+      const goalDocRef = doc(this.firestore, `users/${userId}/goals/${goalId}`);
+      console.log(goalId);
+      try {
+        await deleteDoc(goalDocRef);
+        console.log('goal successfully deleted!');
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
