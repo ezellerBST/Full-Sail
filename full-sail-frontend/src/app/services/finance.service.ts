@@ -13,6 +13,7 @@ import { AddGoalComponent } from '../components/add-goal/add-goal.component';
 import { EditGoalComponent } from '../components/edit-goal/edit-goal.component';
 import { DeleteGoalComponent } from '../components/delete-goal/delete-goal.component';
 import { AccountComponent } from '../components/account/account.component';
+import { SharedService } from './shared.service';
 
 
 @Injectable({
@@ -25,6 +26,7 @@ export class FinanceService {
     private auth: Auth,
     public dialog: MatDialog,
     private firestore: Firestore,
+    private sharedService: SharedService
   ) { }
 
   
@@ -32,7 +34,6 @@ export class FinanceService {
   async inputPaycheck(paycheckAmount: number, paycheckDate: Date, paycheckToGoals: boolean) {
     if (paycheckAmount > 0) {
 
-//The IF statement might be causing issues with how the DATE is being given to the paycheck being put in
       if (paycheckDate.setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0)) {
         paycheckDate = new Date();
       }
@@ -49,6 +50,7 @@ export class FinanceService {
     console.log("Transaction being added to transaction list and goals.", transaction);
     await this.addTransactions(transaction);
     await this.addTransactionToGoals(transaction);
+    await this.sharedService.accountTransactionsUpdate();
   }
 
   async inputCSV(csvString: string, contributeToGoals: boolean) {
@@ -168,19 +170,14 @@ export class FinanceService {
     if (userDetails && userDetails.uid) {
       const userId = userDetails.uid
       const querySnapshot = await getDocs(collection(this.firestore, `users/${userId}/transactions`));
-      // const data: TransactionTable[] = [];
       let result = [];
       querySnapshot.forEach((doc) => {
 
         const docData = doc.data();
-        // const docData = doc.data() as TransactionTable;
-        docData.date = new Date(docData.date.seconds * 1000);
         docData.id = doc.id
-        // data.push(docData);
         result.push(docData);
       });
-      // this.dataSource.data = data;
-      return result
+      return result.sort((a, b) => b.date - a.date);
     } else {
       return null;
     }
@@ -194,11 +191,10 @@ export class FinanceService {
       let goalList = [];
       querySnapshot.forEach((doc) => {
         const docData = doc.data();
-        docData.dateCreated = new Date(docData.dateCreated);
         goalList.push(docData);
       });
-
-      return goalList;
+      console.log(goalList.sort((a, b) => b.date - a.date));
+      return goalList.sort((a, b) => b.date - a.date);
     } else {
       return null;
     }
@@ -208,7 +204,6 @@ export class FinanceService {
 
   createGoal(name: string, amountPerPaycheck: number, total: number) {
     this.addGoal(new Goal(name, total, amountPerPaycheck, 0, new Date()));
-    // console.log("Goal List: ", this.goalList);
     console.log("create Goal: ", new Date());
   }
 
@@ -245,6 +240,8 @@ export class FinanceService {
 
   //NEED TO ADD SETDOC FOR addTransactionToGoals() FOR GOALS UPDATE IN FIRESTORE
   // async is new
+
+
   async addTransactionToGoals(transaction: Transaction) {
 
     if (transaction.amount <= 0 || transaction.income === false || (transaction.contributeToGoals === false || null)) {
@@ -253,10 +250,11 @@ export class FinanceService {
       console.log("addtrantogoal 1st");
       return
     }
-    let goalTotal = 0;
+    let goalTotal : number = 0;
     const goalList = await this.getGoals();
     await goalList.forEach(goal => {
-      goalTotal += goal.amountContributed;
+      console.log(goal.amountContributed, parseInt(goal.amountContributed));
+      goalTotal += parseInt(goal.amountContributed);
     });
 
     console.log("goal Total: ", goalTotal);
@@ -266,6 +264,8 @@ export class FinanceService {
       return;
     }
 
+    const userDetails = await this.getUserDetails();
+
     goalList.forEach(goal => {
       const goalDate = goal.dateCreated;
       const transactionDate = transaction.date;
@@ -273,15 +273,30 @@ export class FinanceService {
       console.log(transaction.date)
 
       if (goalDate <= transactionDate) {
-        goal.balance += goal.amountContributed; //Add logic to update goal balance
+        goal.balance = parseInt(goal.amountContributed) + parseInt(goal.balance); //Add logic to update goal balance
 
-        
+        this.editGoalWithUserDetails(userDetails, goal);
+
 
         console.log("success", goal.balance);
       } else {
         console.log("addtrantogoal 3rd: Tran: ", transaction.date, "Goal: ", goal.dateCreated);
       }
     });
+  }
+
+  async editGoalWithUserDetails(userDetails , goal: Goal) {
+    if (userDetails && userDetails.uid) {
+      const userId = userDetails.uid;
+      const goalDocRef = doc(this.firestore, `users/${userId}/goals`);
+      const data = {  date: goal.dateCreated, name: goal.name, amountPerPaycheck: goal.amountContributed, balance: goal.balance, total: goal.total };
+      try {
+        await setDoc(goalDocRef, data, { merge: true });
+        console.log('Updated goal: ', data);
+      } catch (err) {
+        console.log('Error: ', err);
+      }
+    }
   }
 
 
