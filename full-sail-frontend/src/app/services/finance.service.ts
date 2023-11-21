@@ -13,6 +13,7 @@ import { Goal } from '../models/goal';
 import { AddGoalComponent } from '../components/add-goal/add-goal.component';
 import { EditGoalComponent } from '../components/edit-goal/edit-goal.component';
 import { DeleteGoalComponent } from '../components/delete-goal/delete-goal.component';
+import { AccountComponent } from '../components/account/account.component';
 
 
 @Injectable({
@@ -27,6 +28,8 @@ export class FinanceService {
     public dialog: MatDialog,
     private firestore: Firestore,
   ) { }
+
+  
 
   async inputPaycheck(paycheckAmount: number, paycheckDate: Date, paycheckToGoals: boolean) {
     if (paycheckAmount > 0) {
@@ -50,10 +53,7 @@ export class FinanceService {
   async inputTransactionFromParameter(transaction: Transaction) {
     console.log("2");
     await this.addTransactions(transaction);
-    // this.transactionList.push(transaction);
     await this.addTransactionToGoals(transaction);
-    // this.paycheck = 0;
-    // console.log("Transaction List: ", this.transactionList);
   }
 
   async inputCSV(csvString: string, contributeToGoals: boolean) {
@@ -75,9 +75,7 @@ export class FinanceService {
         },
         error: (error) => {
           console.error(error.message);
-          // this.extractedData = [];
-          // this.csvString = ``;
-          // this.parsedData = [];
+
         }
       });
     }
@@ -106,9 +104,7 @@ export class FinanceService {
       this.inputTransactionFromParameter(newTransaction);
 
     });
-    // this.extractedData = [];
-    // this.csvString = ``;
-    // this.parsedData = [];
+
   }
 
   onFileSelected(event: any, contributeToGoals: boolean) {
