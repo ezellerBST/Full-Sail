@@ -6,6 +6,7 @@ export class Goal {
     dateCreated?: Date;
 
     constructor( name?: string, total?: number, amountContributed ?: number, balance ?: number, dateCreated ?: Date ) {
+        this.dateCreated = new Date();
         this.name = name;
         this.total = total;
         this.amountContributed = amountContributed;
