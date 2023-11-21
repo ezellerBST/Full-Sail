@@ -12,6 +12,7 @@ import { Goal } from '../models/goal';
 import { AddGoalComponent } from '../components/add-goal/add-goal.component';
 import { EditGoalComponent } from '../components/edit-goal/edit-goal.component';
 import { DeleteGoalComponent } from '../components/delete-goal/delete-goal.component';
+import { AccountComponent } from '../components/account/account.component';
 
 
 @Injectable({
@@ -25,6 +26,8 @@ export class FinanceService {
     public dialog: MatDialog,
     private firestore: Firestore,
   ) { }
+
+  
 
   async inputPaycheck(paycheckAmount: number, paycheckDate: Date, paycheckToGoals: boolean) {
     if (paycheckAmount > 0) {
@@ -45,10 +48,7 @@ export class FinanceService {
   async inputTransactionFromParameter(transaction: Transaction) {
     console.log("Transaction being added to transaction list and goals.", transaction);
     await this.addTransactions(transaction);
-    // this.transactionList.push(transaction);
     await this.addTransactionToGoals(transaction);
-    // this.paycheck = 0;
-    // console.log("Transaction List: ", this.transactionList);
   }
 
   async inputCSV(csvString: string, contributeToGoals: boolean) {
@@ -70,9 +70,7 @@ export class FinanceService {
         },
         error: (error) => {
           console.error(error.message);
-          // this.extractedData = [];
-          // this.csvString = ``;
-          // this.parsedData = [];
+
         }
       });
     }
@@ -101,9 +99,7 @@ export class FinanceService {
       this.inputTransactionFromParameter(newTransaction);
 
     });
-    // this.extractedData = [];
-    // this.csvString = ``;
-    // this.parsedData = [];
+
   }
 
   onFileSelected(event: any, contributeToGoals: boolean) {
@@ -178,14 +174,12 @@ export class FinanceService {
 
         const docData = doc.data();
         // const docData = doc.data() as TransactionTable;
-
-        docData.date = docData.date
+        docData.date = new Date(docData.date.seconds * 1000);
         docData.id = doc.id
         // data.push(docData);
         result.push(docData);
       });
       // this.dataSource.data = data;
-      console.log(result);
       return result
     } else {
       return null;
@@ -279,9 +273,9 @@ export class FinanceService {
       console.log(transaction.date)
 
       if (goalDate <= transactionDate) {
-        goal.balance += goal.amountContributed;
+        goal.balance += goal.amountContributed; //Add logic to update goal balance
 
-
+        
 
         console.log("success", goal.balance);
       } else {

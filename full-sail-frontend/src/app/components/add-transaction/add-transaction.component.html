@@ -1,7 +1,9 @@
 <h2>Add a New Transaction</h2>
 <mat-form-field>
     <mat-label>Date</mat-label>
-    <input [(ngModel)]='date' matInput>
+    <input [matDatepicker]="datePicker" [(ngModel)]='date' matInput>
+    <mat-datepicker-toggle matIconSuffix [for]="datePicker"></mat-datepicker-toggle>
+    <mat-datepicker #datePicker></mat-datepicker>
 </mat-form-field>
 <br>
 <mat-form-field>
