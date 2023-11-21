@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Firestore, addDoc, doc, setDoc, getDoc, getDocs, collection, deleteDoc } from '@angular/fire/firestore';
-import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { Auth } from '@angular/fire/auth';
 import { Transaction } from '../models/transaction';
@@ -23,7 +22,6 @@ export class FinanceService {
   constructor(
     private papa: Papa,
     private auth: Auth,
-    private router: Router,
     public dialog: MatDialog,
     private firestore: Firestore,
   ) { }
@@ -31,24 +29,21 @@ export class FinanceService {
   async inputPaycheck(paycheckAmount: number, paycheckDate: Date, paycheckToGoals: boolean) {
     if (paycheckAmount > 0) {
 
-
+//The IF statement might be causing issues with how the DATE is being given to the paycheck being put in
       if (paycheckDate.setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0)) {
         paycheckDate = new Date();
       }
 
       const newTransaction = new Transaction(paycheckAmount, paycheckDate, paycheckToGoals, "Paycheck");
-      console.log("1");
+      console.log("Transaction being passed to transaction list and goals.", newTransaction);
       await this.inputTransactionFromParameter(newTransaction);
-
-
-
     } else {
       return alert("Paycheck must be a positive number");
     }
   }
 
   async inputTransactionFromParameter(transaction: Transaction) {
-    console.log("2");
+    console.log("Transaction being added to transaction list and goals.", transaction);
     await this.addTransactions(transaction);
     // this.transactionList.push(transaction);
     await this.addTransactionToGoals(transaction);
@@ -252,13 +247,15 @@ export class FinanceService {
   }
 
 
-//NEED TO ADD UPDATE AND DELETE FUNCTIONS FOR GOALS CARD
+  //NEED TO ADD UPDATE AND DELETE FUNCTIONS FOR GOALS CARD
 
-//NEED TO ADD SETDOC FOR addTransactionToGoals() FOR GOALS UPDATE IN FIRESTORE
+  //NEED TO ADD SETDOC FOR addTransactionToGoals() FOR GOALS UPDATE IN FIRESTORE
   // async is new
   async addTransactionToGoals(transaction: Transaction) {
 
     if (transaction.amount <= 0 || transaction.income === false || (transaction.contributeToGoals === false || null)) {
+      console.log("The transaction being put in to be sent to goals. ", transaction);
+      
       console.log("addtrantogoal 1st");
       return
     }
@@ -283,8 +280,8 @@ export class FinanceService {
 
       if (goalDate <= transactionDate) {
         goal.balance += goal.amountContributed;
-        
-        
+
+
 
         console.log("success", goal.balance);
       } else {
@@ -355,22 +352,22 @@ export class FinanceService {
 
   //Goal dialog functions
 
-  openCreateGoalDialog(){
+  openCreateGoalDialog() {
     this.dialog.open(AddGoalComponent, {
       width: '55%',
       height: '45%'
     })
   }
 
-  openEditGoalDialog(goalId, nameOfGoal, amountPerPaycheck, total){
+  openEditGoalDialog(goalId, date,  nameOfGoal, amountPerPaycheck, total) {
     this.dialog.open(EditGoalComponent, {
       width: '55%',
       height: '45%',
-      data: { goalId, nameOfGoal, amountPerPaycheck, total }
+      data: { goalId, date, nameOfGoal, amountPerPaycheck, total }
     })
   }
 
-  openDeleteGoalDialog(goalId){
+  openDeleteGoalDialog(goalId) {
     this.dialog.open(DeleteGoalComponent, {
       width: '55%',
       height: '45%',
@@ -378,14 +375,14 @@ export class FinanceService {
     })
   }
 
-  async editGoalButton(goalId, nameOfGoal, amountPerPaycheck, total){
+  async editGoalButton(goalId, goal: Goal) {
     const userDetails = await this.getUserDetails();
 
-    if(userDetails && userDetails.uid) {
+    if (userDetails && userDetails.uid) {
       const userId = userDetails.uid;
       const goalDocRef = doc(this.firestore, `users/${userId}/goals/${goalId}`);
       console.log(goalId);
-      const data = { nameOfGoal: nameOfGoal, amountPerPaycheck: amountPerPaycheck, total: total };
+      const data = {  date: goal.dateCreated, name: goal.name, amountPerPaycheck: goal.amountContributed, total: goal.total };
       try {
         await setDoc(goalDocRef, data, { merge: true });
         console.log('Updated goal: ', data);
@@ -395,7 +392,7 @@ export class FinanceService {
     }
   }
 
-  async deleteGoalButton(goalId){
+  async deleteGoalButton(goalId) {
     const userDetails = await this.getUserDetails();
 
     if (userDetails && userDetails.uid) {
