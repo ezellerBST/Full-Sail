@@ -36,7 +36,8 @@ export class AddGoalComponent implements OnInit {
         this.name = this.name;
         this.amountPerPaycheck = this.amountPerPaycheck;
         this.total = this.total;
-      })
+      }),
+      this.financeService.getGoals()
   }
 
   async addGoal(){
@@ -46,6 +47,7 @@ export class AddGoalComponent implements OnInit {
       this.total
     );
    console.log(this.name, this.amountPerPaycheck, this.total);
+   await this.financeService.getGoals();
    await this.sharedService.accountGoalUpdate();
    this.dialogRef.close(); 
   }

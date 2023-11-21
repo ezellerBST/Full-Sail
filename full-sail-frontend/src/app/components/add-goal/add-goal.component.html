@@ -1,19 +1,19 @@
 <h2>Add a New Goal</h2>
 <mat-form-field>
-    <mat-label>Name</mat-label>
-    <input [(ngModel)]='name' matInput>
+    <mat-label>Name of Goal</mat-label>
+    <input [(ngModel)]='name' matInput placeholder="ex. Save for a house!">
 </mat-form-field>
 <br>
 <mat-form-field>
     <mat-label>Amount Per Paycheck</mat-label>
-    <input [(ngModel)]="amountPerPaycheck" matInput>
+    <input [(ngModel)]="amountPerPaycheck" matInput type="number > 0" placeholder="175.00">
 </mat-form-field>
 <br>
 <mat-form-field>
-    <mat-label>Total amount you are wanting to save for this goal</mat-label>
-    <input [(ngModel)]="total" matInput>
+    <mat-label>Total Amount for this Goal</mat-label>
+    <input [(ngModel)]="total" matInput type="number > 0" placeholder="1000.00">
 </mat-form-field>
 <br>
 
-<button mat-raised-button color="primary" (click)="addGoal()">Save Changes</button>
+<button mat-raised-button color="primary" (click)="addGoal()">Add Goal</button>
 <button mat-raised-button color="warn" (click)="closeDialog()">Cancel</button>
