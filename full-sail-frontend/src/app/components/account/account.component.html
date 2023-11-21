@@ -33,7 +33,6 @@
                                 <mat-form-field>
                                     <input matInput [matDatepicker]="paycheckPicker" name="paycheckPicker"
                                         [(ngModel)]="paycheckDate">
-                                    <mat-hint>MM/DD/YYYY</mat-hint>
                                     <mat-datepicker-toggle matIconSuffix [for]="paycheckPicker"></mat-datepicker-toggle>
                                     <mat-datepicker #paycheckPicker></mat-datepicker>
                                 </mat-form-field>
@@ -165,8 +164,7 @@
             <mat-card-content>
                 <div id="chart">
                     <app-cashflow #cashflow></app-cashflow>
-                  </div>
-                  
+                </div>
             </mat-card-content>
         </mat-card>
 
@@ -177,6 +175,9 @@
                     <h2>Goals</h2>
 
                 </div>
+                <div>
+                    <button mat-raised-button color="primary" (click)="addNewGoalDialog()"> Add New Goal </button>
+                </div>
                 <mat-divider></mat-divider>
                 <br>
                 <div ngClass="items-centered" *ngFor="let goal of goalList">
@@ -184,49 +185,25 @@
                         <h3>{{goal.dateCreated.toLocaleDateString()}} - {{goal.name}}</h3>
                         <h3>{{goal.balance}} / {{goal.total}}</h3>
                         <h3>{{goal.amountContributed}} Per Paycheck</h3>
-                        <button mat-raised-button color="primary">Edit</button>
+
+                        <!-- Need to add button functions to the below buttons, need to change Goal Card so that we 
+                            can get the element.id, and other values to pass in to the button functions  -->
+                        <!-- 
+                        <button mat-raised-button color="primary" (click)="editGoalDialog(  INPUT HERE!! )">Edit</button>
+                        <button mat-raised-button color="warn" (click)="deleteGoalDialog(  INPUT HERE!!!  )">Delete</button>    
+                        -->
+
                     </div>
                     <div ngClass="alt-theme">
                         <mat-progress-bar mode="determinate" style="height: 30px;"
                             [value]="goal.balance / goal.total * 100"></mat-progress-bar>
                     </div>
                 </div>
-
             </mat-card-content>
-            <mat-expansion-panel #createGoalPanel hideToggle>
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        Create Goal
-                    </mat-panel-title>
-                </mat-expansion-panel-header>
-                <div ngClass="items-centered">
-                    <mat-form-field appearance="outline">
-                        <mat-label>Name</mat-label>
-                        <input matInput #goalName type="text">
-                    </mat-form-field>
-
-                    <mat-form-field appearance="outline">
-                        <mat-label>Amount Per Paycheck</mat-label>
-                        <input matInput #goalAmount min="0" type="number">
-                    </mat-form-field>
-
-                    <mat-form-field appearance="outline">
-                        <mat-label>Goal Total</mat-label>
-                        <input matInput #goalTotal min="0" type="number">
-                    </mat-form-field>
-
-                    <button mat-raised-button color="primary"
-                        (click)="createGoal(goalName.value, goalAmount.value, goalTotal.value)"
-                        (click)="createGoalPanel.close()">Create Goal</button>
-                </div>
-            </mat-expansion-panel>
         </mat-card>
-
-
 
         <mat-card class="accounts-content-card hidden-card">
             <mat-card-content ngClass="items-centered">
-
 
             </mat-card-content>
         </mat-card>
@@ -236,8 +213,5 @@
 
             </mat-card-content>
         </mat-card>
-
-
     </div>
-
 </body>

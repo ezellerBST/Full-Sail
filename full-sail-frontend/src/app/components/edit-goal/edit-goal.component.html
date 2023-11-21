@@ -1,0 +1,30 @@
+<mat-form-field>
+    <mat-label>Date</mat-label>
+    <input [(ngModel)]='date' matInput>
+</mat-form-field>
+
+<br>
+
+<mat-form-field>
+    <mat-label>Name Of Goal</mat-label>
+    <input [(ngModel)]="nameOfGoal" matInput>
+</mat-form-field>
+
+<br>
+
+<mat-form-field>
+    <mat-label>Amount to Contribute</mat-label>
+    <input [(ngModel)]="amountPerPaycheck" matInput>
+</mat-form-field>
+
+<br>
+
+<mat-form-field>
+    <mat-label>Total for your Goal</mat-label>
+    <input [(ngModel)]="total" matInput>
+</mat-form-field>
+
+<br>
+
+<button mat-raised-button color="primary" (click)="editGoal()">Save Changes</button>
+<button mat-raised-button color="warn" (click)="closeDialog()">Cancel</button>
