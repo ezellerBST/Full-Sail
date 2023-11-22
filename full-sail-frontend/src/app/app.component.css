@@ -3,7 +3,7 @@ header {
 }
 
 .header {
-    background-color: rgb(206, 216, 224);
+    /* background-color: rgb(206, 216, 224); */
     border-bottom: solid black 1px;
 }
 
@@ -17,7 +17,7 @@ footer {
     margin-top: auto;
     bottom: 0px;
     
-    background-color: lightgrey;
+    /* background-color: lightgrey; */
     width: 100%;
 }
 
@@ -51,7 +51,7 @@ mat-toolbar {
 
 @media (prefers-color-scheme: dark) {
     
-    .header {
+    /* .header {
         color: white;
         background-color: rgb(50, 50, 50);
         border-bottom: white solid 1px;
@@ -61,7 +61,7 @@ mat-toolbar {
         color: white;
         background-color: rgb(50, 50, 50);
         border-top: white solid 1px;
-    }
+    } */
 
    
 
@@ -70,10 +70,7 @@ mat-toolbar {
 
 
 @media (prefers-color-scheme: dark) {
-    .dark-mode-moon {
-        display: none;
-        visibility: hidden;
-    }
+    
 }
 
 
