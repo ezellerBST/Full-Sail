@@ -49,21 +49,26 @@ mat-toolbar {
 
 @media (prefers-color-scheme: dark) {
     
-    /* .header {
-        color: white;
-        /* background-color: rgb(50, 50, 50); */
+    .header {
+
         background-color: navy;
         border-bottom: white solid 1px;
+
+         /* color: white;
+        background-color: rgb(50, 50, 50); */
+     
     }
 
     footer {
         color: white;
-        /* background-color: rgb(50, 50, 50); */
+        background-color: rgb(50, 50, 50);
         background-color: navy;
         border-top: white solid 1px;
-    } */
+    } 
 
 }
+
+
 
 
 @media (prefers-color-scheme: dark) {
@@ -147,4 +152,3 @@ mat-toolbar {
         visibility: hidden;
     }
 }
-
