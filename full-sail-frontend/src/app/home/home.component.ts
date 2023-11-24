@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
   }
   
   getRegisterPage(){
-    this.router.navigate(['register']);
+    this.userService.openRegisterDialog();
   }
 }
 

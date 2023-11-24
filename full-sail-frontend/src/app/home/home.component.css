@@ -52,9 +52,13 @@ body {
         flex-direction: column;
     }
 
+    .sales-pitch {
+        margin: 15px auto;
+    }
+
     .img-1 {
         order: 1;
-        margin-top: 10px;
+        margin: auto;
     }
 
     .second-section {
@@ -63,11 +67,17 @@ body {
 
     .img-2 {
         order: 1;
-        margin-top: 0;
+        margin: auto;
     }
 
     .test-card {
         width: 100%;
+    }
+}
+
+@media (min-width: 850px) and (max-width: 970px)  {
+    .sales-pitch {
+        height: 200px;
     }
 }
 
@@ -83,6 +93,7 @@ h1 {
     font-style: italic;
     text-align: center;
     margin-top: 30px;
+    color: navy;
 }
 
 .card-container {
