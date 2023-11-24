@@ -1,23 +1,25 @@
+
 header {
     width: 100%;
 }
 
 .header {
-    /* background-color: rgb(206, 216, 224); */
+    background-color: navy;
     border-bottom: solid black 1px;
+    color: white;
 }
 
-router-outlet {
-    min-height: 100%;
-    
-    
-}
+/* router-outlet {
+
+} */
 
 footer {
     margin-top: auto;
-    bottom: 0px;
+    /* bottom: 0px; */
     
     /* background-color: lightgrey; */
+    color: white;
+    background-color: navy;
     width: 100%;
 }
 
@@ -36,7 +38,6 @@ mat-icon {
 mat-toolbar {
     display: flex;
     justify-content: space-around;
-    
 }
 
 .footer-div {
@@ -44,29 +45,25 @@ mat-toolbar {
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
-
 }
-
-
 
 @media (prefers-color-scheme: dark) {
     
     /* .header {
         color: white;
-        background-color: rgb(50, 50, 50);
+        /* background-color: rgb(50, 50, 50); */
+        background-color: navy;
         border-bottom: white solid 1px;
     }
 
     footer {
         color: white;
-        background-color: rgb(50, 50, 50);
+        /* background-color: rgb(50, 50, 50); */
+        background-color: navy;
         border-top: white solid 1px;
     } */
 
-   
-
-
-    }
+}
 
 
 @media (prefers-color-scheme: dark) {
@@ -75,47 +72,79 @@ mat-toolbar {
 
 
 @media (min-width: 1870px) {
-
+    .body-p {
+        visibility: hidden;
+    }
 
 }
 
 @media (min-width: 1690px) and (max-width: 1870px) {
-
+    .body-p {
+        visibility: hidden;
+    }
 
 }
 
 @media (min-width: 1440px) and (max-width: 1690px) {
-
+    .body-p {
+        visibility: hidden;
+    }
 
 }
 
 @media (min-width: 1200px) and (max-width: 1440px) {
-
+    .body-p {
+        visibility: hidden;
+    }
 
 }
 
 
 @media (min-width: 1020px) and (max-width: 1200px) {
-
+    .body-p {
+        visibility: hidden;
+    }
 
 }
 
 
 @media (min-width: 825px) and (max-width: 1020px)  {
-
+    .body-p {
+        visibility: hidden;
+    }
 }
 
 @media (min-width: 650px) and (max-width: 825px)  {
-
+    .body-p {
+        visibility: hidden;
+    }
 }
 
 @media (min-width: 470px) and (max-width: 650px)  {
-
+    .body-p {
+        margin-top: 15px;
+        color: navy;
+        font-size: x-large;
+        font-style: italic;
+        font-weight: bold;
+        text-align: center;
+    }
+    .header-p {
+        visibility: hidden;
+    }
 }
 
 @media (max-width: 470px)  {
-  
-
- 
+    .body-p {
+        margin-top: 15px;
+        color: navy;
+        font-size: x-large;
+        font-style: italic;
+        font-weight: bold;
+        text-align: center;
+    }
+    .header-p {
+        visibility: hidden;
+    }
 }
 
