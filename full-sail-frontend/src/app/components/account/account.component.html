@@ -188,10 +188,10 @@
 
                         <!-- Need to add button functions to the below buttons, need to change Goal Card so that we 
                             can get the element.id, and other values to pass in to the button functions  -->
-                        <!-- 
-                        <button mat-raised-button color="primary" (click)="editGoalDialog(  INPUT HERE!! )">Edit</button>
-                        <button mat-raised-button color="warn" (click)="deleteGoalDialog(  INPUT HERE!!!  )">Delete</button>    
-                        -->
+                        
+                        <button mat-raised-button color="primary" (click)="editGoalDialog(goal)">Edit</button>
+                        <button mat-raised-button color="warn" (click)="deleteGoalDialog(goal.id)">Delete</button>    
+                       
 
                     </div>
                     <div ngClass="alt-theme">

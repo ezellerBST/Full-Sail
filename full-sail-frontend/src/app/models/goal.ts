@@ -4,6 +4,7 @@ export class Goal {
     amountContributed ?: number;
     balance?: number;
     dateCreated?: Date;
+    id?: string;
 
     constructor( name?: string, total?: number, amountContributed ?: number, balance ?: number, dateCreated ?: Date ) {
         this.dateCreated = new Date();

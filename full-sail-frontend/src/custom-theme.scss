@@ -74,7 +74,7 @@ $alt-frontend-theme: mat.define-light-theme((
   @include mat.all-component-colors($alt-frontend-theme);
 }
 
-.dark-mode .mat-app-background {
+.dark-mode {
   @include mat.all-component-themes($full-sail-frontend-dark-theme);
 }
 

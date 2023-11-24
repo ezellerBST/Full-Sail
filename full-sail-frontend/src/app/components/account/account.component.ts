@@ -116,8 +116,8 @@ export class AccountComponent implements OnInit, AfterViewInit {
     this.financeService.openCreateGoalDialog();
   }
 
-  editGoalDialog(goalId, date, nameOfGoal, amountPerPaycheck, total){
-    this.financeService.openEditGoalDialog(goalId, date, nameOfGoal, amountPerPaycheck, total);
+  editGoalDialog(goal: Goal){
+    this.financeService.openEditGoalDialog(goal.id, goal.dateCreated, goal.name, goal.amountContributed, goal.total, goal.balance);
   }
 
   deleteGoalDialog(goalId){
