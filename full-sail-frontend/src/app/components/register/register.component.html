@@ -1,22 +1,26 @@
-<div>
-    <form (ngSubmit)="submitForm()" #signupForm="ngForm">
-        <div>
-            <label>Email</label>
-            <input type="email" name="email" [(ngModel)]="email" required>
-        </div>
-        <div>
-            <label>Password</label>
-            <input type="password" name="password" [(ngModel)]="password" required>
-        </div>
-        <div>
-            <label>Display Name</label>
-            <input type="text" name="displayName" [(ngModel)]="displayName" required>
-        </div>
-        <div>
-            <label>Photo URL</label>
-            <input type="text" name="photoURL" [(ngModel)]="photoURL" required>
-        </div>
-        <button mat-raised-button color="primary" type="submit" [disabled]="!signupForm.form.valid">Register Account</button>
-    </form>
+<div id="container">
+    <h1 mat-dialog-title>Create Your Account</h1>
+    <mat-dialog-content>
+        <form (ngSubmit)="submitForm()" #signupForm="ngForm">
+            <div class="email">
+                <label class="label1" for="email">Email</label>
+                <input id="email" type="email" name="email" [(ngModel)]="email" required>
+            </div>
+            <div class="password">
+                <label class="label1" for="password">Password</label>
+                <input id="password" type="password" name="password" [(ngModel)]="password" required>
+            </div>
+            <div class="password">
+                <label class="label1" for="name">Display Name</label>
+                <input id="name" type="text" name="displayName" [(ngModel)]="displayName" required>
+            </div>
+            <div class="password">
+                <label class="label1" for="photo">Photo URL</label>
+                <input id="photo" type="text" name="photoURL" [(ngModel)]="photoURL" required>
+            </div>
+            <div class="submitBtn" mat-dialog-actions>
+                <button mat-raised-button color="warn" type="submit" [disabled]="!signupForm.form.valid">Register</button>
+            </div>
+        </form>
+    </mat-dialog-content>
 </div>
-    

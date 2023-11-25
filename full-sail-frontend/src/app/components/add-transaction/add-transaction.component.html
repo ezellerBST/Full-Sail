@@ -1,24 +1,25 @@
-<h2>Add a New Transaction</h2>
-<mat-form-field>
-    <mat-label>Date</mat-label>
-    <input [matDatepicker]="datePicker" [(ngModel)]='date' matInput>
-    <mat-datepicker-toggle matIconSuffix [for]="datePicker"></mat-datepicker-toggle>
-    <mat-datepicker #datePicker></mat-datepicker>
-</mat-form-field>
-<br>
-<mat-form-field>
-    <mat-label>Description</mat-label>
-    <input [(ngModel)]="description" matInput>
-</mat-form-field>
-<br>
-<mat-form-field>
-    <mat-label>Amount</mat-label>
-    <input [(ngModel)]="amount" matInput>
-</mat-form-field>
-<br>
-<mat-checkbox [(ngModel)]="contributeToGoals" name="contributeToGoals" ngClass="margin-auto">Contribute To
-    Goals</mat-checkbox>
-
-
-<button mat-raised-button color="primary" (click)="addTransaction()">Save Changes</button>
-<button mat-raised-button color="warn" (click)="closeDialog()">Cancel</button>
+<div id="container">
+    <h2 mat-dialog-title>Add a New Transaction</h2>
+    <div>
+        <mat-form-field class="date-field">
+            <mat-label>Date</mat-label>
+            <input [matDatepicker]="datePicker" [(ngModel)]='date' matInput>
+            <mat-datepicker-toggle matIconSuffix [for]="datePicker"></mat-datepicker-toggle>
+            <mat-datepicker #datePicker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Description</mat-label>
+            <input [(ngModel)]="description" matInput>
+        </mat-form-field>
+        <mat-form-field class="amount-field">
+            <mat-label>Amount</mat-label>
+            <input [(ngModel)]="amount" matInput>
+        </mat-form-field>
+        <mat-checkbox [(ngModel)]="contributeToGoals" name="contributeToGoals" ngClass="margin-auto">Contribute To
+            Goals</mat-checkbox>
+    </div>
+    <div class="buttons" mat-dialog-actions>
+        <button mat-raised-button color="accent" (click)="addTransaction()">Save</button>
+        <button mat-raised-button color="warn" (click)="closeDialog()">Cancel</button>
+    </div>
+</div>

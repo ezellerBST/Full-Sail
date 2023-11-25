@@ -309,11 +309,11 @@ export class FinanceService {
     })
   }
 
-  openEditTransactionDialog(transactionId, date, amount, description) {
+  openEditTransactionDialog(transactionId, date, description: string, amount: number) {
     this.dialog.open(EditTransactionComponent, {
       width: '55%',
-      height: '45%',
-      data: { transactionId, date, amount, description }
+      height: '50%',
+      data: { transactionId, date, description, amount}
     })
   }
 
@@ -326,7 +326,7 @@ export class FinanceService {
   }
 
 
-  async editTransactionButton(transactionId, date, amount, description) {
+  async editTransactionButton(transactionId, date, description, amount) {
     const userDetails = await this.getUserDetails();
 
     if (userDetails && userDetails.uid) {

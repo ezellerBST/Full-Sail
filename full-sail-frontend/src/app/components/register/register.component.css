@@ -1,0 +1,48 @@
+#container {
+    display: block;
+    justify-items: center;
+    border: red solid 6px;
+    height: 288px;
+}
+
+#email {
+    margin-left: 100px;
+}
+
+#password {
+    margin-left: 68px; 
+}
+
+#name {
+    margin-left: 38px; 
+}
+
+#photo {
+    margin-left: 64px; 
+}
+
+.email {
+    justify-content: center;
+}
+
+.password {
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.submitBtn {
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.label1, .label2{
+    margin-left: 75px;
+    font-weight: bold;
+    color: navy;
+} 
+
+h1 {
+    text-align: center;
+} 
+
+
