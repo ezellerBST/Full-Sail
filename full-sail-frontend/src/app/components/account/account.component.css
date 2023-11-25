@@ -1,6 +1,6 @@
-html {
+/* html {
     background-color: rgb(30, 30, 30);
-}
+} */
 
 .header-div {
     display: flex;
@@ -30,7 +30,7 @@ svg:not(:host).svg-inline--fa {
     height: 30%;
     margin-bottom: 90px;
     box-sizing: border-box;
-    background-color: lightgray;
+    /* background-color: lightgray; */
 
 }
 
@@ -98,7 +98,7 @@ svg:not(:host).svg-inline--fa {
 
 
 
-    .mat-mdc-form-field:not(.mat-form-field-no-animations) .mdc-text-field__input {
+    /* .mat-mdc-form-field:not(.mat-form-field-no-animations) .mdc-text-field__input {
         color: white;
     }
 
@@ -117,7 +117,7 @@ svg:not(:host).svg-inline--fa {
     body {
         background-color: rgb(25, 25, 25);
         color: white;
-    }
+    } */
 
     .accounts-content-card {
 
@@ -125,8 +125,8 @@ svg:not(:host).svg-inline--fa {
         height: 30%;
         margin-bottom: 90px;
         box-sizing: border-box;
-        background-color: rgb(59, 55, 52);
-        color: white;
+        /* background-color: rgb(59, 55, 52);
+        color: white; */
 
     }
 
