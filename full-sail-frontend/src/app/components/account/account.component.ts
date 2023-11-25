@@ -21,6 +21,16 @@ export interface TransactionTable {
   id: string;
 }
 
+export interface GoalsTable {
+  id: string;
+  dateCreated: Date;
+  name: string;
+  balance: number;
+  total: number;
+  amountContributed: number;
+}
+
+
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
@@ -52,6 +62,7 @@ export class AccountComponent implements OnInit, AfterViewInit {
   extractedData: any[] = [];
   dateOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
 
+
   user: any;
   displayName: string = "";
   dataSource = new MatTableDataSource<TransactionTable>();
@@ -59,6 +70,13 @@ export class AccountComponent implements OnInit, AfterViewInit {
   columnsToDisplay = ['date', 'description', 'amount'];
   columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
   expandedElement: any | null;
+
+
+  goalDataSource= new MatTableDataSource<GoalsTable>();
+  goalColumnsToDisplay = ['id', 'name', 'balance', 'total', 'amountPerPaycheck', 'dateCreated' ];
+  goalColumnsToDisplayWithExpand =[...this.goalColumnsToDisplay, 'expand'];
+  goalExpandedElement: any | null;
+
 
   FaFileCsv = faFileCsv;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -116,8 +134,8 @@ export class AccountComponent implements OnInit, AfterViewInit {
     this.financeService.openCreateGoalDialog();
   }
 
-  editGoalDialog(goalId, date, nameOfGoal, amountPerPaycheck, total){
-    this.financeService.openEditGoalDialog(goalId, date, nameOfGoal, amountPerPaycheck, total);
+  editGoalDialog(goalId, date, nameOfGoal, amountPerPaycheck, total, balance){
+    this.financeService.openEditGoalDialog(goalId, date, nameOfGoal, amountPerPaycheck, total, balance);
   }
 
   deleteGoalDialog(goalId){
@@ -200,7 +218,9 @@ export class AccountComponent implements OnInit, AfterViewInit {
    
   }
 
-
+  // async editGoals(name: string, balance: number, amountPerPaycheck, total: number, date: Date){
+  //   await this.financeService.editGoalButton()
+  // }
 
   async createGoal(name: string, amountPerPaycheck: string, total: string) {
     await this.financeService.createGoal(name, parseInt(amountPerPaycheck), parseInt(total));

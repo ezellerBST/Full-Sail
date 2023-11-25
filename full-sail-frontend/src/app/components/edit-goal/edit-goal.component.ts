@@ -17,6 +17,7 @@ export class EditGoalComponent implements OnInit {
   nameOfGoal: string
   amountPerPaycheck: number = 0;
   total: number = 0;
+  balance: number = 0;
   goalId: string;
 
 
@@ -25,7 +26,7 @@ export class EditGoalComponent implements OnInit {
     private financeService: FinanceService,
     private sharedService: SharedService,
     public dialogRef: MatDialogRef<EditGoalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { goalId, date, nameOfGoal, amountPerPaycheck, total }
+    @Inject(MAT_DIALOG_DATA) public data: { goalId, date, nameOfGoal, amountPerPaycheck, total, balance }
   ) { }
 
   ngOnInit(): void {
@@ -36,12 +37,13 @@ export class EditGoalComponent implements OnInit {
       this.date = this.data.date;
       this.amountPerPaycheck = this.data.amountPerPaycheck;
       this.total = this.data.total;
+      this.balance = this.data.balance;
     })
   }
 
   async editGoal() {
-    await this.financeService.editGoalButton(this.goalId, { name: this.nameOfGoal, dateCreated: this.date, amountContributed: this.amountPerPaycheck, total: this.total })
-    console.log("Goal: ", this.goalId, { name: this.nameOfGoal, dateCreated: this.date, amountContributed: this.amountPerPaycheck, total: this.total });
+    await this.financeService.editGoalButton(this.goalId, { name: this.nameOfGoal, dateCreated: this.date, balance: this.balance, amountContributed: this.amountPerPaycheck, total: this.total })
+    console.log("Goal: ", this.goalId, { name: this.nameOfGoal, dateCreated: this.date, balance: this.balance, amountContributed: this.amountPerPaycheck, total: this.total });
     await this.sharedService.accountGoalUpdate();
     this.dialogRef.close();
   }

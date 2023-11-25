@@ -170,17 +170,71 @@
 
 
         <mat-card class="accounts-content-card goals-card">
-            <mat-card-content>
-                <div ngClass="flex-right">
-                    <h2>Goals</h2>
+            <div ngClass="flex-right">
+                <h2>Goals</h2>
 
-                </div>
-                <div>
-                    <button mat-raised-button color="primary" (click)="addNewGoalDialog()"> Add New Goal </button>
-                </div>
+            </div>
+            <div>
+                <button mat-raised-button color="primary" (click)="addNewGoalDialog()"> Add New Goal </button>
+            </div>
+            <mat-card-content>
                 <mat-divider></mat-divider>
                 <br>
-                <div ngClass="items-centered" *ngFor="let goal of goalList">
+                <table mat-table [dataSource]="goalDataSource" multiTemplateDataRows class="mat-elevation-z8">
+                    <ng-container>
+                        <th>&nbsp;</th>
+                        <td mat-cell *matCellDef="let element">
+                            <button mat-icon-button aria-label="expand row"
+                                (click)="goalExpandedElement = goalExpandedElement=== element ? null : element; $event.stopPropagation()">
+                                <mat-icon> {{goalExpandedElement === element ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}}</mat-icon>
+                            </button>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="goalExpandedDetail">
+                        <td mat-cell *matCellDef="let element" [attr.colspan]=" goalColumnsToDisplayWithExpand.length">
+                            <div [@goalDetailExpand]="element == goalExpandedElement ? 'expanded' : 'collapsed'">
+                                <button mat-raised-button color="primary"
+                                    (click)="editGoalDialog(element.id, element.name, element.total, element.amountPerPaycheck, element.balance, element.dateCreated)">Edit
+                                </button>
+                                <button mat-raised-button color="warn"
+                                    (click)="deleteGoalDialog(element.id)">Delete
+                                </button>
+                            </div>
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="goalColumnsToDisplayWithExpand"></tr>
+                    <tr mat-row *matRowDef="let element; columns: goalColumnsToDisplayWithExpand" class="example-element-row" 
+                    [class.example-expanded-row]="goalExpandedElement === element"
+                    (click)="goalExpandedElement = goalExpandedElement === element ? null : element">
+                    </tr>
+                    <tr mat-row *matRowDef="let row; columns: ['goalExpandedDetail']" class="example-detail-row"></tr>
+
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mar-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                    </tr>
+                </table>
+
+                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                    aria-label="Select page of goals">
+                </mat-paginator>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <!-- <div ngClass="items-centered" *ngFor="let goal of goalList">
                     <div ngClass="flex-goal">
                         <h3>{{goal.dateCreated.toLocaleDateString()}} - {{goal.name}}</h3>
                         <h3>{{goal.balance}} / {{goal.total}}</h3>
@@ -191,14 +245,14 @@
                         <!-- 
                         <button mat-raised-button color="primary" (click)="editGoalDialog(  INPUT HERE!! )">Edit</button>
                         <button mat-raised-button color="warn" (click)="deleteGoalDialog(  INPUT HERE!!!  )">Delete</button>    
-                        -->
+                        
 
                     </div>
                     <div ngClass="alt-theme">
                         <mat-progress-bar mode="determinate" style="height: 30px;"
                             [value]="goal.balance / goal.total * 100"></mat-progress-bar>
                     </div>
-                </div>
+                </div> -->
             </mat-card-content>
             <mat-expansion-panel #createGoalPanel hideToggle>
                 <mat-expansion-panel-header>

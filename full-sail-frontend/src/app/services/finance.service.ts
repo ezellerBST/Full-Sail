@@ -353,11 +353,11 @@ export class FinanceService {
     })
   }
 
-  openEditGoalDialog(goalId, date,  nameOfGoal, amountPerPaycheck, total) {
+  openEditGoalDialog(goalId, date,  nameOfGoal, amountPerPaycheck, total, balance) {
     this.dialog.open(EditGoalComponent, {
       width: '55%',
       height: '45%',
-      data: { goalId, date, nameOfGoal, amountPerPaycheck, total }
+      data: { goalId, date, nameOfGoal, amountPerPaycheck, total, balance }
     })
   }
 
