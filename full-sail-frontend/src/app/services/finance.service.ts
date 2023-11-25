@@ -191,6 +191,9 @@ export class FinanceService {
       let goalList = [];
       querySnapshot.forEach((doc) => {
         const docData = doc.data();
+
+        docData.id = doc.id;
+
         goalList.push(docData);
       });
       console.log(goalList.sort((a, b) => b.date - a.date));
@@ -232,6 +235,7 @@ export class FinanceService {
         console.error('Error: ', error);
       }
     }
+    
     // this.getGoals();
   }
 
@@ -277,19 +281,21 @@ export class FinanceService {
 
         this.editGoalWithUserDetails(userDetails, goal);
 
-
+        
         console.log("success", goal.balance);
+
       } else {
         console.log("addtrantogoal 3rd: Tran: ", transaction.date, "Goal: ", goal.dateCreated);
       }
     });
+    this.sharedService.accountGoalUpdate();
   }
 
   async editGoalWithUserDetails(userDetails , goal: Goal) {
     if (userDetails && userDetails.uid) {
       const userId = userDetails.uid;
-      const goalDocRef = doc(this.firestore, `users/${userId}/goals`);
-      const data = {  date: goal.dateCreated, name: goal.name, amountPerPaycheck: goal.amountContributed, balance: goal.balance, total: goal.total };
+      const goalDocRef = doc(this.firestore, `users/${userId}/goals/${goal.id}`);
+      const data = {  date: goal.dateCreated, name: goal.name, amountPerPaycheck: goal.amountContributed, total: goal.total, balance: goal.balance };
       try {
         await setDoc(goalDocRef, data, { merge: true });
         console.log('Updated goal: ', data);
@@ -368,11 +374,11 @@ export class FinanceService {
     })
   }
 
-  openEditGoalDialog(goalId, date,  nameOfGoal, amountPerPaycheck, total) {
+  openEditGoalDialog(goalId, date,  nameOfGoal, amountPerPaycheck, total, balance) {
     this.dialog.open(EditGoalComponent, {
       width: '55%',
       height: '45%',
-      data: { goalId, date, nameOfGoal, amountPerPaycheck, total }
+      data: { goalId, date, nameOfGoal, amountPerPaycheck, total, balance }
     })
   }
 
@@ -391,7 +397,7 @@ export class FinanceService {
       const userId = userDetails.uid;
       const goalDocRef = doc(this.firestore, `users/${userId}/goals/${goalId}`);
       console.log(goalId);
-      const data = {  date: goal.dateCreated, name: goal.name, amountPerPaycheck: goal.amountContributed, total: goal.total };
+      const data = {  date: goal.dateCreated, name: goal.name, amountPerPaycheck: goal.amountContributed, total: goal.total, balance: goal.balance };
       try {
         await setDoc(goalDocRef, data, { merge: true });
         console.log('Updated goal: ', data);
