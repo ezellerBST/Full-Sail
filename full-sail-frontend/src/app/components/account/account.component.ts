@@ -95,7 +95,7 @@ export class AccountComponent implements OnInit, AfterViewInit {
     });
     this.sharedService.goalsUpdated.subscribe(() => {
       this.getGoals();
-    })
+    });
   }
 
   ngOnInit(): void {
@@ -188,13 +188,12 @@ export class AccountComponent implements OnInit, AfterViewInit {
     const transactions = await this.financeService.getTransactions();
     transactions.forEach((doc) => {
     
-
+      doc.date = new Date(doc.date.seconds * 1000);
       const docData = doc as TransactionTable;
       
       let amount  = parseInt(docData.amount);
         docData.amount = amount.toFixed(2);
-
-      docData.date = new Date(docData.date).toLocaleDateString();
+       docData.date = new Date(docData.date).toLocaleDateString();
       data.push(docData);
     });
     this.dataSource.data = data;
@@ -211,7 +210,9 @@ export class AccountComponent implements OnInit, AfterViewInit {
     this.goalList = [];
     goals.forEach((doc) => {
 
-      doc.dateCreated = new Date(doc.dateCreated);
+      doc.balance = parseInt(doc.balance);
+      // console.log(typeof(doc.))
+      doc.dateCreated = new Date(doc.dateCreated.seconds * 1000);
       this.goalList.push(doc);
 
     });

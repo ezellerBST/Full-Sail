@@ -4,6 +4,7 @@ import { MatCardModule } from '@angular/material/card';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
 import { Auth } from '@angular/fire/auth';
+import { faStar } from '@fortawesome/free-solid-svg-icons'
 
 
 
@@ -13,6 +14,8 @@ import { Auth } from '@angular/fire/auth';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+
+  faStar = faStar;
 
   isSignedIn: boolean = false;
 
@@ -25,7 +28,7 @@ export class HomeComponent implements OnInit {
   }
   
   getRegisterPage(){
-    this.router.navigate(['register']);
+    this.userService.openRegisterDialog();
   }
 }
 
