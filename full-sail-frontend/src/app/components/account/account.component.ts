@@ -55,7 +55,6 @@ export class AccountComponent implements OnInit, AfterViewInit {
   user: any;
   displayName: string = "";
   dataSource = new MatTableDataSource<TransactionTable>();
-  // displayedColumns: string[] = ['date', 'description', 'amount'];
   columnsToDisplay = ['date', 'description', 'amount'];
   columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
   expandedElement: any | null;
@@ -77,11 +76,11 @@ export class AccountComponent implements OnInit, AfterViewInit {
     });
     this.sharedService.goalsUpdated.subscribe(() => {
       this.getGoals();
-    })
+    });
   }
 
   ngOnInit(): void {
-    this.financeService.getUserDetails();
+    this.getUserDetails();
     this.financeService.getTransactions();
     this.financeService.getGoals();
   }
@@ -116,8 +115,8 @@ export class AccountComponent implements OnInit, AfterViewInit {
     this.financeService.openCreateGoalDialog();
   }
 
-  editGoalDialog(goalId, date, nameOfGoal, amountPerPaycheck, total){
-    this.financeService.openEditGoalDialog(goalId, date, nameOfGoal, amountPerPaycheck, total);
+  editGoalDialog(goal: Goal){
+    this.financeService.openEditGoalDialog(goal.id, goal.dateCreated, goal.name, goal.amountContributed, goal.total, goal.balance);
   }
 
   deleteGoalDialog(goalId){
@@ -170,13 +169,12 @@ export class AccountComponent implements OnInit, AfterViewInit {
     const transactions = await this.financeService.getTransactions();
     transactions.forEach((doc) => {
     
-
+      doc.date = new Date(doc.date.seconds * 1000);
       const docData = doc as TransactionTable;
       
       let amount  = parseInt(docData.amount);
         docData.amount = amount.toFixed(2);
-
-      docData.date = new Date(docData.date).toLocaleDateString();
+       docData.date = new Date(docData.date).toLocaleDateString();
       data.push(docData);
     });
     this.dataSource.data = data;
@@ -193,7 +191,9 @@ export class AccountComponent implements OnInit, AfterViewInit {
     this.goalList = [];
     goals.forEach((doc) => {
 
-      doc.dateCreated = new Date(doc.dateCreated);
+      doc.balance = parseInt(doc.balance);
+      // console.log(typeof(doc.))
+      doc.dateCreated = new Date(doc.dateCreated.seconds * 1000);
       this.goalList.push(doc);
 
     });

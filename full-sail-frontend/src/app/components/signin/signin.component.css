@@ -1,6 +1,8 @@
 #container {
     display: block;
     justify-items: center;
+    border: red solid 6px;
+    height: 288px;
 }
 
 #email {
@@ -27,7 +29,8 @@
 
 .label1, .label2{
     margin: 50px;
-    
+    font-weight: bold;
+    color: navy;
 } 
  mat-dialog-content {
     justify-content: center;
@@ -36,3 +39,8 @@ h1 {
     justify-content: center;
     margin-left: 42%;
 } 
+
+mat-dialog-title {
+    font-weight: bold;
+    color: navy;
+}

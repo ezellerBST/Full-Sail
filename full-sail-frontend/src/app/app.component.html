@@ -2,25 +2,28 @@
     <nav>
         <mat-toolbar class="header" >
         <!-- <div> -->
-            <img alt="Full Sail Icon" (click)="getAccountsPage()">
+            <img style="width: 50px;" src="../favicon.png" (click)="getAccountsPage()">
+            
+            <!-- <img alt="Full Sail Icon" (click)="getAccountsPage()"> -->
             <h1><span>Full Sail</span></h1>
-            <mat-icon color="accent"><fa-icon [icon]="faAnchor"></fa-icon></mat-icon>
-            <p>Manage your money and take control!</p>
-            <span><mat-icon><fa-icon
+            <!-- <mat-icon color="accent"><fa-icon [icon]="faAnchor"></fa-icon></mat-icon> -->
+            <p class="header-p">Manage your money and take control!</p>
+            <!-- <span><mat-icon><fa-icon
                         [icon]="faSun"></fa-icon></mat-icon><mat-slide-toggle></mat-slide-toggle><mat-icon><fa-icon
-                        [icon]="faMoon"></fa-icon></mat-icon></span>
-            <button mat-raised-button color="primary" (click)="openSignInDialog()" *ngIf="!isSignedIn">Sign In</button>
-            <button mat-raised-button color="primary" (click)="openRegisterDialog()" *ngIf="!isSignedIn">Register</button>
-            <button mat-raised-button color="primary" (click)="getAccountsPage()" *ngIf="isSignedIn">Accounts</button>
-            <button mat-raised-button color="primary" (click)="getProfile()" *ngIf="isSignedIn">Profile</button>
-            <button mat-raised-button color="primary" (click)="signOut()" *ngIf="isSignedIn">Logout</button>
+                        [icon]="faMoon"></fa-icon></mat-icon></span> -->
+            <button mat-raised-button color="warn" (click)="openSignInDialog()" *ngIf="!isSignedIn">Sign In</button>
+            <button mat-raised-button color="warn" (click)="openRegisterDialog()" *ngIf="!isSignedIn">Register</button>
+            <button mat-raised-button color="warn" (click)="getAccountsPage()" *ngIf="isSignedIn">Accounts</button>
+            <button mat-raised-button color="warn" (click)="getProfile()" *ngIf="isSignedIn">Profile</button>
+            <button mat-raised-button color="warn" (click)="signOut()" *ngIf="isSignedIn">Logout</button>
         </mat-toolbar>
     </nav>
 </header>
+<p class="body-p">Manage your money and take control!</p>
 <router-outlet></router-outlet>
 <footer>
     <div class="footer-div">
-        <img src="" alt="Icon">
+        <img style="width: 50px;" src="../favicon.png">
         <h3>Full Sail <mat-icon>copyright</mat-icon> 2023</h3>
         <div>
             <mat-icon><fa-icon [icon]="faTwitter"></fa-icon></mat-icon>

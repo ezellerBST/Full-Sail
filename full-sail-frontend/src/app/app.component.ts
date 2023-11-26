@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { faSun, faMoon } from '@fortawesome/free-regular-svg-icons'
 import { faHouseUser, faAnchor } from '@fortawesome/free-solid-svg-icons'
 import { faFacebook, faXTwitter, faTiktok, faInstagram, faGithub, } from '@fortawesome/free-brands-svg-icons';
 import { MatDialog } from '@angular/material/dialog';
-// import { UserDialogComponent } from './components/user-dialog/user-dialog.component';
 import { SigninComponent } from './components/signin/signin.component';
 import { RegisterComponent } from './components/register/register.component';
 import { UserService } from './services/user.service';
 import { Router } from '@angular/router';
 import { Auth, signOut } from '@angular/fire/auth';
+import { ThemePalette } from '@angular/material/core';
+
 
 @Component({
   selector: 'app-root',
@@ -47,6 +48,12 @@ export class AppComponent implements OnInit {
       // Update isSignedIn based on the user's authentication state
       this.isSignedIn = !!user; 
     });
+  
+    this.setDarkLightMode();
+
+    window.matchMedia('(prefers-color-scheme: dark)').addListener((e) => {
+      this.setDarkLightMode();
+    });
   }
 
   //Opens the dialog popup to sign in to the app for the registered user
@@ -78,5 +85,17 @@ export class AppComponent implements OnInit {
   //Allows a logged in user to go to their accounts page showing their financial info
   getAccountsPage() {
     this.router.navigate(['account']);
+  }
+
+
+
+  setDarkLightMode() {
+    const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const currentMode = document.body.classList.contains('dark-mode');
+    
+    if (!!prefersDarkMode && !currentMode || !prefersDarkMode && currentMode) {
+      document.body.classList.toggle('dark-mode');
+    }
+    console.log(document.body.classList.contains('dark-mode'));
   }
 }

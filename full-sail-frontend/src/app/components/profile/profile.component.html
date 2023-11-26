@@ -15,16 +15,11 @@
                 {{ phoneNum }}
             </p>
         </mat-card-content>
-        <mat-card-footer>
-            <mat-progress-bar mode="determinate" value="100"></mat-progress-bar>
-        </mat-card-footer>
     </mat-card>
 </div>
 
-<mat-divider></mat-divider>
-
 <div class="mid">
-    <mat-card>
+    <mat-card class="mid-card">
         <h3 class="email">Name</h3>
         <mat-form-field>
             <mat-label>Name</mat-label>
@@ -51,7 +46,7 @@
             <input matInput [(ngModel)]="photoURL">
         </mat-form-field>
         <mat-card-actions align="end" class="buttons">
-            <button mat-raised-button color="secondary" class="save" (click)="updateProfile()">Save</button>
+            <button mat-raised-button color="warn" class="save" (click)="updateProfile()">Save</button>
         </mat-card-actions>
 
     </mat-card>

@@ -13,18 +13,21 @@ import { SharedService } from 'src/app/services/shared.service';
 export class EditTransactionComponent implements OnInit {
 
   isSignedIn: boolean = false;
-  date: Date = new Date;
+  date: Date;
   description: string;
   amount: number;
   id: string;
-
-
 
   constructor(
     private auth: Auth,
     private financeService: FinanceService,
     public dialogRef: MatDialogRef<EditTransactionComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { transactionId, date, description, amount },
+    @Inject(MAT_DIALOG_DATA) public data: { 
+      transactionId, 
+      date: Date, 
+      description: string, 
+      amount: number
+    },
     private sharedService: SharedService
   ) { }
 
@@ -44,14 +47,6 @@ export class EditTransactionComponent implements OnInit {
     console.log(this.id, this.date, this.description, this.amount);
     await this.sharedService.accountTransactionsUpdate();
     this.dialogRef.close();
-
-    // .then((transaction) => {
-    //   console.log('Transaction was successfully updated: ', transaction);
-    //   this.dialogRef.close();
-    // })
-    // .catch((error) => {
-    //   console.log(error);
-    // });
   }
 
   closeDialog() {

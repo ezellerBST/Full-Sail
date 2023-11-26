@@ -1,4 +1,3 @@
-import { DecimalPipe } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -15,7 +14,7 @@ export class AddTransactionComponent implements OnInit {
   isSignedIn: boolean = false;
   date: Date;
   description: string;
-  amount: number = 0;
+  amount: number;
   contributeToGoals: boolean = false;
 
   constructor(
@@ -50,7 +49,7 @@ export class AddTransactionComponent implements OnInit {
       contributeToGoals: this.contributeToGoals
     })
     console.log({ date: this.date, description: this.description, amount: this.amount });
-    await this.sharedService.accountTransactionsUpdate();
+    // await this.sharedService.accountTransactionsUpdate();
     this.dialogRef.close();
   }
 
