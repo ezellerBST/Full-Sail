@@ -1,9 +1,10 @@
 .top {
-    padding: 50px;
+    padding-bottom: 20px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
 }
+
 
 .address {
     padding-left: 10%;
@@ -17,25 +18,16 @@
     padding-left: 10%;
 }
 
-input {
-    /* margin: 0 50px 0 50px; */
-    /* background-color: black; */
-}
-
 .mid mat-form-field {
     padding: 0 10% 0 10%;
 }
 
-.top mat-form-field {
-    
-}
-
-.inner {
-    /* padding-right: 40%; */
-}
-
 .mid {
     padding: 50px;
+}
+
+.mid-card {
+    border: solid 4px navy;
 }
 
 mat-divider {
@@ -46,6 +38,7 @@ mat-divider {
     width: 500px;
     margin-left: auto;
     margin-right: auto;
+    border: solid 4px navy;
 }
 
 mat-card-image {

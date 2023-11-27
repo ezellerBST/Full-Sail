@@ -21,6 +21,16 @@ export interface TransactionTable {
   id: string;
 }
 
+export interface GoalsTable {
+  id: string;
+  dateCreated: Date;
+  name: string;
+  balance: number;
+  total: number;
+  amountContributed: number;
+}
+
+
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
@@ -52,13 +62,20 @@ export class AccountComponent implements OnInit, AfterViewInit {
   extractedData: any[] = [];
   dateOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
 
+
   user: any;
   displayName: string = "";
   dataSource = new MatTableDataSource<TransactionTable>();
-  // displayedColumns: string[] = ['date', 'description', 'amount'];
   columnsToDisplay = ['date', 'description', 'amount'];
   columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
   expandedElement: any | null;
+
+
+  goalDataSource= new MatTableDataSource<GoalsTable>();
+  goalColumnsToDisplay = ['name', 'balance', 'total' ];
+  goalColumnsToDisplayWithExpand =[...this.goalColumnsToDisplay, 'expand'];
+  goalExpandedElement: any | null;
+
 
   FaFileCsv = faFileCsv;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -81,7 +98,7 @@ export class AccountComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.financeService.getUserDetails();
+    this.getUserDetails();
     this.financeService.getTransactions();
     this.financeService.getGoals();
   }
@@ -116,8 +133,8 @@ export class AccountComponent implements OnInit, AfterViewInit {
     this.financeService.openCreateGoalDialog();
   }
 
-  editGoalDialog(goal: Goal){
-    this.financeService.openEditGoalDialog(goal.id, goal.dateCreated, goal.name, goal.amountContributed, goal.total, goal.balance);
+  editGoalDialog(goalId, date, nameOfGoal, amountPerPaycheck, total, balance){
+    this.financeService.openEditGoalDialog(goalId, date, nameOfGoal, amountPerPaycheck, total, balance);
   }
 
   deleteGoalDialog(goalId){
@@ -188,31 +205,26 @@ export class AccountComponent implements OnInit, AfterViewInit {
 
   async getGoals() {
 
-    const data: Goal[] = [];
-    this.goalList = [];
+    const data: GoalsTable[] = [];
 
     const goals = await this.financeService.getGoals();
 
-
     goals.forEach((doc) => {
 
-      // doc.date = new Date(doc.date.seconds * 1000);
-
-      doc.balance = parseInt(doc.balance);
+      const docData = doc as GoalsTable;
+      //docData.balance = parseInt(doc.balance);
+      //docData.total = docData.total;
       // console.log(typeof(doc.))
-      console.log( "1st date",doc.date);
-      console.log( "1st dateCreated",doc.dateCreated);
-      console.log(doc.date === doc.dateCreated);
-      doc.dateCreated = new Date(doc.dateCreated.seconds * 1000);
-      console.log( "2nd date",doc.date);
-      console.log( "2nd dateCreated",doc.dateCreated);
-      this.goalList.push(doc);
+      docData.dateCreated = new Date(doc.dateCreated.seconds * 1000);
+      data.push(docData);
 
     });
-   
+    this.goalDataSource.data = data;
   }
 
-
+  // async editGoals(name: string, balance: number, amountPerPaycheck, total: number, date: Date){
+  //   await this.financeService.editGoalButton()
+  // }
 
   async createGoal(name: string, amountPerPaycheck: string, total: string) {
     await this.financeService.createGoal(name, parseInt(amountPerPaycheck), parseInt(total));
