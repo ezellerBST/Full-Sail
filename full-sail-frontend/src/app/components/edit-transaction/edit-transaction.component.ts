@@ -13,18 +13,21 @@ import { SharedService } from 'src/app/services/shared.service';
 export class EditTransactionComponent implements OnInit {
 
   isSignedIn: boolean = false;
-  date: Date = new Date;
+  date: Date;
   description: string;
   amount: number;
   id: string;
-
-
 
   constructor(
     private auth: Auth,
     private financeService: FinanceService,
     public dialogRef: MatDialogRef<EditTransactionComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { transactionId, date, description, amount },
+    @Inject(MAT_DIALOG_DATA) public data: { 
+      transactionId, 
+      date: Date, 
+      description: string, 
+      amount: number
+    },
     private sharedService: SharedService
   ) { }
 

@@ -16,7 +16,7 @@ export class EditGoalComponent implements OnInit {
   nameOfGoal: string
   amountPerPaycheck: number = 0;
   total: number = 0;
-  balance: number = 0;
+  balance: number;
   goalId: string;
 
 

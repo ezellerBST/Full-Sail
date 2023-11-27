@@ -1,6 +1,6 @@
-html {
+/* html {
     background-color: rgb(30, 30, 30);
-}
+} */
 
 .header-div {
     display: flex;
@@ -16,6 +16,7 @@ html {
     flex-direction: column;
     justify-content: space-around;
     width: 100%;
+    margin-bottom: 10px;
 }
 
 svg:not(:root).svg-inline--fa,
@@ -33,9 +34,29 @@ svg:not(:host).svg-inline--fa {
     height: 30%;
     margin-bottom: 90px;
     box-sizing: border-box;
-    background-color: lightgray;
+    /* background-color: lightgray; */
 
 }
+
+.transactBtn {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.editBtn {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.datePicker {
+    width: 175px;
+}
+
+.datePicker .mat-datepicker-input {
+    width: 100%;
+}
+
 
 .input-paycheck-div {
     display: flex;
@@ -56,6 +77,7 @@ svg:not(:host).svg-inline--fa {
 }
 
 .margin-auto {
+    margin-bottom: 3px;
     margin-right: auto;
     margin-left: auto;
     width: fit-content;
@@ -63,9 +85,8 @@ svg:not(:host).svg-inline--fa {
 
 .flex-right {
     display: flex;
-    flex-direction: row;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: center;
     width: 100%;
 }
 
@@ -81,7 +102,7 @@ svg:not(:host).svg-inline--fa {
 
 
 
-    .mat-mdc-form-field:not(.mat-form-field-no-animations) .mdc-text-field__input {
+    /* .mat-mdc-form-field:not(.mat-form-field-no-animations) .mdc-text-field__input {
         color: white;
     }
 
@@ -100,7 +121,7 @@ svg:not(:host).svg-inline--fa {
     body {
         background-color: rgb(25, 25, 25);
         color: white;
-    }
+    } */
 
     .accounts-content-card {
 
@@ -108,8 +129,8 @@ svg:not(:host).svg-inline--fa {
         height: 30%;
         margin-bottom: 90px;
         box-sizing: border-box;
-        background-color: rgb(59, 55, 52);
-        color: white;
+        /* background-color: rgb(59, 55, 52);
+        color: white; */
 
     }
 

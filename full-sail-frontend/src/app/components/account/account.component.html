@@ -1,11 +1,10 @@
-<body>
+<body class="mat-app-background">
     <div class="card-list">
 
         <!-- Welcome Header -->
         
         <div class="header-div">
             <h2 ng-non-bindable>Welcome {{ displayName }}</h2>
-            <!--this is simply a place holder till we inplement the code-->
             <mat-form-field appearance="outline">
                 <mat-label ngClass="dark-mode-white">Search</mat-label>
                 <input matInput>
@@ -34,7 +33,7 @@
                                 <mat-checkbox [(ngModel)]="contributeToGoals" name="contributeToGoals"
                                     ngClass="margin-auto">Contribute To Goals</mat-checkbox>
 
-                                <mat-form-field>
+                                <mat-form-field class="datePicker">
                                     <input matInput [matDatepicker]="paycheckPicker" name="paycheckPicker"
                                         [(ngModel)]="paycheckDate">
                                     <mat-datepicker-toggle matIconSuffix [for]="paycheckPicker"></mat-datepicker-toggle>
@@ -43,21 +42,18 @@
                             </div>
 
                             <div ngClass="flex-right">
-
-
                                 <mat-form-field appearance="outline">
                                     <mat-label ngClass="dark-mode-white">Input Paycheck</mat-label>
                                     <input matInput min="0" type="number" name="paycheck-input"
                                         [(ngModel)]="paycheckAmount">
                                 </mat-form-field>
 
-                                <button mat-raised-button color="primary" type="submit">Submit</button>
+                                <button mat-raised-button color="accent" type="submit">Submit</button>
                             </div>
                         </form>
                     </div>
 
                     <div *ngIf="showImportPaycheck === 'false'">
-                        <!-- <form ngClass="items-centered" (submit)="inputCSV()"> -->
                         <form ngClass="items-centered">
                             <mat-checkbox [(ngModel)]="contributeToGoals" name="contributeToGoals"
                                 ngClass="dark-mode-white margin-auto">Contribute To Goals</mat-checkbox>
@@ -66,13 +62,12 @@
                                 <!-- Modify your HTML template -->
                                 <input type="file" #fileInput name="CSV-input" style="display: none"
                                     (input)="onFileSelected($event, contributeToGoals); fileInput.value = ''">
-                                <button matTooltip="Import CSV file" mat-raised-button color="primary"
+                                <button matTooltip="Import CSV file" mat-raised-button color="accent"
                                     (click)="fileInput.click()"><mat-icon style="height: 30px;"
                                         class="margin-auto"><fa-icon class="fa-xl"
                                             [icon]="FaFileCsv"></fa-icon></mat-icon>
                                 </button>
                             </div>
-
                         </form>
                     </div>
                 </div>
@@ -99,8 +94,8 @@
 
         <mat-card class="accounts-content-card">
             <h2 ngClass="margin-auto">Transactions</h2>
-            <mat-card-content>
-                <button mat-raised-button color="primary" (click)="addTransaction()">Add transaction</button>
+            <mat-card-content class="transactBtn">
+                <button mat-raised-button color="accent" (click)="addTransaction()">Add transaction</button>
             </mat-card-content>
             <br>
             <mat-card-content>
@@ -131,8 +126,8 @@
 
                     <ng-container matColumnDef="expandedDetail">
                         <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayWithExpand.length">
-                            <div [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-                                <button mat-raised-button color="secondary"
+                            <div class="editBtn" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                                <button mat-raised-button color="accent"
                                     (click)="editTransaction(element.id, element.date, element.description, element.amount)">Edit</button>
                                 <button mat-raised-button color="warn"
                                     (click)="deleteTransaction(element.id)">Delete</button>
@@ -167,11 +162,10 @@
             <div ngClass="flex-right">
                 <h2>Goals</h2>
 
-            </div>
-            <div>
-                <button mat-raised-button color="primary" (click)="addNewGoalDialog()"> Add New Goal </button>
-            </div>
-            <mat-card-content>
+                </div>
+                <div>
+                    <button mat-raised-button color="accent" (click)="addNewGoalDialog()"> Add New Goal </button>
+                </div>
                 <mat-divider></mat-divider>
                 <br>
                 <table mat-table [dataSource]="goalDataSource" multiTemplateDataRows class="mat-elevation-z8">
@@ -235,14 +229,19 @@
                         <button mat-raised-button color="primary" (click)="editGoalDialog(  INPUT HERE!! )">Edit</button>
                         <button mat-raised-button color="warn" (click)="deleteGoalDialog(  INPUT HERE!!!  )">Delete</button>    
                         
+                         Need to add button functions to the below buttons, need to change Goal Card so that we 
+                            can get the element.id, and other values to pass in to the button functions
+                        
+                        <button mat-raised-button color="primary" (click)="editGoalDialog(goal)">Edit</button>
+                        <button mat-raised-button color="warn" (click)="deleteGoalDialog(goal.id)">Delete</button>    
+                       
 
                     </div>
                     <div ngClass="alt-theme">
                         <mat-progress-bar mode="determinate" style="height: 30px;"
                             [value]="goal.balance / goal.total * 100"></mat-progress-bar>
-                    </div>
+                    </div> 
                 </div> -->
-            </mat-card-content>
         </mat-card>
 
 <!-- Random Cards for Spacing -->

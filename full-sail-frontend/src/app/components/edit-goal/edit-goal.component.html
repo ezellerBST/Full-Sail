@@ -26,5 +26,12 @@
 
 <br>
 
+<mat-form-field>
+    <mat-label>Current Balance of Goal</mat-label>
+    <input [(ngModel)]="balance" matInput>
+</mat-form-field>
+
+<br>
+
 <button mat-raised-button color="primary" (click)="editGoal()">Save Changes</button>
 <button mat-raised-button color="warn" (click)="closeDialog()">Cancel</button>

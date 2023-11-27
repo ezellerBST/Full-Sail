@@ -66,7 +66,6 @@ export class AccountComponent implements OnInit, AfterViewInit {
   user: any;
   displayName: string = "";
   dataSource = new MatTableDataSource<TransactionTable>();
-  // displayedColumns: string[] = ['date', 'description', 'amount'];
   columnsToDisplay = ['date', 'description', 'amount'];
   columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
   expandedElement: any | null;
@@ -99,7 +98,7 @@ export class AccountComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.financeService.getUserDetails();
+    this.getUserDetails();
     this.financeService.getTransactions();
     this.financeService.getGoals();
   }

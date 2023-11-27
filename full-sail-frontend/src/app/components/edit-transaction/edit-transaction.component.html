@@ -1,17 +1,23 @@
-<mat-form-field>
-    <mat-label>Date</mat-label>
-    <input [(ngModel)]='date' matInput>
-</mat-form-field>
-<br>
-<mat-form-field>
-    <mat-label>Description</mat-label>
-    <input [(ngModel)]="description" matInput>
-</mat-form-field>
-<br>
-<mat-form-field>
-    <mat-label>Amount</mat-label>
-    <input [(ngModel)]="amount" matInput>
-</mat-form-field>
-<br>
-<button mat-raised-button color="primary" (click)="editTransaction()">Save Changes</button>
-<button mat-raised-button color="warn" (click)="closeDialog()">Cancel</button>
+<div id="container">
+    <h2 mat-dialog-title>Edit This Transaction</h2>
+    <div class="form-container">
+        <mat-form-field>
+            <mat-label>Date</mat-label>
+            <input [matDatepicker]="datePicker" [(ngModel)]='date' matInput>
+            <mat-datepicker-toggle matIconSuffix [for]="datePicker"></mat-datepicker-toggle>
+            <mat-datepicker #datePicker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Description</mat-label>
+            <input [(ngModel)]='description' matInput >
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Amount</mat-label>
+            <input [(ngModel)]='amount' matInput>
+        </mat-form-field>
+    </div>
+    <div class="buttons" mat-dialog-actions>
+        <button mat-raised-button color="accent" (click)="editTransaction()">Save</button>
+        <button mat-raised-button color="warn" (click)="closeDialog()">Cancel</button>
+    </div>
+</div>

@@ -233,6 +233,7 @@ export class FinanceService {
         console.error('Error: ', error);
       }
     }
+    
     // this.getGoals();
   }
 
@@ -280,12 +281,14 @@ export class FinanceService {
 
         this.editGoalWithUserDetails(userDetails, goalId, goal);
 
-
+        
         console.log("success", goal.balance);
+
       } else {
         console.log("addtrantogoal 3rd: Tran: ", transaction.date, "Goal: ", goal.dateCreated);
       }
     });
+    this.sharedService.accountGoalUpdate();
   }
 
   async editGoalWithUserDetails(userDetails, goalId , goal: Goal) {
@@ -312,11 +315,11 @@ export class FinanceService {
     })
   }
 
-  openEditTransactionDialog(transactionId, date, amount, description) {
+  openEditTransactionDialog(transactionId, date, description: string, amount: number) {
     this.dialog.open(EditTransactionComponent, {
       width: '55%',
-      height: '45%',
-      data: { transactionId, date, amount, description }
+      height: '50%',
+      data: { transactionId, date, description, amount}
     })
   }
 
@@ -329,7 +332,7 @@ export class FinanceService {
   }
 
 
-  async editTransactionButton(transactionId, date, amount, description) {
+  async editTransactionButton(transactionId, date, description, amount) {
     const userDetails = await this.getUserDetails();
 
     if (userDetails && userDetails.uid) {

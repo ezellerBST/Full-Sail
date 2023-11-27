@@ -15,6 +15,9 @@ header {
 
 footer {
     margin-top: auto;
+    /* bottom: 0px; */
+    
+    /* background-color: lightgrey; */
     color: white;
     background-color: navy;
     width: 100%;
@@ -47,27 +50,29 @@ mat-toolbar {
 @media (prefers-color-scheme: dark) {
     
     .header {
-        color: white;
-        /* background-color: rgb(50, 50, 50); */
+
         background-color: navy;
         border-bottom: white solid 1px;
+
+         /* color: white;
+        background-color: rgb(50, 50, 50); */
+     
     }
 
     footer {
         color: white;
-        /* background-color: rgb(50, 50, 50); */
+        background-color: rgb(50, 50, 50);
         background-color: navy;
         border-top: white solid 1px;
-    }
+    } 
 
 }
 
 
+
+
 @media (prefers-color-scheme: dark) {
-    .dark-mode-moon {
-        display: none;
-        visibility: hidden;
-    }
+    
 }
 
 
@@ -147,4 +152,3 @@ mat-toolbar {
         visibility: hidden;
     }
 }
-

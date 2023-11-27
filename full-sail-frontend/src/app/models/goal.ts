@@ -4,6 +4,7 @@ export class Goal {
     amountPerPaycheck ?: number;
     balance?: number;
     dateCreated?: Date;
+    id?: string;
 
     constructor( name?: string, total?: number, amountPerPaycheck ?: number, balance ?: number, dateCreated ?: Date ) {
         this.dateCreated = new Date();
