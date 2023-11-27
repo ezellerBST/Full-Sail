@@ -73,7 +73,7 @@ export class AccountComponent implements OnInit, AfterViewInit {
 
 
   goalDataSource= new MatTableDataSource<GoalsTable>();
-  goalColumnsToDisplay = ['id', 'name', 'balance', 'total', 'amountPerPaycheck', 'dateCreated' ];
+  goalColumnsToDisplay = ['name', 'balance', 'total' ];
   goalColumnsToDisplayWithExpand =[...this.goalColumnsToDisplay, 'expand'];
   goalExpandedElement: any | null;
 
@@ -205,18 +205,22 @@ export class AccountComponent implements OnInit, AfterViewInit {
   
 
   async getGoals() {
+
+    const data: GoalsTable[] = [];
+
     const goals = await this.financeService.getGoals();
 
-    this.goalList = [];
     goals.forEach((doc) => {
 
-      doc.balance = parseInt(doc.balance);
+      const docData = doc as GoalsTable;
+      //docData.balance = parseInt(doc.balance);
+      //docData.total = docData.total;
       // console.log(typeof(doc.))
-      doc.dateCreated = new Date(doc.dateCreated.seconds * 1000);
-      this.goalList.push(doc);
+      docData.dateCreated = new Date(doc.dateCreated.seconds * 1000);
+      data.push(docData);
 
     });
-   
+    this.goalDataSource.data = data;
   }
 
   // async editGoals(name: string, balance: number, amountPerPaycheck, total: number, date: Date){

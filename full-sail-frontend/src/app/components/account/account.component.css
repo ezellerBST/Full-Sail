@@ -23,6 +23,10 @@ svg:not(:host).svg-inline--fa {
     height: 30px;
 }
 
+.cashFlowHeader {
+    text-align: center;
+}
+
 .accounts-content-card {
 
     width: 100%;

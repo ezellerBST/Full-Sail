@@ -174,7 +174,7 @@ export class FinanceService {
       querySnapshot.forEach((doc) => {
 
         const docData = doc.data();
-        docData.id = doc.id
+         docData.id = doc.id;
         result.push(docData);
       });
       return result.sort((a, b) => b.date - a.date);
@@ -191,6 +191,7 @@ export class FinanceService {
       let goalList = [];
       querySnapshot.forEach((doc) => {
         const docData = doc.data();
+        docData.id = doc.id;
         goalList.push(docData);
       });
       console.log(goalList.sort((a, b) => b.date - a.date));
@@ -218,7 +219,7 @@ export class FinanceService {
         const docRef = await addDoc(collection(this.firestore, `users/${userId}/goals`), {
           name: goal.name,
           total: goal.total,
-          amountContributed: goal.amountContributed,
+          amountPerPaycheck: goal.amountPerPaycheck,
           balance: goal.balance,
           dateCreated: goal.dateCreated
         });
@@ -250,11 +251,13 @@ export class FinanceService {
       console.log("addtrantogoal 1st");
       return
     }
+    let goalId: string;
     let goalTotal : number = 0;
     const goalList = await this.getGoals();
     await goalList.forEach(goal => {
-      console.log(goal.amountContributed, parseInt(goal.amountContributed));
-      goalTotal += parseInt(goal.amountContributed);
+      console.log(goal.amountPerPaycheck, parseInt(goal.amountPerPaycheck));
+      goalId = goal.id;
+      goalTotal += parseInt(goal.amountPerPaycheck);
     });
 
     console.log("goal Total: ", goalTotal);
@@ -273,9 +276,9 @@ export class FinanceService {
       console.log(transaction.date)
 
       if (goalDate <= transactionDate) {
-        goal.balance = parseInt(goal.amountContributed) + parseInt(goal.balance); //Add logic to update goal balance
+        goal.balance = parseInt(goal.amountPerPaycheck) + parseInt(goal.balance); //Add logic to update goal balance
 
-        this.editGoalWithUserDetails(userDetails, goal);
+        this.editGoalWithUserDetails(userDetails, goalId, goal);
 
 
         console.log("success", goal.balance);
@@ -285,11 +288,11 @@ export class FinanceService {
     });
   }
 
-  async editGoalWithUserDetails(userDetails , goal: Goal) {
+  async editGoalWithUserDetails(userDetails, goalId , goal: Goal) {
     if (userDetails && userDetails.uid) {
       const userId = userDetails.uid;
-      const goalDocRef = doc(this.firestore, `users/${userId}/goals`);
-      const data = {  date: goal.dateCreated, name: goal.name, amountPerPaycheck: goal.amountContributed, balance: goal.balance, total: goal.total };
+      const goalDocRef = doc(this.firestore, `users/${userId}/goals/${goalId}`);
+      const data = {  date: goal.dateCreated, name: goal.name, amountPerPaycheck: goal.amountPerPaycheck, balance: goal.balance, total: goal.total };
       try {
         await setDoc(goalDocRef, data, { merge: true });
         console.log('Updated goal: ', data);
@@ -391,7 +394,7 @@ export class FinanceService {
       const userId = userDetails.uid;
       const goalDocRef = doc(this.firestore, `users/${userId}/goals/${goalId}`);
       console.log(goalId);
-      const data = {  date: goal.dateCreated, name: goal.name, amountPerPaycheck: goal.amountContributed, total: goal.total };
+      const data = {  date: goal.dateCreated, name: goal.name, balance: goal.balance, amountPerPaycheck: goal.amountPerPaycheck, total: goal.total };
       try {
         await setDoc(goalDocRef, data, { merge: true });
         console.log('Updated goal: ', data);

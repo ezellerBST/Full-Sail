@@ -1,7 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import { FinanceService } from 'src/app/services/finance.service';
 import { SharedService } from 'src/app/services/shared.service';
 
@@ -42,8 +41,8 @@ export class EditGoalComponent implements OnInit {
   }
 
   async editGoal() {
-    await this.financeService.editGoalButton(this.goalId, { name: this.nameOfGoal, dateCreated: this.date, balance: this.balance, amountContributed: this.amountPerPaycheck, total: this.total })
-    console.log("Goal: ", this.goalId, { name: this.nameOfGoal, dateCreated: this.date, balance: this.balance, amountContributed: this.amountPerPaycheck, total: this.total });
+    await this.financeService.editGoalButton(this.goalId, {  dateCreated: this.date, name: this.nameOfGoal, amountPerPaycheck: this.amountPerPaycheck, total: this.total, balance: this.balance })
+    console.log("Goal: ", this.goalId, {  dateCreated: this.date, name: this.nameOfGoal, amountPerPaycheck: this.amountPerPaycheck, total: this.total, balance: this.balance });
     await this.sharedService.accountGoalUpdate();
     this.dialogRef.close();
   }

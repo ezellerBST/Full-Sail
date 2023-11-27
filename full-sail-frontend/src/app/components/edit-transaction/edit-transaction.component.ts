@@ -44,14 +44,6 @@ export class EditTransactionComponent implements OnInit {
     console.log(this.id, this.date, this.description, this.amount);
     await this.sharedService.accountTransactionsUpdate();
     this.dialogRef.close();
-
-    // .then((transaction) => {
-    //   console.log('Transaction was successfully updated: ', transaction);
-    //   this.dialogRef.close();
-    // })
-    // .catch((error) => {
-    //   console.log(error);
-    // });
   }
 
   closeDialog() {
