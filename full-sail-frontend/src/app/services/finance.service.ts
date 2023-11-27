@@ -270,11 +270,10 @@ export class FinanceService {
 
     const userDetails = await this.getUserDetails();
 
-    goalList.forEach(goal => {
+    await goalList.forEach(goal => {
       const goalDate = goal.dateCreated;
       const transactionDate = transaction.date;
-      console.log("Tran Date");
-      console.log(transaction.date)
+
 
       if (goalDate <= transactionDate) {
         goal.balance = parseInt(goal.amountContributed) + parseInt(goal.balance); //Add logic to update goal balance
@@ -292,8 +291,10 @@ export class FinanceService {
   }
 
   async editGoalWithUserDetails(userDetails , goal: Goal) {
+    console.log(goal.id);
     if (userDetails && userDetails.uid) {
       const userId = userDetails.uid;
+      console.log(goal.dateCreated);
       const goalDocRef = doc(this.firestore, `users/${userId}/goals/${goal.id}`);
       const data = {  date: goal.dateCreated, name: goal.name, amountPerPaycheck: goal.amountContributed, total: goal.total, balance: goal.balance };
       try {

@@ -187,14 +187,25 @@ export class AccountComponent implements OnInit, AfterViewInit {
   
 
   async getGoals() {
+
+    const data: Goal[] = [];
+    this.goalList = [];
+
     const goals = await this.financeService.getGoals();
 
-    this.goalList = [];
+
     goals.forEach((doc) => {
+
+      // doc.date = new Date(doc.date.seconds * 1000);
 
       doc.balance = parseInt(doc.balance);
       // console.log(typeof(doc.))
+      console.log( "1st date",doc.date);
+      console.log( "1st dateCreated",doc.dateCreated);
+      console.log(doc.date === doc.dateCreated);
       doc.dateCreated = new Date(doc.dateCreated.seconds * 1000);
+      console.log( "2nd date",doc.date);
+      console.log( "2nd dateCreated",doc.dateCreated);
       this.goalList.push(doc);
 
     });
@@ -214,9 +225,9 @@ export class AccountComponent implements OnInit, AfterViewInit {
 
   async addGoal(goal: Goal) {
 
-    this.financeService.addGoal(goal);
+    await this.financeService.addGoal(goal);
 
-    this.getGoals();
+    await this.getGoals();
   }
 
 }
