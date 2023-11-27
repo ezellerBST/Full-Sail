@@ -12,8 +12,8 @@ import { SharedService } from 'src/app/services/shared.service';
 export class EditGoalComponent implements OnInit {
 
   isSignedIn: boolean = false;
-  date: Date;
-  nameOfGoal: string
+  dateCreated: Date;
+  name: string
   amountPerPaycheck: number = 0;
   total: number = 0;
   balance: number;
@@ -25,15 +25,15 @@ export class EditGoalComponent implements OnInit {
     private financeService: FinanceService,
     private sharedService: SharedService,
     public dialogRef: MatDialogRef<EditGoalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { goalId, date, nameOfGoal, amountPerPaycheck, total, balance }
+    @Inject(MAT_DIALOG_DATA) public data: { goalId, dateCreated, name, amountPerPaycheck, total, balance }
   ) { }
 
   ngOnInit(): void {
     this.auth.onAuthStateChanged(user => {
       this.isSignedIn = !!user;
       this.goalId = this.data.goalId;
-      this.nameOfGoal = this.data.nameOfGoal;
-      this.date = this.data.date;
+      this.name = this.data.name;
+      this.dateCreated = this.data.dateCreated;
       this.amountPerPaycheck = this.data.amountPerPaycheck;
       this.total = this.data.total;
       this.balance = this.data.balance;
@@ -41,8 +41,8 @@ export class EditGoalComponent implements OnInit {
   }
 
   async editGoal() {
-    await this.financeService.editGoalButton(this.goalId, {  dateCreated: this.date, name: this.nameOfGoal, amountPerPaycheck: this.amountPerPaycheck, total: this.total, balance: this.balance })
-    console.log("Goal: ", this.goalId, {  dateCreated: this.date, name: this.nameOfGoal, amountPerPaycheck: this.amountPerPaycheck, total: this.total, balance: this.balance });
+    await this.financeService.editGoalButton(this.goalId, {  dateCreated: this.dateCreated, name: this.name, amountPerPaycheck: this.amountPerPaycheck, total: this.total, balance: this.balance })
+    console.log("Goal: ", this.goalId, {  dateCreated: this.dateCreated, name: this.name, amountPerPaycheck: this.amountPerPaycheck, total: this.total, balance: this.balance });
     await this.sharedService.accountGoalUpdate();
     this.dialogRef.close();
   }

@@ -194,8 +194,8 @@ export class FinanceService {
         docData.id = doc.id;
         goalList.push(docData);
       });
-      console.log(goalList.sort((a, b) => b.date - a.date));
-      return goalList.sort((a, b) => b.date - a.date);
+      console.log(goalList.sort((a, b) => b.dateCreated - a.dateCreated));
+      return goalList.sort((a, b) => b.dateCreated - a.dateCreated);
     } else {
       return null;
     }
@@ -295,7 +295,7 @@ export class FinanceService {
     if (userDetails && userDetails.uid) {
       const userId = userDetails.uid;
       const goalDocRef = doc(this.firestore, `users/${userId}/goals/${goalId}`);
-      const data = {  date: goal.dateCreated, name: goal.name, amountPerPaycheck: goal.amountPerPaycheck, balance: goal.balance, total: goal.total };
+      const data = {  dateCreated: goal.dateCreated, name: goal.name, amountPerPaycheck: goal.amountPerPaycheck, balance: goal.balance, total: goal.total };
       try {
         await setDoc(goalDocRef, data, { merge: true });
         console.log('Updated goal: ', data);
@@ -374,11 +374,11 @@ export class FinanceService {
     })
   }
 
-  openEditGoalDialog(goalId, date,  nameOfGoal, amountPerPaycheck, total, balance) {
+  openEditGoalDialog(goalId, dateCreated,  name, amountPerPaycheck, total, balance) {
     this.dialog.open(EditGoalComponent, {
       width: '55%',
       height: '45%',
-      data: { goalId, date, nameOfGoal, amountPerPaycheck, total, balance }
+      data: { goalId, dateCreated, name, amountPerPaycheck, total, balance }
     })
   }
 
@@ -397,7 +397,7 @@ export class FinanceService {
       const userId = userDetails.uid;
       const goalDocRef = doc(this.firestore, `users/${userId}/goals/${goalId}`);
       console.log(goalId);
-      const data = {  date: goal.dateCreated, name: goal.name, balance: goal.balance, amountPerPaycheck: goal.amountPerPaycheck, total: goal.total };
+      const data = {  dateCreated: goal.dateCreated, name: goal.name, balance: goal.balance, amountPerPaycheck: goal.amountPerPaycheck, total: goal.total };
       try {
         await setDoc(goalDocRef, data, { merge: true });
         console.log('Updated goal: ', data);

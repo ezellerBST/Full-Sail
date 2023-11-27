@@ -28,6 +28,12 @@ svg:not(:host).svg-inline--fa {
     text-align: center;
 }
 
+.goalsBtn {
+    text-align: center;
+    margin: auto;
+    margin-bottom: 15px;
+}
+
 .accounts-content-card {
 
     width: 100%;
@@ -41,6 +47,7 @@ svg:not(:host).svg-inline--fa {
 .transactBtn {
     margin-left: auto;
     margin-right: auto;
+    margin-top: 15px;
 }
 
 .editBtn {
