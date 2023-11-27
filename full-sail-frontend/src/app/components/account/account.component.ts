@@ -23,7 +23,7 @@ export interface TransactionTable {
 
 export interface GoalsTable {
   id: string;
-  dateCreated: Date;
+  dateCreated: string;
   name: string;
   balance: number;
   total: number;
@@ -210,12 +210,12 @@ export class AccountComponent implements OnInit, AfterViewInit {
     const goals = await this.financeService.getGoals();
 
     goals.forEach((doc) => {
-
+      doc.dateCreated = new Date(doc.dateCreated.seconds * 1000);
       const docData = doc as GoalsTable;
       //docData.balance = parseInt(doc.balance);
       //docData.total = docData.total;
       // console.log(typeof(doc.))
-      docData.dateCreated = new Date(doc.dateCreated.seconds * 1000);
+      docData.dateCreated = new Date(doc.dateCreated).toLocaleDateString();
       data.push(docData);
 
     });
