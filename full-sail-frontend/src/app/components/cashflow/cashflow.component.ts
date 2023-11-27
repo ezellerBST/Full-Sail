@@ -113,7 +113,6 @@ export class CashflowComponent implements  AfterViewInit {
   }
 
   private initializeChart() {
-    // Check if chart is defined before updating options
     if (this.chart && this.chart.updateOptions) {
       window.matchMedia('(prefers-color-scheme: dark)').addListener(() => {
         this.setDarkLightMode();
