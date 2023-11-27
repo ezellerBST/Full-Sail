@@ -194,7 +194,6 @@ export class FinanceService {
         docData.id = doc.id;
         goalList.push(docData);
       });
-      console.log(goalList.sort((a, b) => b.dateCreated - a.dateCreated));
       return goalList.sort((a, b) => b.dateCreated - a.dateCreated);
     } else {
       return null;

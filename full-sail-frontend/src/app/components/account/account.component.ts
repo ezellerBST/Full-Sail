@@ -228,7 +228,6 @@ export class AccountComponent implements OnInit, AfterViewInit {
 
   async createGoal(name: string, amountPerPaycheck: string, total: string) {
     await this.financeService.createGoal(name, parseInt(amountPerPaycheck), parseInt(total));
-    // this.addGoal(new Goal(name, parseInt(total), parseInt(amountPerPaycheck), 0, new Date()));
     console.log("Goal List: ", this.goalList);
     console.log("create Goal: ", new Date());
     this.getGoals();

@@ -35,10 +35,11 @@ export class EditTransactionComponent implements OnInit {
     this.auth.onAuthStateChanged(user => {
       this.isSignedIn = !!user;
       this.id = this.data.transactionId;
-      this.date = this.data.date;
+      this.date = new Date(this.data.date);
       this.description = this.data.description;
       this.amount = this.data.amount;
     });
+
   }
 
 

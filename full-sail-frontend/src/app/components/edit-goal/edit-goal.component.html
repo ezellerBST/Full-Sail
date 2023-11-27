@@ -1,37 +1,41 @@
-<mat-form-field>
-    <mat-label>Date</mat-label>
-    <input [(ngModel)]='dateCreated' matInput>
-</mat-form-field>
+<div>
+    <mat-form-field>
+        <mat-label>Date</mat-label>
+            <input matInput [matDatepicker]="editGoalDatePicker" [(ngModel)]="dateCreated">
+            <mat-datepicker-toggle matIconSuffix [for]="editGoalDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #editGoalDatePicker></mat-datepicker>
+    </mat-form-field>
 
-<br>
+    <br>
 
-<mat-form-field>
-    <mat-label>Name Of Goal</mat-label>
-    <input [(ngModel)]="name" matInput>
-</mat-form-field>
+    <mat-form-field>
+        <mat-label>Name Of Goal</mat-label>
+        <input [(ngModel)]="name" matInput>
+    </mat-form-field>
 
-<br>
+    <br>
 
-<mat-form-field>
-    <mat-label>Amount to Contribute</mat-label>
-    <input [(ngModel)]="amountPerPaycheck" matInput>
-</mat-form-field>
+    <mat-form-field>
+        <mat-label>Amount to Contribute</mat-label>
+        <input [(ngModel)]="amountPerPaycheck" matInput>
+    </mat-form-field>
 
-<br>
+    <br>
 
-<mat-form-field>
-    <mat-label>Total for your Goal</mat-label>
-    <input [(ngModel)]="total" matInput>
-</mat-form-field>
+    <mat-form-field>
+        <mat-label>Total for your Goal</mat-label>
+        <input [(ngModel)]="total" matInput>
+    </mat-form-field>
 
-<br>
+    <br>
 
-<mat-form-field>
-    <mat-label>Current Balance of Goal</mat-label>
-    <input [(ngModel)]="balance" matInput>
-</mat-form-field>
+    <mat-form-field>
+        <mat-label>Current Balance of Goal</mat-label>
+        <input [(ngModel)]="balance" matInput>
+    </mat-form-field>
 
-<br>
+    <br>
 
-<button mat-raised-button color="primary" (click)="editGoal()">Save Changes</button>
-<button mat-raised-button color="warn" (click)="closeDialog()">Cancel</button>
+    <button mat-raised-button color="primary" (click)="editGoal()">Save Changes</button>
+    <button mat-raised-button color="warn" (click)="closeDialog()">Cancel</button>
+</div>

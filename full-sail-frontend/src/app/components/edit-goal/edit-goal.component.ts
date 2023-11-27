@@ -33,7 +33,7 @@ export class EditGoalComponent implements OnInit {
       this.isSignedIn = !!user;
       this.goalId = this.data.goalId;
       this.name = this.data.name;
-      this.dateCreated = this.data.dateCreated;
+      this.dateCreated = new Date(this.data.dateCreated);
       this.amountPerPaycheck = this.data.amountPerPaycheck;
       this.total = this.data.total;
       this.balance = this.data.balance;

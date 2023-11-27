@@ -96,6 +96,5 @@ export class AppComponent implements OnInit {
     if (!!prefersDarkMode && !currentMode || !prefersDarkMode && currentMode) {
       document.body.classList.toggle('dark-mode');
     }
-    // console.log(document.body.classList.contains('dark-mode'));
   }
 }
