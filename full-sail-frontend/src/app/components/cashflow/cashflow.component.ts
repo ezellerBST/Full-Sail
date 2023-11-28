@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, OnInit, ViewChild } from "@angular/core";
+import * as ApexCharts from "apexcharts";
 import {
   ApexAxisChartSeries,
   ApexChart,
@@ -33,15 +34,17 @@ export type ChartOptions = {
   templateUrl: './cashflow.component.html',
   styleUrls: ['./cashflow.component.css']
 })
-export class CashflowComponent implements OnInit {
+export class CashflowComponent implements  AfterViewInit {
   @ViewChild("chart") chart: ChartComponent;
   public chartOptions: Partial<ChartOptions>;
 
   constructor(private financeService: FinanceService) {
 
+    let chartForeColor = '';
 
-
-
+    if (document.body.classList.contains('dark-mode')) {
+      chartForeColor = '#FFFFFF'
+    }
 
     this.chartOptions = {
       series: [
@@ -57,7 +60,8 @@ export class CashflowComponent implements OnInit {
       ],
       chart: {
         type: "bar",
-        height: 350
+        height: 350,
+        foreColor: chartForeColor
       },
       plotOptions: {
         bar: {
@@ -104,18 +108,49 @@ export class CashflowComponent implements OnInit {
             return "$ " + val;
           }
         }
-      }
+      },
     };
   }
 
-  async ngOnInit() {
-
+  private initializeChart() {
+    if (this.chart && this.chart.updateOptions) {
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(() => {
+        this.setDarkLightMode();
+      });
+    }
   }
+
+  async ngAfterViewInit() {
+    this.initializeChart();
+  }
+
+  async setDarkLightMode() {
+    let chartForeColor = '';
+
+    if (document.body.classList.contains('dark-mode')) {
+      chartForeColor = '#FFFFFF'
+    }
+
+    const options = {
+      chart: {
+        foreColor: chartForeColor
+      }
+    }
+
+    if (this.chart && this.chart.updateOptions) {
+      this.chart.updateOptions(options, false, true);
+    }
+
+      
+  }
+  
+  loadedData;
 
   public async loadData(data) {
 
     try{
       
+      this.loadedData = data;
 
       const currentYear = new Date().getUTCFullYear();
 
