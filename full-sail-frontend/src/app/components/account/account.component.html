@@ -4,11 +4,8 @@
         <!-- Welcome Header -->
 
         <div class="header-div">
-            <h2 ng-non-bindable>Welcome {{ displayName }}</h2>
-            <mat-form-field appearance="outline">
-                <mat-label ngClass="dark-mode-white">Search</mat-label>
-                <input matInput>
-            </mat-form-field>
+            <h2 style="text-align: center;" ng-non-bindable>Welcome {{ displayName }}</h2>
+            
         </div>
 
         <!-- Import or Manually add a Paycheck into the app, distributes to Goals Table and Transaction Tables -->
@@ -185,7 +182,7 @@
 
                     <ng-container matColumnDef="progressBar">
                         <td mat-cell *matCellDef="let element" style="width: 100%;">
-                            <mat-progress-bar mode="determinate"
+                            <mat-progress-bar style="margin-bottom: 20px;" mode="determinate"
                                 [value]="element.balance / element.total * 100"></mat-progress-bar>
                         </td>
                     </ng-container>
