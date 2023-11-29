@@ -1,6 +1,6 @@
-/* html {
-    background-color: rgb(30, 30, 30);
-} */
+body {
+    height: 100vh;
+}
 
 .header-div {
     display: flex;
@@ -19,6 +19,20 @@
     margin-bottom: 10px;
 }
 
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.date-field {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 5px;
+}
+
 svg:not(:root).svg-inline--fa,
 svg:not(:host).svg-inline--fa {
     height: 30px;
@@ -29,8 +43,9 @@ svg:not(:host).svg-inline--fa {
 }
 
 .goalsBtn {
-    text-align: center;
-    margin: auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 15px;
     margin-bottom: 15px;
 }
 
@@ -54,6 +69,14 @@ svg:not(:host).svg-inline--fa {
     display: flex;
     justify-content: center;
     gap: 8px;
+}
+
+.goalDetails {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .datePicker {

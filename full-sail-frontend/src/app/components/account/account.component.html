@@ -2,7 +2,7 @@
     <div class="card-list">
 
         <!-- Welcome Header -->
-        
+
         <div class="header-div">
             <h2 ng-non-bindable>Welcome {{ displayName }}</h2>
             <mat-form-field appearance="outline">
@@ -18,43 +18,40 @@
 
                 <div class="items-centered">
                     <h2 ngClass="margin-auto">Income</h2>
-                    <hr>
-                    <mat-button-toggle-group color="primary" ngClass="margin-auto" style="width: fit-content;"
-                        [(ngModel)]="showImportPaycheck">
+                    
+                    <mat-button-toggle-group color="primary" ngClass="margin-auto" [(ngModel)]="showImportPaycheck">
                         <mat-button-toggle color="primary" value="true">Import Paycheck</mat-button-toggle>
                         <mat-button-toggle value="false">Import CSV</mat-button-toggle>
                     </mat-button-toggle-group>
 
                     <div *ngIf="showImportPaycheck === 'true'">
-                        <form ngClass="items-centered"
+                        <form ngClass="form-container"
                             (ngSubmit)="inputPaycheck(paycheckAmount, paycheckDate, contributeToGoals)">
 
-                            <div ngClass="flex-right">
-                                <mat-checkbox [(ngModel)]="contributeToGoals" name="contributeToGoals"
-                                    ngClass="margin-auto">Contribute To Goals</mat-checkbox>
+                            <mat-form-field class="datePicker" style="margin-top: 5px;">
+                                <input matInput [matDatepicker]="paycheckPicker" name="paycheckPicker"
+                                    [(ngModel)]="paycheckDate">
+                                <mat-datepicker-toggle matIconSuffix [for]="paycheckPicker"></mat-datepicker-toggle>
+                                <mat-datepicker #paycheckPicker></mat-datepicker>
+                            </mat-form-field>
 
-                                <mat-form-field class="datePicker">
-                                    <input matInput [matDatepicker]="paycheckPicker" name="paycheckPicker"
-                                        [(ngModel)]="paycheckDate">
-                                    <mat-datepicker-toggle matIconSuffix [for]="paycheckPicker"></mat-datepicker-toggle>
-                                    <mat-datepicker #paycheckPicker></mat-datepicker>
-                                </mat-form-field>
-                            </div>
-
-                            <div ngClass="flex-right">
-                                <mat-form-field appearance="outline">
+                            <div class="date-field">
+                                <mat-form-field appearance="outline" style="width: 150px;">
                                     <mat-label ngClass="dark-mode-white">Input Paycheck</mat-label>
                                     <input matInput min="0" type="number" name="paycheck-input"
                                         [(ngModel)]="paycheckAmount">
                                 </mat-form-field>
 
-                                <button mat-raised-button color="accent" type="submit">Submit</button>
+                                <mat-checkbox [(ngModel)]="contributeToGoals" name="contributeToGoals">Contribute To
+                                    Goals</mat-checkbox>
                             </div>
+
+                            <button mat-raised-button color="accent" type="submit">Submit</button>
                         </form>
                     </div>
 
                     <div *ngIf="showImportPaycheck === 'false'">
-                        <form ngClass="items-centered">
+                        <form ngClass="form-container">
                             <mat-checkbox [(ngModel)]="contributeToGoals" name="contributeToGoals"
                                 ngClass="dark-mode-white margin-auto">Contribute To Goals</mat-checkbox>
 
@@ -126,7 +123,8 @@
 
                     <ng-container matColumnDef="expandedDetail">
                         <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayWithExpand.length">
-                            <div class="editBtn" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                            <div class="editBtn"
+                                [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
                                 <button mat-raised-button color="accent"
                                     (click)="editTransaction(element.id, element.date, element.description, element.amount)">Edit</button>
                                 <button mat-raised-button color="warn"
@@ -152,33 +150,26 @@
                 <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
                     aria-label="Select page of transactions">
                 </mat-paginator>
-                
+
             </mat-card-content>
         </mat-card>
 
         <!-- Goals Table -->
 
-        <mat-card class="accounts-content-card goals-card">
-            <div ngClass="flex-right">
-                <h2>Goals</h2>
-
-                </div>
-                <div class="goalsBtn" >
-                    <button mat-raised-button color="accent" (click)="addNewGoalDialog()"> Add New Goal </button>
-                </div>
+        <mat-card class="accounts-content-card">
+            <h2 ngClass="margin-auto">Goals</h2>
+            <mat-card-content class="goalsBtn">
+                <button mat-raised-button color="accent" (click)="addNewGoalDialog()"> Add New Goal </button>
+            </mat-card-content>
+            <mat-card-content>
                 <mat-divider></mat-divider>
                 <br>
                 <table mat-table [dataSource]="goalDataSource" multiTemplateDataRows class="mat-elevation-z8">
 
                     <ng-container matColumnDef="{{column}}" *ngFor="let column of goalColumnsToDisplay">
                         <th mat-header-cell *matHeaderCellDef> {{column}} </th>
-                        <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
                         <td mat-cell *matCellDef="let element"> {{element[column]}}
-                            <!-- <mat-progress-bar mode="determinate" style="height: 30px;"
-                                        [value]="element.balance / element.total * 100"></mat-progress-bar> -->
-                            
                         </td>
-
                     </ng-container>
 
                     <ng-container matColumnDef="expand">
@@ -192,35 +183,42 @@
                         </td>
                     </ng-container>
 
+                    <ng-container matColumnDef="progressBar">
+                        <td mat-cell *matCellDef="let element" style="width: 100%;">
+                            <mat-progress-bar mode="determinate"
+                                [value]="element.balance / element.total * 100"></mat-progress-bar>
+                        </td>
+                    </ng-container>
+
                     <ng-container matColumnDef="goalExpandedDetail">
                         <td mat-cell *matCellDef="let element" [attr.colspan]=" goalColumnsToDisplayWithExpand.length">
                             <div [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-                                <div>
-                                    {{element.amountPerPaycheck}}
+                                <div class="goalDetails">
+                                    <div>
+                                        Per paycheck = {{element.amountPerPaycheck}}
+                                    </div>
+                                    <div>
+                                        Created {{element.dateCreated}}
+                                    </div>
                                 </div>
-                                <dir>
-                                    {{element.dateCreated}}
-                                </dir>
-                                <div>
-                                    <mat-progress-bar [value]="(element.balance / element.total) * 100" mode="determinate" style="height: 30px;"></mat-progress-bar>       
-                                </div>
-                                <div>
-                                    <button mat-raised-button color="primary"
-                                    (click)="editGoalDialog(element.id,element.dateCreated, element.name, element.amountPerPaycheck, element.total,  element.balance )">Edit
-                                </button>    
-                                </div>
-                                <div>
+                                <div class="editBtn">
+                                    <button mat-raised-button color="accent"
+                                        (click)="editGoalDialog(element.id,element.dateCreated, element.name, element.amountPerPaycheck, element.total,  element.balance )">Edit
+                                    </button>
                                     <button mat-raised-button color="warn" (click)="deleteGoalDialog(element.id)">Delete
                                     </button>
                                 </div>
                             </div>
                         </td>
                     </ng-container>
+
+                    <!-- Row Definitions -->
                     <tr mat-header-row *matHeaderRowDef="goalColumnsToDisplayWithExpand"></tr>
                     <tr mat-row *matRowDef="let element; columns: goalColumnsToDisplayWithExpand;"
                         class="example-element-row" [class.example-expanded-row]="expandedElement === element"
                         (click)="expandedElement = expandedElement === element ? null : element">
                     </tr>
+                    <tr mat-row *matRowDef="let element; columns: ['progressBar']" style="height: 10px;"></tr>
                     <tr mat-row *matRowDef="let row; columns: ['goalExpandedDetail']" class="example-detail-row"></tr>
 
                 </table>
@@ -228,35 +226,10 @@
                 <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of goals">
                 </mat-paginator>
 
-
-                <!-- <div ngClass="items-centered" *ngFor="let goal of goalList">
-                    <div ngClass="flex-goal">
-                        <h3>{{goal.dateCreated.toLocaleDateString()}} - {{goal.name}}</h3>
-                        <h3>{{goal.balance}} / {{goal.total}}</h3>
-                        <h3>{{goal.amountContributed}} Per Paycheck</h3>
-
-                         Need to add button functions to the below buttons, need to change Goal Card so that we 
-                            can get the element.id, and other values to pass in to the button functions 
-                
-                        <button mat-raised-button color="primary" (click)="editGoalDialog(  INPUT HERE!! )">Edit</button>
-                        <button mat-raised-button color="warn" (click)="deleteGoalDialog(  INPUT HERE!!!  )">Delete</button>    
-                        
-                         Need to add button functions to the below buttons, need to change Goal Card so that we 
-                            can get the element.id, and other values to pass in to the button functions
-                        
-                        <button mat-raised-button color="primary" (click)="editGoalDialog(goal)">Edit</button>
-                        <button mat-raised-button color="warn" (click)="deleteGoalDialog(goal.id)">Delete</button>    
-                       
-
-                    </div>
-                    <div ngClass="alt-theme">
-                        <mat-progress-bar mode="determinate" style="height: 30px;"
-                            [value]="goal.balance / goal.total * 100"></mat-progress-bar>
-                    </div> 
-                </div> -->
+            </mat-card-content>
         </mat-card>
 
-<!-- Random Cards for Spacing -->
+        <!-- Random Cards for Spacing -->
 
         <mat-card class="accounts-content-card hidden-card">
             <mat-card-content ngClass="items-centered">

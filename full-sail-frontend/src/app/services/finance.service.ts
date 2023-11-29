@@ -370,22 +370,22 @@ export class FinanceService {
   openCreateGoalDialog() {
     this.dialog.open(AddGoalComponent, {
       width: '55%',
-      height: '45%'
+      height: '50%'
     })
   }
 
   openEditGoalDialog(goalId, dateCreated,  name, amountPerPaycheck, total, balance) {
     this.dialog.open(EditGoalComponent, {
       width: '55%',
-      height: '45%',
+      height: '50%',
       data: { goalId, dateCreated, name, amountPerPaycheck, total, balance }
     })
   }
 
   openDeleteGoalDialog(goalId) {
     this.dialog.open(DeleteGoalComponent, {
-      width: '55%',
-      height: '45%',
+      width: '35%',
+      height: '25%',
       data: { goalId }
     })
   }
