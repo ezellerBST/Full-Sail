@@ -1,154 +1,151 @@
-<body>
-    <section class="first-section">
-        <div class="sales-pitch">
-            <h2>Budget Like a Pro</h2>
-            <p>Experience powerful budgeting tools combined with an intuitive interface. See exactly where your money is
-                going and make informed decisions.</p>
-            <button mat-raised-button color="warn" (click)="getRegisterPage()">Create Your Free Account</button>
-        </div>
-        <img class="img-1" height="300px" width="500px" src="./assets/financial-planner.jpg" alt="Image">
-    </section>
+<section class="first-section">
+    <div class="sales-pitch">
+        <h2>Budget Like a Pro</h2>
+        <p>Experience powerful budgeting tools combined with an intuitive interface. See exactly where your money is
+            going and make informed decisions.</p>
+        <button mat-raised-button color="warn" (click)="getRegisterPage()">Create Your Free Account</button>
+    </div>
+    <img class="img-1" height="300px" width="500px" src="./assets/financial-planner.jpg" alt="Image">
+</section>
 
-    <section class="second-section">
-        <img class="img-2" height="300px" width="400px" src="./assets/saving-money.avif" alt="Savings Image">
-        <div class="sales-pitch">
-            <h2>Secure Your Financial Future</h2>
-            <p>Transform your financial habits with smart savings strategies. Set goals, track progress, and watch your
-                savings grow effortlessly.</p>
-            <button class="btn-2" mat-raised-button color="warn" (click)="getRegisterPage()">Start Saving</button>
-        </div>
-    </section>
+<section class="second-section">
+    <img class="img-2" height="300px" width="400px" src="./assets/saving-money.avif" alt="Savings Image">
+    <div class="sales-pitch">
+        <h2>Secure Your Financial Future</h2>
+        <p>Transform your financial habits with smart savings strategies. Set goals, track progress, and watch your
+            savings grow effortlessly.</p>
+        <button class="btn-2" mat-raised-button color="warn" (click)="getRegisterPage()">Start Saving</button>
+    </div>
+</section>
 
-    <h1>Testimonials</h1>
+<h1>Testimonials</h1>
 
-    <section class="testimonials-section">
-        <div class="card-container">
-            <mat-card class="test-card">
-                <mat-card-header>
-                    <mat-card-title-group>
-                        <mat-card-title>John D.</mat-card-title>
-                        <mat-card-subtitle>
-                            <span>
-                                <mat-icon style="height: 30px;">
-                                    <fa-icon [icon]="faStar"></fa-icon>
-                                </mat-icon>
-                                <mat-icon style="height: 30px;">
-                                    <fa-icon [icon]="faStar"></fa-icon>
-                                </mat-icon>
-                                <mat-icon style="height: 30px;">
-                                    <fa-icon [icon]="faStar"></fa-icon>
-                                </mat-icon>
-                                <mat-icon style="height: 30px;">
-                                    <fa-icon [icon]="faStar"></fa-icon>
-                                </mat-icon>
-                                <mat-icon style="height: 30px;">
-                                    <fa-icon [icon]="faStar"></fa-icon>
-                                </mat-icon>
-                            </span>
-                        </mat-card-subtitle>
-                        <img height="100px" width="100px" mat-card-sm-image src="./assets/profile-pic.avif">
-                    </mat-card-title-group>
-                </mat-card-header>
-                <mat-card-content>
-                    "Full Sail has been a game-changer for my finances. I love how it helps me manage my money
-                    efficiently!"
-                </mat-card-content>
-            </mat-card>
-            <mat-card class="test-card">
-                <mat-card-header>
-                    <mat-card-title-group>
-                        <mat-card-title>Sarah H.</mat-card-title>
-                        <mat-card-subtitle>
-                            <span>
-                                <mat-icon style="height: 30px;">
-                                    <fa-icon [icon]="faStar"></fa-icon>
-                                </mat-icon>
-                                <mat-icon style="height: 30px;">
-                                    <fa-icon [icon]="faStar"></fa-icon>
-                                </mat-icon>
-                                <mat-icon style="height: 30px;">
-                                    <fa-icon [icon]="faStar"></fa-icon>
-                                </mat-icon>
-                                <mat-icon style="height: 30px;">
-                                    <fa-icon [icon]="faStar"></fa-icon>
-                                </mat-icon>
-                                <mat-icon style="height: 30px;">
-                                    <fa-icon [icon]="faStar"></fa-icon>
-                                </mat-icon>
-                            </span>
-                        </mat-card-subtitle>
-                        <img height="100px" width="100px" mat-card-sm-image src="./assets/sarah.avif">
-                    </mat-card-title-group>
-                </mat-card-header>
-                <mat-card-content>
-                    "Thanks to its intuitive interface and powerful budgeting tools, I've effortlessly taken control of
-                    my finances. Now, I can confidently say goodbye to overspending and hello to financial freedom."
-                </mat-card-content>
-            </mat-card>
-            <mat-card class="test-card">
-                <mat-card-header>
-                    <mat-card-title-group>
-                        <mat-card-title>James M.</mat-card-title>
-                        <mat-card-subtitle>
-                            <span>
-                                <mat-icon style="height: 30px;">
-                                    <fa-icon [icon]="faStar"></fa-icon>
-                                </mat-icon>
-                                <mat-icon style="height: 30px;">
-                                    <fa-icon [icon]="faStar"></fa-icon>
-                                </mat-icon>
-                                <mat-icon style="height: 30px;">
-                                    <fa-icon [icon]="faStar"></fa-icon>
-                                </mat-icon>
-                                <mat-icon style="height: 30px;">
-                                    <fa-icon [icon]="faStar"></fa-icon>
-                                </mat-icon>
-                                <mat-icon style="height: 30px;">
-                                    <fa-icon [icon]="faStar"></fa-icon>
-                                </mat-icon>
-                            </span>
-                        </mat-card-subtitle>
-                        <img height="100px" width="100px" mat-card-sm-image src="./assets/james.avif">
-                    </mat-card-title-group>
-                </mat-card-header>
-                <mat-card-content>
-                    "I was skeptical at first, but Full Sail exceeded my expectations. I'm genuinely
-                    grateful for the positive impact it has had on my financial life." </mat-card-content>
-            </mat-card>
-            <mat-card class="test-card">
-                <mat-card-header>
-                    <mat-card-title-group>
-                        <mat-card-title>Arjun S.</mat-card-title>
-                        <mat-card-subtitle>
-                            <span>
-                                <mat-icon style="height: 30px;">
-                                    <fa-icon [icon]="faStar"></fa-icon>
-                                </mat-icon>
-                                <mat-icon style="height: 30px;">
-                                    <fa-icon [icon]="faStar"></fa-icon>
-                                </mat-icon>
-                                <mat-icon style="height: 30px;">
-                                    <fa-icon [icon]="faStar"></fa-icon>
-                                </mat-icon>
-                                <mat-icon style="height: 30px;">
-                                    <fa-icon [icon]="faStar"></fa-icon>
-                                </mat-icon>
-                                <mat-icon style="height: 30px;">
-                                    <fa-icon [icon]="faStar"></fa-icon>
-                                </mat-icon>
-                            </span>
-                        </mat-card-subtitle>
-                        <img height="100px" width="100px" mat-card-sm-image src="./assets/arjun.avif">
-                    </mat-card-title-group>
-                </mat-card-header>
-                <mat-card-content>
-                    "This app's user-friendly design and innovative features have transformed my approach to budgeting.
-                    Tracking expenses is now so easy." </mat-card-content>
-            </mat-card>
-        </div>
-    </section>
+<section class="testimonials-section">
+    <div class="card-container">
+        <mat-card class="test-card">
+            <mat-card-header>
+                <mat-card-title-group>
+                    <mat-card-title>John D.</mat-card-title>
+                    <mat-card-subtitle>
+                        <span>
+                            <mat-icon style="height: 30px;">
+                                <fa-icon [icon]="faStar"></fa-icon>
+                            </mat-icon>
+                            <mat-icon style="height: 30px;">
+                                <fa-icon [icon]="faStar"></fa-icon>
+                            </mat-icon>
+                            <mat-icon style="height: 30px;">
+                                <fa-icon [icon]="faStar"></fa-icon>
+                            </mat-icon>
+                            <mat-icon style="height: 30px;">
+                                <fa-icon [icon]="faStar"></fa-icon>
+                            </mat-icon>
+                            <mat-icon style="height: 30px;">
+                                <fa-icon [icon]="faStar"></fa-icon>
+                            </mat-icon>
+                        </span>
+                    </mat-card-subtitle>
+                    <img height="100px" width="100px" mat-card-sm-image src="./assets/profile-pic.avif">
+                </mat-card-title-group>
+            </mat-card-header>
+            <mat-card-content>
+                "Full Sail has been a game-changer for my finances. I love how it helps me manage my money
+                efficiently!"
+            </mat-card-content>
+        </mat-card>
+        <mat-card class="test-card">
+            <mat-card-header>
+                <mat-card-title-group>
+                    <mat-card-title>Sarah H.</mat-card-title>
+                    <mat-card-subtitle>
+                        <span>
+                            <mat-icon style="height: 30px;">
+                                <fa-icon [icon]="faStar"></fa-icon>
+                            </mat-icon>
+                            <mat-icon style="height: 30px;">
+                                <fa-icon [icon]="faStar"></fa-icon>
+                            </mat-icon>
+                            <mat-icon style="height: 30px;">
+                                <fa-icon [icon]="faStar"></fa-icon>
+                            </mat-icon>
+                            <mat-icon style="height: 30px;">
+                                <fa-icon [icon]="faStar"></fa-icon>
+                            </mat-icon>
+                            <mat-icon style="height: 30px;">
+                                <fa-icon [icon]="faStar"></fa-icon>
+                            </mat-icon>
+                        </span>
+                    </mat-card-subtitle>
+                    <img height="100px" width="100px" mat-card-sm-image src="./assets/sarah.avif">
+                </mat-card-title-group>
+            </mat-card-header>
+            <mat-card-content>
+                "Thanks to its intuitive interface and powerful budgeting tools, I've effortlessly taken control of
+                my finances. Now, I can confidently say goodbye to overspending and hello to financial freedom."
+            </mat-card-content>
+        </mat-card>
+        <mat-card class="test-card">
+            <mat-card-header>
+                <mat-card-title-group>
+                    <mat-card-title>James M.</mat-card-title>
+                    <mat-card-subtitle>
+                        <span>
+                            <mat-icon style="height: 30px;">
+                                <fa-icon [icon]="faStar"></fa-icon>
+                            </mat-icon>
+                            <mat-icon style="height: 30px;">
+                                <fa-icon [icon]="faStar"></fa-icon>
+                            </mat-icon>
+                            <mat-icon style="height: 30px;">
+                                <fa-icon [icon]="faStar"></fa-icon>
+                            </mat-icon>
+                            <mat-icon style="height: 30px;">
+                                <fa-icon [icon]="faStar"></fa-icon>
+                            </mat-icon>
+                            <mat-icon style="height: 30px;">
+                                <fa-icon [icon]="faStar"></fa-icon>
+                            </mat-icon>
+                        </span>
+                    </mat-card-subtitle>
+                    <img height="100px" width="100px" mat-card-sm-image src="./assets/james.avif">
+                </mat-card-title-group>
+            </mat-card-header>
+            <mat-card-content>
+                "I was skeptical at first, but Full Sail exceeded my expectations. I'm genuinely
+                grateful for the positive impact it has had on my financial life." </mat-card-content>
+        </mat-card>
+        <mat-card class="test-card">
+            <mat-card-header>
+                <mat-card-title-group>
+                    <mat-card-title>Arjun S.</mat-card-title>
+                    <mat-card-subtitle>
+                        <span>
+                            <mat-icon style="height: 30px;">
+                                <fa-icon [icon]="faStar"></fa-icon>
+                            </mat-icon>
+                            <mat-icon style="height: 30px;">
+                                <fa-icon [icon]="faStar"></fa-icon>
+                            </mat-icon>
+                            <mat-icon style="height: 30px;">
+                                <fa-icon [icon]="faStar"></fa-icon>
+                            </mat-icon>
+                            <mat-icon style="height: 30px;">
+                                <fa-icon [icon]="faStar"></fa-icon>
+                            </mat-icon>
+                            <mat-icon style="height: 30px;">
+                                <fa-icon [icon]="faStar"></fa-icon>
+                            </mat-icon>
+                        </span>
+                    </mat-card-subtitle>
+                    <img height="100px" width="100px" mat-card-sm-image src="./assets/arjun.avif">
+                </mat-card-title-group>
+            </mat-card-header>
+            <mat-card-content>
+                "This app's user-friendly design and innovative features have transformed my approach to budgeting.
+                Tracking expenses is now so easy." </mat-card-content>
+        </mat-card>
+    </div>
+</section>
 
-    <button class="btn-3" mat-raised-button color="warn" (click)="getRegisterPage()">Get
-        Started Today</button>
-
-</body>
+<button class="btn-3" mat-raised-button color="warn" (click)="getRegisterPage()">Get
+    Started Today</button>
