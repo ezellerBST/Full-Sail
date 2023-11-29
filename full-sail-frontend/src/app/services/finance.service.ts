@@ -308,27 +308,49 @@ export class FinanceService {
 
   //Transaction dialog button functions
 
+  // openTransactionDialog() {
+  //   this.dialog.open(AddTransactionComponent, {
+  //     width: '55%',
+  //     height: '47.5%'
+  //   })
+  // }
+
   openTransactionDialog() {
     this.dialog.open(AddTransactionComponent, {
-      width: '55%',
-      height: '45%'
+      width: 'auto',
+      height: 'auto'
     })
   }
 
+  // openEditTransactionDialog(transactionId, date, description: string, amount: number) {
+  //   this.dialog.open(EditTransactionComponent, {
+  //     width: '55%',
+  //     height: '53%',
+  //     data: { transactionId, date, description, amount}
+  //   })
+  // }
+
   openEditTransactionDialog(transactionId, date, description: string, amount: number) {
     this.dialog.open(EditTransactionComponent, {
-      width: '55%',
-      height: '50%',
+      width: 'auto',
+      height: 'auto',
       data: { transactionId, date, description, amount}
     })
   }
 
-  openDeleteTransactionDialog(transactionId) {
-    this.dialog.open(DeleteTransactionComponent, {
-      width: '35%',
-      height: '25%',
-      data: { transactionId }
-    });
+  // openDeleteTransactionDialog(transactionId) {
+  //   this.dialog.open(DeleteTransactionComponent, {
+  //     width: '35%',
+  //     height: '26.65%',
+  //     data: { transactionId }
+  //   });
+
+    openDeleteTransactionDialog(transactionId) {
+      this.dialog.open(DeleteTransactionComponent, {
+        width: 'auto',
+        height: 'auto',
+        data: { transactionId }
+      });
   }
 
 
@@ -369,23 +391,23 @@ export class FinanceService {
 
   openCreateGoalDialog() {
     this.dialog.open(AddGoalComponent, {
-      width: '55%',
-      height: '50%'
+      width: 'auto',
+      height: 'auto'
     })
   }
 
   openEditGoalDialog(goalId, dateCreated,  name, amountPerPaycheck, total, balance) {
     this.dialog.open(EditGoalComponent, {
-      width: '55%',
-      height: '50%',
+      width: 'auto',
+      height: 'auto',
       data: { goalId, dateCreated, name, amountPerPaycheck, total, balance }
     })
   }
 
   openDeleteGoalDialog(goalId) {
     this.dialog.open(DeleteGoalComponent, {
-      width: '35%',
-      height: '25%',
+      width: 'auto',
+      height: 'auto',
       data: { goalId }
     })
   }
