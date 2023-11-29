@@ -9,15 +9,8 @@ header {
     color: white;
 }
 
-/* router-outlet {
-
-} */
-
 footer {
-    margin-top: auto;
-    /* bottom: 0px; */
-    
-    /* background-color: lightgrey; */
+    /* margin-top: auto; */
     color: white;
     background-color: navy;
     width: 100%;

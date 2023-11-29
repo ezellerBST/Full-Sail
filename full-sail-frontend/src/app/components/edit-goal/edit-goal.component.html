@@ -1,41 +1,37 @@
-<div>
-    <mat-form-field>
-        <mat-label>Date</mat-label>
-            <input matInput [matDatepicker]="editGoalDatePicker" [(ngModel)]="dateCreated">
-            <mat-datepicker-toggle matIconSuffix [for]="editGoalDatePicker"></mat-datepicker-toggle>
-            <mat-datepicker #editGoalDatePicker></mat-datepicker>
-    </mat-form-field>
-
-    <br>
-
-    <mat-form-field>
-        <mat-label>Name Of Goal</mat-label>
-        <input [(ngModel)]="name" matInput>
-    </mat-form-field>
-
-    <br>
-
-    <mat-form-field>
-        <mat-label>Amount to Contribute</mat-label>
-        <input [(ngModel)]="amountPerPaycheck" matInput>
-    </mat-form-field>
-
-    <br>
-
-    <mat-form-field>
-        <mat-label>Total for your Goal</mat-label>
-        <input [(ngModel)]="total" matInput>
-    </mat-form-field>
-
-    <br>
-
-    <mat-form-field>
-        <mat-label>Current Balance of Goal</mat-label>
-        <input [(ngModel)]="balance" matInput>
-    </mat-form-field>
-
-    <br>
-
-    <button mat-raised-button color="primary" (click)="editGoal()">Save Changes</button>
-    <button mat-raised-button color="warn" (click)="closeDialog()">Cancel</button>
+<div id="container">
+    <h2 mat-dialog-title>Edit Goal</h2>
+    <div class="form-container">
+        <div class="field-spacing">
+            <mat-form-field style="width: 160px;">
+                <mat-label>Date</mat-label>
+                <input matInput [matDatepicker]="editGoalDatePicker" [(ngModel)]="dateCreated">
+                <mat-datepicker-toggle matIconSuffix [for]="editGoalDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #editGoalDatePicker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field style="width: 160px;">
+                <mat-label>Name Of Goal</mat-label>
+                <input [(ngModel)]="name" matInput>
+            </mat-form-field>
+        </div>
+        <div class="field-spacing">
+            <mat-form-field style="width: 150px;">
+                <mat-label>Amount to Contribute</mat-label>
+                <input [(ngModel)]="amountPerPaycheck" matInput>
+            </mat-form-field>
+            <mat-form-field style="width: 150px;">
+                <mat-label>Total for your Goal</mat-label>
+                <input [(ngModel)]="total" matInput>
+            </mat-form-field>
+        </div>
+        <div class="field-spacing">
+            <mat-form-field style="width: 150px;">
+                <mat-label>Current Balance of Goal</mat-label>
+                <input [(ngModel)]="balance" matInput>
+            </mat-form-field>
+        </div>
+        <div class="buttons" mat-dialog-actions>
+            <button mat-raised-button color="accent" (click)="editGoal()">Save</button>
+            <button mat-raised-button color="warn" (click)="closeDialog()">Cancel</button>
+        </div>
+    </div>
 </div>

@@ -1,0 +1,15 @@
+#container {
+    display: block;
+    justify-items: center;
+    border: red solid 6px;
+    height: 164px;
+}
+
+h2 {
+    text-align: center;
+}
+
+.buttons {
+    justify-content: center;
+    gap: 10px;
+}

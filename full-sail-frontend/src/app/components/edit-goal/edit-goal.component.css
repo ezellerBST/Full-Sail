@@ -1,0 +1,31 @@
+#container {
+    display: block;
+    justify-items: center;
+    border: red solid 6px;
+    height: 337px;
+}
+
+h2 {
+    text-align: center;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.field-spacing {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 8px;
+}
+
+.buttons {
+    margin-top: -10px;
+    justify-content: center;
+    gap: 10px;
+}
