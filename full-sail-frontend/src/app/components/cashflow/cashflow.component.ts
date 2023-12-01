@@ -1,5 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from "@angular/core";
-import * as ApexCharts from "apexcharts";
+import { AfterViewInit, Component, ViewChild } from "@angular/core";
 import {
   ApexAxisChartSeries,
   ApexChart,
@@ -13,7 +12,6 @@ import {
   ApexFill,
   ApexTooltip
 } from "ng-apexcharts";
-import { Transaction } from "src/app/models/transaction";
 import { FinanceService } from "src/app/services/finance.service";
 
 export type ChartOptions = {
@@ -34,11 +32,11 @@ export type ChartOptions = {
   templateUrl: './cashflow.component.html',
   styleUrls: ['./cashflow.component.css']
 })
-export class CashflowComponent implements  AfterViewInit {
+export class CashflowComponent implements AfterViewInit {
   @ViewChild("chart") chart: ChartComponent;
   public chartOptions: Partial<ChartOptions>;
 
-  constructor(private financeService: FinanceService) {
+  constructor() {
 
     let chartForeColor = '';
 
@@ -141,15 +139,15 @@ export class CashflowComponent implements  AfterViewInit {
       this.chart.updateOptions(options, false, true);
     }
 
-      
+
   }
-  
+
   loadedData;
 
   public async loadData(data) {
 
-    try{
-      
+    try {
+
       this.loadedData = data;
 
       const currentYear = new Date().getUTCFullYear();

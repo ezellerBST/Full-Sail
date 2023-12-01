@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { Auth } from '@angular/fire/auth';
 import { UserService } from 'src/app/services/user.service';
 import { SharedService } from 'src/app/services/shared.service';
@@ -55,20 +55,4 @@ export class ProfileComponent implements OnInit {
       console.log(error);
     }
   }
-
-
-
-
-
-
-
-
-
 }
-
-  // getErrorMessage() {
-  //   if (this.emailCheck.hasError('required')) {
-  //     return 'You must enter a valid email';
-  //   }
-  //   return this.emailCheck.hasError('email') ? 'Not a valid email' : 'Please enter a valid email';
-  // }

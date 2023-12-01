@@ -1,14 +1,10 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { faSun, faMoon } from '@fortawesome/free-regular-svg-icons'
 import { faHouseUser, faAnchor } from '@fortawesome/free-solid-svg-icons'
 import { faFacebook, faXTwitter, faTiktok, faInstagram, faGithub, } from '@fortawesome/free-brands-svg-icons';
-import { MatDialog } from '@angular/material/dialog';
-import { SigninComponent } from './components/signin/signin.component';
-import { RegisterComponent } from './components/register/register.component';
 import { UserService } from './services/user.service';
 import { Router } from '@angular/router';
 import { Auth, signOut } from '@angular/fire/auth';
-import { ThemePalette } from '@angular/material/core';
 
 
 @Component({
@@ -36,19 +32,22 @@ export class AppComponent implements OnInit {
   phoneNum: string = '';
   isSignedIn: boolean = false;
 
-  constructor(private dialog: MatDialog,
+  constructor(
     private userService: UserService,
     public router: Router,
     private auth: Auth
   ) { }
 
+
   //Checks to see if the user is signed in when they visit the website
   ngOnInit(): void {
     this.auth.onAuthStateChanged(user => {
-      // Update isSignedIn based on the user's authentication state
-      this.isSignedIn = !!user; 
+      this.isSignedIn = !!user;
+      if (!user) {
+        this.router.navigate(['home']);
+      }
     });
-  
+
     this.setDarkLightMode();
 
     window.matchMedia('(prefers-color-scheme: dark)').addListener((e) => {
@@ -65,7 +64,7 @@ export class AppComponent implements OnInit {
   openRegisterDialog() {
     this.userService.openRegisterDialog();
   }
- 
+
   //Signs out the logged in user from their session, revoking the token
   signOut() {
     return signOut(this.auth).then(() => {
@@ -78,7 +77,7 @@ export class AppComponent implements OnInit {
   }
 
   //If the user is already signed in, allows them to go to their profile page
-  getProfile(){
+  getProfile() {
     this.router.navigate(['profile']);
   }
 
@@ -87,12 +86,15 @@ export class AppComponent implements OnInit {
     this.router.navigate(['account']);
   }
 
+  getHomePage() {
+    this.router.navigate(['home']);
+  }
 
 
   setDarkLightMode() {
     const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const currentMode = document.body.classList.contains('dark-mode');
-    
+
     if (!!prefersDarkMode && !currentMode || !prefersDarkMode && currentMode) {
       document.body.classList.toggle('dark-mode');
     }
