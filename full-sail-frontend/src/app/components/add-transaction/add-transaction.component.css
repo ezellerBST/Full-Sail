@@ -35,21 +35,3 @@ h2 {
     justify-content: center;
     gap: 10px;
 }
-/* 
-@media (min-width: 825px) and (max-width: 1020px) {
-    #container {
-        border: none;
-    }
-}
-
-@media (min-width: 650px) and (max-width: 825px) {
-    #container {
-        border: none;
-    }
-}
-
-@media (min-width: 470px) and (max-width: 650px) {
-    #container {
-        border: none;
-    }
-} */

@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { MatCardModule } from '@angular/material/card';
 import { UserService } from '../services/user.service';
-import { Router } from '@angular/router';
 import { Auth } from '@angular/fire/auth';
 import { faStar } from '@fortawesome/free-solid-svg-icons'
-
 
 
 @Component({
@@ -19,7 +15,7 @@ export class HomeComponent implements OnInit {
 
   isSignedIn: boolean = false;
 
-  constructor(private router: Router, private auth: Auth, private userService: UserService ) {}
+  constructor(private auth: Auth, private userService: UserService ) {}
   
   ngOnInit() {
     this.auth.onAuthStateChanged(user => {

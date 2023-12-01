@@ -41,7 +41,6 @@ export class AddTransactionComponent implements OnInit {
   }
 
   async addTransaction() {
-    //await this.financeService.addTransactions({ date: this.date, description: this.description, amount: this.amount })
     await this.financeService.inputTransactionFromParameter({
       date: this.date,
       description: this.description,
@@ -49,7 +48,6 @@ export class AddTransactionComponent implements OnInit {
       contributeToGoals: this.contributeToGoals
     })
     console.log({ date: this.date, description: this.description, amount: this.amount });
-    // await this.sharedService.accountTransactionsUpdate();
     this.dialogRef.close();
   }
 
