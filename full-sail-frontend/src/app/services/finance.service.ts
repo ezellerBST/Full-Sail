@@ -194,7 +194,6 @@ export class FinanceService {
         docData.id = doc.id;
         goalList.push(docData);
       });
-      console.log(goalList.sort((a, b) => b.dateCreated - a.dateCreated));
       return goalList.sort((a, b) => b.dateCreated - a.dateCreated);
     } else {
       return null;
@@ -270,34 +269,35 @@ export class FinanceService {
 
     const userDetails = await this.getUserDetails();
 
-    goalList.forEach(goal => {
+    await goalList.forEach(goal => {
       const goalDate = goal.dateCreated;
       const transactionDate = transaction.date;
-      console.log("Tran Date");
-      console.log(transaction.date)
+
 
       if (goalDate <= transactionDate) {
+        goalId = goal.id;
         goal.balance = parseInt(goal.amountPerPaycheck) + parseInt(goal.balance); //Add logic to update goal balance
 
         this.editGoalWithUserDetails(userDetails, goalId, goal);
 
         
-        console.log("success", goal.balance);
+        console.log("success", goal);
 
       } else {
         console.log("addtrantogoal 3rd: Tran: ", transaction.date, "Goal: ", goal.dateCreated);
       }
     });
-    this.sharedService.accountGoalUpdate();
   }
 
   async editGoalWithUserDetails(userDetails, goalId , goal: Goal) {
     if (userDetails && userDetails.uid) {
       const userId = userDetails.uid;
       const goalDocRef = doc(this.firestore, `users/${userId}/goals/${goalId}`);
-      const data = {  dateCreated: goal.dateCreated, name: goal.name, amountPerPaycheck: goal.amountPerPaycheck, balance: goal.balance, total: goal.total };
+      console.log(goalId);
+      const data = {  dateCreated: goal.dateCreated, name: goal.name, balance: goal.balance, amountPerPaycheck: goal.amountPerPaycheck, total: goal.total };
       try {
         await setDoc(goalDocRef, data, { merge: true });
+        this.sharedService.accountGoalUpdate();
         console.log('Updated goal: ', data);
       } catch (err) {
         console.log('Error: ', err);
@@ -308,27 +308,49 @@ export class FinanceService {
 
   //Transaction dialog button functions
 
+  // openTransactionDialog() {
+  //   this.dialog.open(AddTransactionComponent, {
+  //     width: '55%',
+  //     height: '47.5%'
+  //   })
+  // }
+
   openTransactionDialog() {
     this.dialog.open(AddTransactionComponent, {
-      width: '55%',
-      height: '45%'
+      width: 'auto',
+      height: 'auto'
     })
   }
 
+  // openEditTransactionDialog(transactionId, date, description: string, amount: number) {
+  //   this.dialog.open(EditTransactionComponent, {
+  //     width: '55%',
+  //     height: '53%',
+  //     data: { transactionId, date, description, amount}
+  //   })
+  // }
+
   openEditTransactionDialog(transactionId, date, description: string, amount: number) {
     this.dialog.open(EditTransactionComponent, {
-      width: '55%',
-      height: '50%',
+      width: 'auto',
+      height: 'auto',
       data: { transactionId, date, description, amount}
     })
   }
 
-  openDeleteTransactionDialog(transactionId) {
-    this.dialog.open(DeleteTransactionComponent, {
-      width: '35%',
-      height: '25%',
-      data: { transactionId }
-    });
+  // openDeleteTransactionDialog(transactionId) {
+  //   this.dialog.open(DeleteTransactionComponent, {
+  //     width: '35%',
+  //     height: '26.65%',
+  //     data: { transactionId }
+  //   });
+
+    openDeleteTransactionDialog(transactionId) {
+      this.dialog.open(DeleteTransactionComponent, {
+        width: 'auto',
+        height: 'auto',
+        data: { transactionId }
+      });
   }
 
 
@@ -369,23 +391,23 @@ export class FinanceService {
 
   openCreateGoalDialog() {
     this.dialog.open(AddGoalComponent, {
-      width: '55%',
-      height: '45%'
+      width: 'auto',
+      height: 'auto'
     })
   }
 
   openEditGoalDialog(goalId, dateCreated,  name, amountPerPaycheck, total, balance) {
     this.dialog.open(EditGoalComponent, {
-      width: '55%',
-      height: '45%',
+      width: 'auto',
+      height: 'auto',
       data: { goalId, dateCreated, name, amountPerPaycheck, total, balance }
     })
   }
 
   openDeleteGoalDialog(goalId) {
     this.dialog.open(DeleteGoalComponent, {
-      width: '55%',
-      height: '45%',
+      width: 'auto',
+      height: 'auto',
       data: { goalId }
     })
   }

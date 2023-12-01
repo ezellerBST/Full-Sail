@@ -31,7 +31,6 @@ export class UserService {
           }).then(() => user);
         }
         console.log(user);
-        // sendEmailVerification(this.auth.currentUser);
         return null; // Handle case where user is not available
       })
       .catch((error) => {
