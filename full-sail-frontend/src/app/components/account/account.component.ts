@@ -1,10 +1,8 @@
-import { Component, AfterViewInit, ViewChild, OnInit, ElementRef } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, OnInit } from '@angular/core';
 import { Transaction } from 'src/app/models/transaction';
 import { Goal } from 'src/app/models/goal';
-import { Papa } from 'ngx-papaparse';
 import { faFileCsv } from '@fortawesome/free-solid-svg-icons';
 import { Auth } from '@angular/fire/auth';
-import { Firestore, addDoc, doc, setDoc, getDoc, collection, getDocs } from '@angular/fire/firestore';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -12,7 +10,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { FinanceService } from 'src/app/services/finance.service';
 import { CashflowComponent } from '../cashflow/cashflow.component';
 import { SharedService } from 'src/app/services/shared.service';
-// import { CashflowComponent } from '../cashflow/cashflow.component';
+
 
 export interface TransactionTable {
   date: string;
@@ -71,9 +69,9 @@ export class AccountComponent implements OnInit, AfterViewInit {
   expandedElement: any | null;
 
 
-  goalDataSource= new MatTableDataSource<GoalsTable>();
-  goalColumnsToDisplay = ['name', 'balance', 'total' ];
-  goalColumnsToDisplayWithExpand =[...this.goalColumnsToDisplay, 'expand'];
+  goalDataSource = new MatTableDataSource<GoalsTable>();
+  goalColumnsToDisplay = ['name', 'balance', 'total'];
+  goalColumnsToDisplayWithExpand = [...this.goalColumnsToDisplay, 'expand'];
   goalExpandedElement: any | null;
 
 
@@ -83,10 +81,8 @@ export class AccountComponent implements OnInit, AfterViewInit {
   @ViewChild('cashflow') cashflow: CashflowComponent;
 
 
-  constructor(private papa: Papa,
-    private el: ElementRef,
+  constructor(
     private auth: Auth,
-    private firestore: Firestore,
     private financeService: FinanceService,
     private sharedService: SharedService) {
     this.sharedService.transactionsUpdated.subscribe(() => {
@@ -129,18 +125,18 @@ export class AccountComponent implements OnInit, AfterViewInit {
     this.financeService.openDeleteTransactionDialog(transactionId);
   }
 
-  addNewGoalDialog(){
+  addNewGoalDialog() {
     this.financeService.openCreateGoalDialog();
   }
 
-  editGoalDialog(goalId, date, nameOfGoal, amountPerPaycheck, total, balance){
+  editGoalDialog(goalId, date, nameOfGoal, amountPerPaycheck, total, balance) {
     this.financeService.openEditGoalDialog(goalId, date, nameOfGoal, amountPerPaycheck, total, balance);
   }
 
-  deleteGoalDialog(goalId){
+  deleteGoalDialog(goalId) {
     this.financeService.openDeleteGoalDialog(goalId);
   }
-  
+
 
   async inputPaycheck(paycheckAmount: number, paycheckDate: Date, contributeToGoals: boolean) {
     console.log("start");
@@ -152,7 +148,7 @@ export class AccountComponent implements OnInit, AfterViewInit {
     this.ngOnInit();
 
   }
- 
+
 
   async onFileSelected($event, contributeToGoals) {
     await this.financeService.onFileSelected($event, contributeToGoals);
@@ -186,22 +182,22 @@ export class AccountComponent implements OnInit, AfterViewInit {
 
     const transactions = await this.financeService.getTransactions();
     transactions.forEach((doc) => {
-    
+
       doc.date = new Date(doc.date.seconds * 1000);
       const docData = doc as TransactionTable;
-      
-      let amount  = parseInt(docData.amount);
-        docData.amount = amount.toFixed(2);
-       docData.date = new Date(docData.date).toLocaleDateString();
+
+      let amount = parseInt(docData.amount);
+      docData.amount = amount.toFixed(2);
+      docData.date = new Date(docData.date).toLocaleDateString();
       data.push(docData);
     });
     this.dataSource.data = data;
 
-      if (this.cashflow) {
+    if (this.cashflow) {
       this.cashflow.loadData(transactions);
-      }
     }
-  
+  }
+
 
   async getGoals() {
 
@@ -212,19 +208,12 @@ export class AccountComponent implements OnInit, AfterViewInit {
     goals.forEach((doc) => {
       doc.dateCreated = new Date(doc.dateCreated.seconds * 1000);
       const docData = doc as GoalsTable;
-      //docData.balance = parseInt(doc.balance);
-      //docData.total = docData.total;
-      // console.log(typeof(doc.))
       docData.dateCreated = new Date(doc.dateCreated).toLocaleDateString();
       data.push(docData);
 
     });
     this.goalDataSource.data = data;
   }
-
-  // async editGoals(name: string, balance: number, amountPerPaycheck, total: number, date: Date){
-  //   await this.financeService.editGoalButton()
-  // }
 
   async createGoal(name: string, amountPerPaycheck: string, total: string) {
     await this.financeService.createGoal(name, parseInt(amountPerPaycheck), parseInt(total));

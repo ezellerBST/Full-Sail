@@ -7,12 +7,10 @@ import { AddTransactionComponent } from '../components/add-transaction/add-trans
 import { EditTransactionComponent } from '../components/edit-transaction/edit-transaction.component';
 import { DeleteTransactionComponent } from '../components/delete-transaction/delete-transaction.component';
 import { Papa } from 'ngx-papaparse';
-import { MatTableDataSource } from '@angular/material/table';
 import { Goal } from '../models/goal';
 import { AddGoalComponent } from '../components/add-goal/add-goal.component';
 import { EditGoalComponent } from '../components/edit-goal/edit-goal.component';
 import { DeleteGoalComponent } from '../components/delete-goal/delete-goal.component';
-import { AccountComponent } from '../components/account/account.component';
 import { SharedService } from './shared.service';
 
 
@@ -28,8 +26,6 @@ export class FinanceService {
     private firestore: Firestore,
     private sharedService: SharedService
   ) { }
-
-  
 
   async inputPaycheck(paycheckAmount: number, paycheckDate: Date, paycheckToGoals: boolean) {
     if (paycheckAmount > 0) {
@@ -160,9 +156,6 @@ export class FinanceService {
       }
 
     }
-    //console.log("4", "transaction added");
-
-    // this.getTransactions();
   }
 
   async getTransactions() {
@@ -174,7 +167,7 @@ export class FinanceService {
       querySnapshot.forEach((doc) => {
 
         const docData = doc.data();
-         docData.id = doc.id;
+        docData.id = doc.id;
         result.push(docData);
       });
       return result.sort((a, b) => b.date - a.date);
@@ -232,27 +225,19 @@ export class FinanceService {
         console.error('Error: ', error);
       }
     }
-    
-    // this.getGoals();
   }
-
-
-  //NEED TO ADD UPDATE AND DELETE FUNCTIONS FOR GOALS CARD
-
-  //NEED TO ADD SETDOC FOR addTransactionToGoals() FOR GOALS UPDATE IN FIRESTORE
-  // async is new
 
 
   async addTransactionToGoals(transaction: Transaction) {
 
     if (transaction.amount <= 0 || transaction.income === false || (transaction.contributeToGoals === false || null)) {
       console.log("The transaction being put in to be sent to goals. ", transaction);
-      
+
       console.log("addtrantogoal 1st");
       return
     }
     let goalId: string;
-    let goalTotal : number = 0;
+    let goalTotal: number = 0;
     const goalList = await this.getGoals();
     await goalList.forEach(goal => {
       console.log(goal.amountPerPaycheck, parseInt(goal.amountPerPaycheck));
@@ -280,7 +265,7 @@ export class FinanceService {
 
         this.editGoalWithUserDetails(userDetails, goalId, goal);
 
-        
+
         console.log("success", goal);
 
       } else {
@@ -289,12 +274,12 @@ export class FinanceService {
     });
   }
 
-  async editGoalWithUserDetails(userDetails, goalId , goal: Goal) {
+  async editGoalWithUserDetails(userDetails, goalId, goal: Goal) {
     if (userDetails && userDetails.uid) {
       const userId = userDetails.uid;
       const goalDocRef = doc(this.firestore, `users/${userId}/goals/${goalId}`);
       console.log(goalId);
-      const data = {  dateCreated: goal.dateCreated, name: goal.name, balance: goal.balance, amountPerPaycheck: goal.amountPerPaycheck, total: goal.total };
+      const data = { dateCreated: goal.dateCreated, name: goal.name, balance: goal.balance, amountPerPaycheck: goal.amountPerPaycheck, total: goal.total };
       try {
         await setDoc(goalDocRef, data, { merge: true });
         this.sharedService.accountGoalUpdate();
@@ -308,13 +293,6 @@ export class FinanceService {
 
   //Transaction dialog button functions
 
-  // openTransactionDialog() {
-  //   this.dialog.open(AddTransactionComponent, {
-  //     width: '55%',
-  //     height: '47.5%'
-  //   })
-  // }
-
   openTransactionDialog() {
     this.dialog.open(AddTransactionComponent, {
       width: 'auto',
@@ -322,35 +300,20 @@ export class FinanceService {
     })
   }
 
-  // openEditTransactionDialog(transactionId, date, description: string, amount: number) {
-  //   this.dialog.open(EditTransactionComponent, {
-  //     width: '55%',
-  //     height: '53%',
-  //     data: { transactionId, date, description, amount}
-  //   })
-  // }
-
   openEditTransactionDialog(transactionId, date, description: string, amount: number) {
     this.dialog.open(EditTransactionComponent, {
       width: 'auto',
       height: 'auto',
-      data: { transactionId, date, description, amount}
+      data: { transactionId, date, description, amount }
     })
   }
 
-  // openDeleteTransactionDialog(transactionId) {
-  //   this.dialog.open(DeleteTransactionComponent, {
-  //     width: '35%',
-  //     height: '26.65%',
-  //     data: { transactionId }
-  //   });
-
-    openDeleteTransactionDialog(transactionId) {
-      this.dialog.open(DeleteTransactionComponent, {
-        width: 'auto',
-        height: 'auto',
-        data: { transactionId }
-      });
+  openDeleteTransactionDialog(transactionId) {
+    this.dialog.open(DeleteTransactionComponent, {
+      width: 'auto',
+      height: 'auto',
+      data: { transactionId }
+    });
   }
 
 
@@ -396,7 +359,7 @@ export class FinanceService {
     })
   }
 
-  openEditGoalDialog(goalId, dateCreated,  name, amountPerPaycheck, total, balance) {
+  openEditGoalDialog(goalId, dateCreated, name, amountPerPaycheck, total, balance) {
     this.dialog.open(EditGoalComponent, {
       width: 'auto',
       height: 'auto',
@@ -419,7 +382,7 @@ export class FinanceService {
       const userId = userDetails.uid;
       const goalDocRef = doc(this.firestore, `users/${userId}/goals/${goalId}`);
       console.log(goalId);
-      const data = {  dateCreated: goal.dateCreated, name: goal.name, balance: goal.balance, amountPerPaycheck: goal.amountPerPaycheck, total: goal.total };
+      const data = { dateCreated: goal.dateCreated, name: goal.name, balance: goal.balance, amountPerPaycheck: goal.amountPerPaycheck, total: goal.total };
       try {
         await setDoc(goalDocRef, data, { merge: true });
         console.log('Updated goal: ', data);

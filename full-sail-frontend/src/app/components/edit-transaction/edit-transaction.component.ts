@@ -1,7 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import { FinanceService } from 'src/app/services/finance.service';
 import { SharedService } from 'src/app/services/shared.service';
 
