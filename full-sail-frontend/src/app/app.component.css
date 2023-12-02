@@ -20,7 +20,7 @@ header {
 }
 
 .btnDiv {
-    gap: 10px;
+    gap: 25px;
     display: flex;
     flex-wrap: wrap;
     margin-top: 10px;
