@@ -126,7 +126,11 @@ svg:not(:host).svg-inline--fa {
     width: 100%;
 }
 
+
 @media (prefers-color-scheme: dark) {
+    mat-card {
+        border: black solid 3px;
+    }
 
     .accounts-content-card {
 
