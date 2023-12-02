@@ -47,3 +47,11 @@ mat-card-image {
     object-fit: cover;
 }
 
+@media (prefers-color-scheme: dark) {
+    .profile-card {
+        border: black solid 3px;
+    }
+    .mid-card {
+        border: black solid 3px;
+    }
+}

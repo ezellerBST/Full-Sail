@@ -1,16 +1,23 @@
 <header>
     <nav>
         <mat-toolbar class="header">
-            <img class="logo" style="width: 100px; border-radius: 100px; margin-left: 15px;" src="../assets/favicon.png" (click)="getHomePage()">
+            <img class="logo" style="width: 100px; border-radius: 100px; margin-left: 15px;" src="../assets/favicon.png"
+                (click)="getHomePage()">
             <h1 class="title"><span>Full Sail</span></h1>
             <p class="header-p">Manage your money and take control!</p>
             <div class="btnDiv">
-                <button class="acctBtns" mat-raised-button color="warn" (click)="openRegisterDialog()" *ngIf="!isSignedIn && !smallScreenSize">Register</button>
-                <button class="acctBtns" mat-raised-button color="warn" (click)="getAccountsPage()" *ngIf="isSignedIn && !smallScreenSize">Accounts</button>
-                <button class="acctBtns" mat-raised-button color="warn" (click)="openSignInDialog()" *ngIf="!isSignedIn && !smallScreenSize">Sign In</button>
-                <button class="acctBtns" mat-raised-button color="warn" (click)="getProfile()" *ngIf="isSignedIn && !smallScreenSize">Profile</button>
-                <button class="acctBtns" mat-raised-button color="warn" (click)="signOut()"  *ngIf="isSignedIn && !smallScreenSize">Logout</button>
-                <button class="navBtn" mat-icon-button color="success" [matMenuTriggerFor]="menu" *ngIf="smallScreenSize">
+                <button class="acctBtns" mat-raised-button color="warn" (click)="openRegisterDialog()"
+                    *ngIf="!isSignedIn && !smallScreenSize">Register</button>
+                <button class="acctBtns" mat-raised-button color="warn" (click)="getAccountsPage()"
+                    *ngIf="isSignedIn && !smallScreenSize">Accounts</button>
+                <button class="acctBtns" mat-raised-button color="warn" (click)="openSignInDialog()"
+                    *ngIf="!isSignedIn && !smallScreenSize">Sign In</button>
+                <button class="acctBtns" mat-raised-button color="warn" (click)="getProfile()"
+                    *ngIf="isSignedIn && !smallScreenSize">Profile</button>
+                <button class="acctBtns" mat-raised-button color="warn" (click)="signOut()"
+                    *ngIf="isSignedIn && !smallScreenSize">Logout</button>
+                <button class="navBtn" mat-icon-button color="success" [matMenuTriggerFor]="menu"
+                    *ngIf="smallScreenSize">
                     <mat-icon>menu</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu" xPosition="before">
@@ -23,7 +30,7 @@
                         <button mat-menu-item color="warn" (click)="openSignInDialog()">SignIn</button>
                         <button mat-menu-item color="warn" (click)="openRegisterDialog()">Register</button>
                     </ng-container>
-                    
+
                 </mat-menu>
             </div>
 
@@ -43,7 +50,12 @@
             <mat-icon><fa-icon [icon]="faFacebook"></fa-icon></mat-icon>
             <mat-icon><fa-icon [icon]="faTiktok"></fa-icon></mat-icon>
             <mat-icon><fa-icon [icon]="faInstagram"></fa-icon></mat-icon>
-            <mat-icon><fa-icon [icon]="faGithub"></fa-icon></mat-icon>
+            <a href="https://github.com/bethel-school-of-technology/team-the-ghost-kids-on-the-block-frontend.git"
+                target="_blank" style="text-decoration: none; color: white;">
+                <mat-icon>
+                    <fa-icon [icon]="faGithub"></fa-icon>
+                </mat-icon>
+            </a>
         </div>
     </div>
 </footer>
