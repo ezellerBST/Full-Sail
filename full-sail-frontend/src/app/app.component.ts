@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { faSun, faMoon } from '@fortawesome/free-regular-svg-icons'
 import { faHouseUser, faAnchor } from '@fortawesome/free-solid-svg-icons'
-import { faFacebook, faXTwitter, faTiktok, faInstagram, faGithub, } from '@fortawesome/free-brands-svg-icons';
+import { faFacebook, faXTwitter, faTiktok, faInstagram, faGithub,} from '@fortawesome/free-brands-svg-icons';
 import { UserService } from './services/user.service';
 import { Router } from '@angular/router';
 import { Auth, signOut } from '@angular/fire/auth';
@@ -22,6 +22,7 @@ export class AppComponent implements OnInit {
   faMoon = faMoon;
   faSun = faSun;
   faAnchor = faAnchor;
+  // faMenu = faMenu;
 
   title = 'full-sail-frontend';
 
@@ -31,6 +32,7 @@ export class AppComponent implements OnInit {
   photoURL: string = '';
   phoneNum: string = '';
   isSignedIn: boolean = false;
+  smallScreenSize = window.innerWidth <= 1200;P
 
   constructor(
     private userService: UserService,
@@ -47,12 +49,23 @@ export class AppComponent implements OnInit {
         this.router.navigate(['home']);
       }
     });
+    // if (window.screen.width >= 1200) {
+    //   this.smallScreenSize = false;
+    // }
+    // if (window.screen.width <= 1200) {
+    //   this.smallScreenSize = true;
+    // }
 
     this.setDarkLightMode();
 
     window.matchMedia('(prefers-color-scheme: dark)').addListener((e) => {
       this.setDarkLightMode();
     });
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event): void {
+    this.smallScreenSize = window.innerWidth <= 1200;
   }
 
   //Opens the dialog popup to sign in to the app for the registered user

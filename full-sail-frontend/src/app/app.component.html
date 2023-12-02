@@ -1,26 +1,44 @@
 <header>
     <nav>
         <mat-toolbar class="header">
-            <img style="width: 50px;" src="../assets/favicon.png" (click)="getHomePage()">
-            <h1><span>Full Sail</span></h1>
+            <img class="logo" style="width: 100px; border-radius: 100px; margin-left: 15px;" src="../assets/favicon.png" (click)="getHomePage()">
+            <h1 class="title"><span>Full Sail</span></h1>
             <p class="header-p">Manage your money and take control!</p>
-            <button mat-raised-button color="warn" (click)="openSignInDialog()" *ngIf="!isSignedIn">Sign In</button>
-            <button mat-raised-button color="warn" (click)="openRegisterDialog()" *ngIf="!isSignedIn">Register</button>
-            <button mat-raised-button color="warn" (click)="getAccountsPage()" *ngIf="isSignedIn">Accounts</button>
-            <button mat-raised-button color="warn" (click)="getProfile()" *ngIf="isSignedIn">Profile</button>
-            <button mat-raised-button color="warn" (click)="signOut()" *ngIf="isSignedIn">Logout</button>
+            <div class="btnDiv">
+                <button class="acctBtns" mat-raised-button color="warn" (click)="openRegisterDialog()" *ngIf="!isSignedIn && !smallScreenSize">Register</button>
+                <button class="acctBtns" mat-raised-button color="warn" (click)="getAccountsPage()" *ngIf="isSignedIn && !smallScreenSize">Accounts</button>
+                <button class="acctBtns" mat-raised-button color="warn" (click)="openSignInDialog()" *ngIf="!isSignedIn && !smallScreenSize">Sign In</button>
+                <button class="acctBtns" mat-raised-button color="warn" (click)="getProfile()" *ngIf="isSignedIn && !smallScreenSize">Profile</button>
+                <button class="acctBtns" mat-raised-button color="warn" (click)="signOut()"  *ngIf="isSignedIn && !smallScreenSize">Logout</button>
+                <button class="navBtn" mat-icon-button color="success" [matMenuTriggerFor]="menu" *ngIf="smallScreenSize">
+                    <mat-icon>menu</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu" xPosition="before">
+                    <ng-container *ngIf="isSignedIn">
+                        <button mat-menu-item color="warn" (click)="getAccountsPage()">Accounts</button>
+                        <button mat-menu-item color="warn" (click)="getProfile()">Profile</button>
+                        <button mat-menu-item color="warn" (click)="signOut()">Logout</button>
+                    </ng-container>
+                    <ng-container *ngIf="!isSignedIn">
+                        <button mat-menu-item color="warn" (click)="openSignInDialog()">SignIn</button>
+                        <button mat-menu-item color="warn" (click)="openRegisterDialog()">Register</button>
+                    </ng-container>
+                    
+                </mat-menu>
+            </div>
+
+
         </mat-toolbar>
     </nav>
 </header>
 
-<p class="body-p">Manage your money and take control!</p>
 <router-outlet></router-outlet>
 
 <footer>
     <div class="footer-div">
-        <img style="width: 50px;" src="../assets/favicon.png">
-        <h3>Full Sail <mat-icon>copyright</mat-icon> 2023</h3>
-        <div>
+        <img style="width: 100px; border-radius: 100px;" src="../assets/favicon.png">
+        <h3>Full Sail<mat-icon>copyright</mat-icon> 2023</h3>
+        <div class="mediaIcons">
             <mat-icon><fa-icon [icon]="faTwitter"></fa-icon></mat-icon>
             <mat-icon><fa-icon [icon]="faFacebook"></fa-icon></mat-icon>
             <mat-icon><fa-icon [icon]="faTiktok"></fa-icon></mat-icon>

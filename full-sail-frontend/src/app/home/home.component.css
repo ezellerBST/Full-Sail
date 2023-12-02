@@ -27,6 +27,7 @@ body {
     max-width: 100%;
     height: auto;
     margin: 20px;
+    border-radius: 20px;
 }
 
 .second-section {
@@ -41,11 +42,20 @@ body {
     max-width: 400px;
     max-height: 300px;
     margin-left: 20px;
+    border-radius: 20px;
+}
+
+.btn-1 {
+    margin-top: 15px;
 }
 
 .btn-2 {
+    margin-top: 25px;
     margin-left: 70%;
     
+}
+.test-card {
+    border-radius: 20px;
 }
 
 @media (max-width: 850px) {
@@ -114,7 +124,8 @@ h1 {
 
 .btn-3 {
     display: block;
-    margin: 10px auto;
+    margin: 25px auto 50px auto;
+
 }
 
 mat-card-subtitle {
