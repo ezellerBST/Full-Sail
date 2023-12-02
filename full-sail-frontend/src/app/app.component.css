@@ -1,12 +1,37 @@
 
 header {
     width: 100%;
+    max-width: 100%;
 }
 
 .header {
     background-color: navy;
     border-bottom: solid black 1px;
     color: white;
+    height: 90px;
+    display: flex;
+    max-width: 100%;
+    /* justify-content: space-around; */
+}
+
+.header-p {
+    font-size: 25px;
+    margin-left: 15%;
+}
+
+.btnDiv {
+    gap: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    justify-content: flex-end;
+    position: relative;
+}
+
+.title {
+    font-size: 50px;
+    font-weight: bold;
+    margin-left: 5%;
 }
 
 footer {
@@ -15,7 +40,7 @@ footer {
     width: 100%;
 }
 
-div {
+.mediaIcons {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row-reverse;
@@ -23,13 +48,12 @@ div {
 
 }
 
-mat-icon {
-    padding: 3px;
+.navBtn {
+    margin-top: -10px;
 }
 
-mat-toolbar {
-    display: flex;
-    justify-content: space-around;
+mat-icon {
+    padding: 3px;
 }
 
 .footer-div {
@@ -57,78 +81,144 @@ mat-toolbar {
 }
 
 @media (min-width: 1870px) {
-    .body-p {
-        visibility: hidden;
+    .btnDiv {
+        margin-left: 20px;
+        position: absolute;
+        right: 20px;
     }
-
+    .navBtn {
+        display: none;
+    }
 }
 
 @media (min-width: 1690px) and (max-width: 1870px) {
-    .body-p {
-        visibility: hidden;
+    .btnDiv {
+        margin-left: 20px;
+        position: absolute;
+        right: 20px;
     }
 
+    .navBtn {
+        display: none;
+    }
 }
 
 @media (min-width: 1440px) and (max-width: 1690px) {
-    .body-p {
-        visibility: hidden;
+    
+    .navBtn {
+        display: none;
     }
-
+    .btnDiv {
+        margin-left: 20px;
+        position: absolute;
+        right: 20px;
+    }
+   
 }
 
 @media (min-width: 1200px) and (max-width: 1440px) {
-    .body-p {
-        visibility: hidden;
+    
+    .btnDiv {
+        margin-left: 20px;
+        position: absolute;
+        right: 20px;
     }
-
+    .header-p {
+        margin-left: 40px;
+    }
+    
 }
 
 
 @media (min-width: 1020px) and (max-width: 1200px) {
-    .body-p {
-        visibility: hidden;
+    .header-p {
+        display: none;
     }
-
+    /* .logo {
+        margin-left: 50px;
+    } */
+    .title {
+        margin: auto;
+   }
+   .btnDiv {
+    margin-left: 20px;
+    position: absolute;
+    right: 20px;
+}
+    /* .acctBtns {
+        display: none;
+    } */
 }
 
 
 @media (min-width: 825px) and (max-width: 1020px)  {
-    .body-p {
-        visibility: hidden;
+    .header-p {
+        display: none;
     }
+    .title {
+        margin: auto;
+    }
+    .btnDiv {
+        margin-left: 20px;
+        position: absolute;
+        right: 20px;
+    }
+
+    /* .acctBtns {
+        display: none;
+    } */
 }
 
 @media (min-width: 650px) and (max-width: 825px)  {
-    .body-p {
-        visibility: hidden;
+    .header-p {
+        display: none;
     }
+    .title {
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        margin: auto;
+    }
+    .btnDiv {
+        margin-left: 20px;
+        position: absolute;
+        right: 20px;
+    }
+    /* .acctBtns {
+        display: none;
+    } */
 }
 
 @media (min-width: 470px) and (max-width: 650px)  {
-    .body-p {
-        margin-top: 15px;
-        color: navy;
-        font-size: x-large;
-        font-style: italic;
-        font-weight: bold;
-        text-align: center;
-    }
     .header-p {
-        visibility: hidden;
+        display: none;
+    }
+    .title {
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        margin: auto;
+    }
+    .btnDiv {
+        margin-left: 20px0;
+        position: absolute;
+        right: 20px;
     }
 }
 
 @media (max-width: 470px)  {
-    .body-p {
-        margin-top: 15px;
-        color: navy;
-        font-size: x-large;
-        font-style: italic;
-        font-weight: bold;
-        text-align: center;
-    }
     .header-p {
-        visibility: hidden;
+        display: none;
+    }
+    .btnDiv {
+        margin-left: 0px;
+        position: absolute;
+        right: 0px;
+    }
+    .title {
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        margin: auto;
     }
 }
