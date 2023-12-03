@@ -39,9 +39,12 @@ export class CashflowComponent implements AfterViewInit {
   constructor() {
 
     let chartForeColor = '';
+    let toolTipTheme = ''
+    
 
     if (document.body.classList.contains('dark-mode')) {
       chartForeColor = '#FFFFFF'
+      toolTipTheme = 'dark'
     }
 
     this.chartOptions = {
@@ -105,7 +108,8 @@ export class CashflowComponent implements AfterViewInit {
           formatter: function (val) {
             return "$ " + val;
           }
-        }
+        },
+        theme: toolTipTheme
       },
     };
   }
@@ -114,6 +118,8 @@ export class CashflowComponent implements AfterViewInit {
     if (this.chart && this.chart.updateOptions) {
       window.matchMedia('(prefers-color-scheme: dark)').addListener(() => {
         this.setDarkLightMode();
+        
+
       });
     }
   }
@@ -124,19 +130,27 @@ export class CashflowComponent implements AfterViewInit {
 
   async setDarkLightMode() {
     let chartForeColor = '';
+    let tooltipColor = ''
 
     if (document.body.classList.contains('dark-mode')) {
-      chartForeColor = '#FFFFFF'
+      chartForeColor = '#FFFFFF';
+      tooltipColor = 'dark';
+    }
+    
+
+    const chartOptions = {
+      chart: {
+        foreColor: chartForeColor,
+      }, 
+        tooltip: {
+          theme : tooltipColor
+        }
     }
 
-    const options = {
-      chart: {
-        foreColor: chartForeColor
-      }
-    }
+    
 
     if (this.chart && this.chart.updateOptions) {
-      this.chart.updateOptions(options, false, true);
+      this.chart.updateOptions(chartOptions, false, true);
     }
 
 
@@ -193,6 +207,7 @@ export class CashflowComponent implements AfterViewInit {
         },
 
       ];
+      
 
 
     } catch (error) {
