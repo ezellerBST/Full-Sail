@@ -42,8 +42,10 @@ mat-divider {
     border: solid 4px navy;
 }
 
+
 mat-card-image {
     width: 100%;
+    height: 400px;
     object-fit: cover;
 }
 
