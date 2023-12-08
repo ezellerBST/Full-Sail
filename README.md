@@ -1,1 +1,1 @@
-# team-the-ghost-kids-on-the-block-frontend
+# Full Sail App
