@@ -13,7 +13,7 @@
   <a href="#how-to-use">How To Use</a> •
   <a href="#tech-stack">Tech Stack</a> •
   <a href="#contributors">Contributors</a> •
-  <a href="#acknowledges">Acknowledgements</a>
+  <a href="#acknowledgements">Acknowledgements</a>
 </p>
 
 <br>
@@ -37,17 +37,19 @@ Welcome to the Full Sail project repository! This project, originally forked fro
 
 ## How to Use
 
-To clone and run this application, you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
+To clone and run this application, you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. 
+<br><br>
+From your command line: create a project directory on your local computer where you want to save the the app files then run steps below
 
 ```bash
 # Clone this repository
 $ git clone https://github.com/ezellerBST/Full-Sail.git
 
 # Go into the repository
-$ cd full-sail
+$ cd Full-Sail/full-sail-frontend
 
 # Install dependencies
-$ npm install //node modules are a part of source code but might need updated
+$ npm install //node modules are a part of source code but might need updating
 
 # Run the app
 $ npm start
