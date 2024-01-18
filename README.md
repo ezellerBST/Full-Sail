@@ -18,7 +18,7 @@
 
 <br>
 <div align="center">
-    <img src="" alt="homePage" width="400">
+    <img src="https://github.com/ezellerBST/Full-Sail/blob/dev/full-sail-frontend/src/assets/HomePage.png?raw=true" alt="homePage" width="600">
 </div>
 
 ## Overview
