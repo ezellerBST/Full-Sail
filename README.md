@@ -5,7 +5,7 @@
   <br>
 </h1>
 
-<h4 align="center">A financial planning app built in Bethel Tech's end of term Final Project class</h4>
+<h4 align="center">A financial planning app built to serve all your budgeting goals</h4>
 
 <p align="center">
   <a href="#overview">Overview</a> •
@@ -22,7 +22,7 @@
 </div>
 
 ## Overview
-Welcome to the Full Sail project repository! This project, originally forked from bethel-school-of-technology/team-the-ghost-kids-on-the-block-frontend, was inspired by team member Mason's idea to track personal financials after paying off college tuition. It was created from scratch using the full stack knowledge gained while attending Bethel School of Technology. For the frontend design we used Angular and Angular Material while the backend uses Google's cloud Firebase and Firestore. Feel free to explore the code, contribute, and make this project even better.
+Welcome to the Full Sail project repository! This project, originally forked from bethel-school-of-technology/team-the-ghost-kids-on-the-block-frontend, was inspired by an idea to track personal financials after paying off college tuition. Full stack application using cloud based products. For the frontend design we used Angular and Angular Material while the backend uses Google's cloud Firebase and Firestore. Feel free to explore the code, contribute, and make this project even better.
 
 ## Key Features
 * Customizable budgeting app to track daily data on spending and saving
